@@ -1,0 +1,17 @@
+export const qwarkSpaceTokens = {
+  {{#each spaceTokens}}
+  "{{this.[0]}}": {{this.[1]}},
+  {{/each}}
+}
+
+export const qwarkBaseColors = {
+  {{#each baseColors}}
+  "{{this.[0]}}": "{{this.[1]}}",
+  {{/each}}
+}
+
+export const qwarkSemanticColors = {
+  {{#each semanticColors }}
+  "{{this.[0]}}": "{{this.[1]}}",
+  {{/each}}
+}
