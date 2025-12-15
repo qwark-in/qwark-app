@@ -9,14 +9,14 @@
  * Imports
  */
 // React and RN
-import { Pressable, PressableProps } from 'react-native';
+import { Pressable, PressableProps } from "react-native";
 
 // Libraries providing UI-related utils (e.g. tamagui, form etc.)
-import { View } from 'tamagui';
+import { View } from "tamagui";
 
 // Local (e.g. this and other workspaces)
-import { SvgProps } from '@/assets';
-import { ReactNode } from 'react';
+import { SvgProps } from "react-native-svg";
+import { ReactNode } from "react";
 
 /**
  * Types and interfaces
@@ -54,7 +54,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
         borderless: true,
         foreground: true,
         radius: hitSlopValue,
-        color: 'rgba(0, 0, 0, 0.2)',
+        color: "rgba(0, 0, 0, 0.2)",
       }}
       hitSlop={{
         top: hitSlopValue,
