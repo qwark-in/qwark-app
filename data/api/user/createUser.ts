@@ -1,9 +1,12 @@
-import axios, { AxiosError } from 'axios';
-import { BASE_URL } from './constants';
-import { CreateUserQueryBody, CreateUserResponse } from './types';
-import { AuthDataType } from '@/data/stores/auth-store';
+import axios, { AxiosError } from "axios";
+import { BASE_URL } from "./constants";
+import { CreateUserQueryBody, CreateUserResponse } from "./types";
+import { AuthDataType } from "data/models/auth";
 
-export const createUser = async (data: CreateUserQueryBody, authData: AuthDataType) => {
+export const createUser = async (
+  data: CreateUserQueryBody,
+  authData: AuthDataType
+) => {
   try {
     const response = await axios.post<CreateUserResponse>(`${BASE_URL}`, data, {
       headers: {
@@ -11,25 +14,27 @@ export const createUser = async (data: CreateUserQueryBody, authData: AuthDataTy
       },
     });
 
-    console.log('✅ Create User Response status:', response.status);
+    console.log("✅ Create User Response status:", response.status);
     return response;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       const error = err as AxiosError<{ message?: string }>;
 
-      console.error('❌ Create User Axios Error:', {
+      console.error("❌ Create User Axios Error:", {
         status: error.response?.status,
         message: error.response?.data?.message || error.message,
       });
 
       throw new Error(
         `Create user failed: ${
-          error.response?.data?.message || error.response?.statusText || error.message
+          error.response?.data?.message ||
+          error.response?.statusText ||
+          error.message
         }`
       );
     } else {
-      console.error('❌ Unexpected Error:', err);
-      throw new Error('An unexpected error occurred while creating the user.');
+      console.error("❌ Unexpected Error:", err);
+      throw new Error("An unexpected error occurred while creating the user.");
     }
   }
 };

@@ -5,9 +5,7 @@ import { LabelText } from "components/ui/typography";
 import { SvgProps } from "react-native-svg";
 
 export type PillProps = {
-  textProps?: React.ComponentProps<
-    typeof import("components/ui/typography").BodyText
-  >;
+  textProps?: React.ComponentProps<typeof import("components/ui/typography").BodyText>;
   styleProps?: ViewProps;
 };
 

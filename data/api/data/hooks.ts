@@ -1,12 +1,14 @@
-import { DashboardState } from '@/data/models/dashboard';
-import axios from 'axios';
-import useSWR from 'swr';
-import { BASE_URL } from './constants';
-import { useDashboardStore } from '@/data/stores/dashboard-store';
-import { MarketState } from '@/data/models/market';
-import { useMarketStore } from '@/data/stores/market-store';
+import axios from "axios";
+import useSWR from "swr";
+import { BASE_URL } from "./constants";
+import { useDashboardStore } from "data/stores/dashboard-store";
+import { DashboardState } from "data/models/dashboard";
+import { MarketState } from "data/models/market";
+import { useMarketStore } from "data/stores/market-store";
 
-const getDashboardDataFetcher = async (url: string): Promise<DashboardState> => {
+const getDashboardDataFetcher = async (
+  url: string
+): Promise<DashboardState> => {
   const response = await axios.get(url);
   return response.data;
 };

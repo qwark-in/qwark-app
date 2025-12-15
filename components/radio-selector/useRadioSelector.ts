@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-type ExtractTitles<T extends readonly { value: string }[]> = T[number]['value'];
+type ExtractTitles<T extends readonly { value: string }[]> = T[number]["value"];
 
 export function useRadioSelector<const RadioItems extends readonly { value: string }[]>(
   initialTitle: ExtractTitles<RadioItems>

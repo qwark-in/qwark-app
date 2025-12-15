@@ -2,13 +2,13 @@
  * Imports
  */
 // React and RN
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 // Libraries providing UI-related utils (e.g. tamagui, form etc.)
-import { AnimatePresence, View } from 'tamagui';
+import { AnimatePresence, View } from "tamagui";
 
 // Local (e.g. this and other workspaces)
-import { CheckSmall } from '@/assets';
+import { CheckSmall } from "assets";
 
 /**
  * Types and interfaces
@@ -37,20 +37,23 @@ interface CheckBoxProps {
  *
  * @description Basic checkbox component using Qwark colors
  */
-export const Checkbox: React.FC<CheckBoxProps> = ({ checked, borderHidden = false }) => {
+export const Checkbox: React.FC<CheckBoxProps> = ({
+  checked,
+  borderHidden = false,
+}) => {
   return (
     <View
       w="$5"
       h="$5"
       br="$_5"
       bw="$_5"
-      boc={borderHidden ? '$colorTransparent' : '$qwark/primary'}
+      boc={borderHidden ? "$colorTransparent" : "$qwark/primary"}
       jc="center"
       ai="center"
-      bg={checked ? '$qwark/primary' : '$colorTransparent'}
+      bg={checked ? "$qwark/primary" : "$colorTransparent"}
       pointerEvents="none"
       animation="presence"
-      animateOnly={['backgroundColor']}
+      animateOnly={["backgroundColor"]}
     >
       <AnimatePresence>
         {checked && (
@@ -59,9 +62,12 @@ export const Checkbox: React.FC<CheckBoxProps> = ({ checked, borderHidden = fals
             animation="presence"
             enterStyle={{ opacity: 0 }}
             exitStyle={{ opacity: 0 }}
-            animateOnly={['opacity', 'scale']}
+            animateOnly={["opacity", "scale"]}
           >
-            <CheckSmall width={borderHidden ? 20 : 24} height={borderHidden ? 20 : 24} />
+            <CheckSmall
+              width={borderHidden ? 20 : 24}
+              height={borderHidden ? 20 : 24}
+            />
           </View>
         )}
       </AnimatePresence>

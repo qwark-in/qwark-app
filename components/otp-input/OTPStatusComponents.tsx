@@ -1,7 +1,7 @@
 import { Spinner, XStack } from "tamagui";
 
 import { BodyText } from "components/ui/typography";
-import { Verified } from "@/assets";
+import { Verified } from "assets";
 import { useToastController } from "@tamagui/toast";
 import { OTPCountdownTimer } from "./OTPCountdownTimer";
 

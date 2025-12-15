@@ -1,5 +1,5 @@
 import { useAudioPlayer } from "expo-audio";
-import { EyeHidden, EyeVisible } from "@/assets";
+import { EyeHidden, EyeVisible } from "assets";
 import { IconButton } from "components/ui/buttons";
 import { useDashboardScreenStore } from "@mobile/features/dashboard/store/dashboardScreenStore";
 

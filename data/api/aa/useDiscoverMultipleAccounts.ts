@@ -1,8 +1,8 @@
-import { useCallback, useEffect } from 'react';
-import { useDiscoverAccounts } from './useDiscoverAccounts';
-import { useUserStore } from '@/data/stores/user-store';
-import { useAAStore } from '@/data/stores/aa-store';
-import { Entity } from '@/data/models/account-aggregator';
+import { useCallback, useEffect } from "react";
+import { useDiscoverAccounts } from "./useDiscoverAccounts";
+import { useUserStore } from "data/stores/user-store";
+import { useAAStore } from "data/stores/aa-store";
+import { Entity } from "data/models/account-aggregator";
 
 export const useDiscoverMultipleAccounts = () => {
   const phone = useUserStore((store) => store.phone);
@@ -10,9 +10,13 @@ export const useDiscoverMultipleAccounts = () => {
   const selectedBanks = useAAStore((store) => store.selectedBanks);
   const consentHandles = useAAStore((store) => store.consent_handles);
   const sessionId = useAAStore((store) => store.session_id);
-  const setDiscoveredAccounts = useAAStore((store) => store.setDiscoveredAccounts);
+  const setDiscoveredAccounts = useAAStore(
+    (store) => store.setDiscoveredAccounts
+  );
   // const selectAllAccounts = useAAStore((store) => store.selectAllAccounts); //TODO: Un-comment this in production to auto-select every discovered and un-linked account
-  const resetDiscoveredAccounts = useAAStore((store) => store.resetDiscoveredAccounts);
+  const resetDiscoveredAccounts = useAAStore(
+    (store) => store.resetDiscoveredAccounts
+  );
   const { discoverAccounts, discoverAccountsIsLoading, discoverAccountsError } =
     useDiscoverAccounts();
 
@@ -94,5 +98,9 @@ export const useDiscoverMultipleAccounts = () => {
     });
   }, []);
 
-  return { triggerDiscoverAccounts, discoverAccountsIsLoading, discoverAccountsError };
+  return {
+    triggerDiscoverAccounts,
+    discoverAccountsIsLoading,
+    discoverAccountsError,
+  };
 };

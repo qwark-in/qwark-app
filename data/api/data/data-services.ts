@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { BASE_URL } from "./constants";
-import { AuthDataType } from "data/stores/auth-store";
 import { DashboardState } from "data/models/dashboard";
+import { AuthDataType } from "data/models/auth";
 
 type GetDashboardResponse = DashboardState;
 

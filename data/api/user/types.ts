@@ -1,5 +1,5 @@
-import { FinancialProfileState } from '@/data/models/financial-profile';
-import { UserState } from '@/data/models/user';
+import { FinancialProfileState } from "data/models/financial-profile";
+import { UserState } from "data/models/user";
 
 // Get User
 export type GetUserResponse = UserState;

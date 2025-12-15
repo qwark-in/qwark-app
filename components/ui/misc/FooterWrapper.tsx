@@ -1,8 +1,8 @@
-import { PropsWithChildren } from 'react';
-import { XStack } from 'tamagui';
-import { CamsfinservLogo } from '@/assets';
-import { BodyText } from '../typography';
-import { ShadowWrapper } from './ShadowWrapper';
+import { PropsWithChildren } from "react";
+import { XStack } from "tamagui";
+import { CamsfinservLogo } from "assets";
+import { BodyText } from "../typography";
+import { ShadowWrapper } from "./ShadowWrapper";
 
 type FooterProps = PropsWithChildren;
 

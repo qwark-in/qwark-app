@@ -1,7 +1,7 @@
-import { RadioItem } from '@/ui/components/inputs';
-import { LabelText, TitleText } from '@/ui/components/typography';
-import { Pressable } from 'react-native';
-import { Separator, View, XStack, getTokens } from 'tamagui';
+import { Pressable } from "react-native";
+import { Separator, View, XStack } from "tamagui";
+import { TitleText } from "components/ui/typography";
+import { RadioItem } from "components/ui/inputs";
 
 type RadioListItemProps = {
   value: string;
@@ -20,13 +20,17 @@ export const RadioListItem: React.FC<RadioListItemProps> = ({
     <View>
       <Pressable
         onPress={() => handleValuechange(value)}
-        android_ripple={{ borderless: false, foreground: true, color: 'rgba(0, 0, 0, 0.2)' }}
+        android_ripple={{
+          borderless: false,
+          foreground: true,
+          color: "rgba(0, 0, 0, 0.2)",
+        }}
       >
         <XStack jc="space-between" px="$4" py="$3">
           <TitleText>{value}</TitleText>
           <RadioItem
             value={value}
-            color={selected ? '$icon/accent' : '$icon/secondary'}
+            color={selected ? "$icon/accent" : "$icon/secondary"}
             pointerEvents="none" // This is needed for controlled radio inputs with value change handler on container instead of RadioGroup
           />
         </XStack>

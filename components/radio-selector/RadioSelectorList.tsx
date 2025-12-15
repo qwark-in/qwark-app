@@ -1,5 +1,5 @@
-import { RadioGroup, ScrollView } from 'tamagui';
-import { RadioListItem } from './RadioListItem';
+import { RadioGroup, ScrollView } from "tamagui";
+import { RadioListItem } from "./RadioListItem";
 
 type RadioSelectorListProps<T extends string> = {
   radioList: readonly { value: T }[];

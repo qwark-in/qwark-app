@@ -1,28 +1,28 @@
 // userMockApis.ts
-import { AuthDataType } from '@/data/stores/auth-store';
+import { AuthDataType } from "data/models/auth";
 import {
   GetUserResponse,
   CreateUserQueryBody,
   CreateUserResponse,
   UpdateUserQueryBody,
   UpdateUserResponse,
-} from './types';
+} from "./types";
 
 // ---- Mock Data ----
 const mockUser: GetUserResponse = {
-  user_id: 'cbb25c27-b0dc-49c7-bbeb-54f741975a44',
+  user_id: "cbb25c27-b0dc-49c7-bbeb-54f741975a44",
   name: {
-    first: 'Harsh',
-    middle: '',
-    last: 'Mohite',
+    first: "Harsh",
+    middle: "",
+    last: "Mohite",
   },
   joining_time: new Date().toISOString(),
-  dob: '1997-06-15T00:00:00.000Z',
-  pan: 'EEJPM4774J',
-  phone: '9737927175',
-  email: 'harsh@example.com',
-  marital_status: 'SINGLE',
-  gender: 'MALE',
+  dob: "1997-06-15T00:00:00.000Z",
+  pan: "EEJPM4774J",
+  phone: "9737927175",
+  email: "harsh@example.com",
+  marital_status: "SINGLE",
+  gender: "MALE",
 };
 
 // Simulate latency
@@ -31,9 +31,11 @@ const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 // ---- Mock API functions ----
 
 // Get User
-export const getUserMock = async (authData: AuthDataType): Promise<{ data: GetUserResponse }> => {
+export const getUserMock = async (
+  authData: AuthDataType
+): Promise<{ data: GetUserResponse }> => {
   await delay(300);
-  console.log('✅ [MOCK] Get User called');
+  console.log("✅ [MOCK] Get User called");
   return { data: mockUser };
 };
 
@@ -43,7 +45,7 @@ export const createUserMock = async (
   authData: AuthDataType
 ): Promise<{ data: CreateUserResponse }> => {
   await delay(300);
-  console.log('✅ [MOCK] Create User called with:', data);
+  console.log("✅ [MOCK] Create User called with:", data);
 
   // Overwrite mock user
   const newMockUser = {
@@ -51,7 +53,7 @@ export const createUserMock = async (
     ...data,
   };
 
-  console.log('New Mock User', newMockUser);
+  console.log("New Mock User", newMockUser);
 
   return { data: newMockUser };
 };
@@ -62,7 +64,7 @@ export const updateUserMock = async (
   authData: AuthDataType
 ): Promise<{ data: UpdateUserResponse }> => {
   await delay(300);
-  console.log('✅ [MOCK] Update User called with:', data);
+  console.log("✅ [MOCK] Update User called with:", data);
 
   // Update existing fields
   const newMockUser = {
