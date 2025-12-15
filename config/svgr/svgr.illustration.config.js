@@ -1,10 +1,7 @@
-// svgr.static.config.js
 module.exports = {
   native: true,
   typescript: true,
   jsxRuntime: "automatic",
-
-  // Important: do NOT treat as icons
   icon: false,
 
   // Keep original SVG exactly as-is
@@ -12,7 +9,10 @@ module.exports = {
 
   svgo: true,
   svgoConfig: {
-    plugins: [{ name: "removeXMLNS", active: true }],
+    plugins: [
+      { name: "removeXMLNS", active: true },
+      { name: "removeXlink", active: true },
+    ],
   },
 
   template({ imports, componentName, jsx }, { tpl }) {

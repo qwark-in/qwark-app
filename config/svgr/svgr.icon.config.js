@@ -1,4 +1,3 @@
-// svgr.config.js
 module.exports = {
   native: true,
   icon: true,
@@ -13,6 +12,9 @@ module.exports = {
         name: "removeXMLNS",
         active: true,
       },
+      { name: "removeXlink", active: true },
+
+      // Important plugin for icon
       {
         name: "convertColors",
         params: {
