@@ -1,8 +1,8 @@
-import { create } from 'zustand';
-import { createJSONStorage, devtools, persist } from 'zustand/middleware';
-import { immer } from 'zustand/middleware/immer';
-import { DashboardActions, DashboardState } from '@/data/models/dashboard';
-import { zustandStorage } from './helpers/storage';
+import { create } from "zustand";
+import { createJSONStorage, devtools, persist } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
+import { DashboardActions, DashboardState } from "data/models/dashboard";
+import { zustandStorage } from "./helpers/storage";
 
 export const useDashboardStore = create<DashboardState & DashboardActions>()(
   immer(
@@ -21,7 +21,7 @@ export const useDashboardStore = create<DashboardState & DashboardActions>()(
           }),
       }),
       {
-        name: 'dashboard-storage',
+        name: "dashboard-storage",
         storage: createJSONStorage(() => zustandStorage),
       }
     )

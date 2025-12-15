@@ -1,10 +1,9 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import { immer } from 'zustand/middleware/immer';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
+import { zustandStorage } from "./helpers/storage";
 
-import { zustandStorage } from './helpers/storage';
-
-type PermissionState = 'GRANTED' | 'DENIED' | 'NEVER_ASK_AGAIN';
+type PermissionState = "GRANTED" | "DENIED" | "NEVER_ASK_AGAIN";
 
 type SettingsState = {
   isBiometricsEnabled: boolean;
@@ -40,7 +39,7 @@ export const useSettigsStore = create<SettingsState & SettingsActions>()(
         },
       }),
       {
-        name: 'settings-storage',
+        name: "settings-storage",
         storage: createJSONStorage(() => zustandStorage),
       }
     )

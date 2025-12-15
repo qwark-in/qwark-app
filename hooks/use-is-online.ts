@@ -9,20 +9,8 @@
  * Imports
  */
 // React and RN
-import { useState, useEffect } from 'react';
-import NetInfo from '@react-native-community/netinfo';
-
-// Libraries
-
-// Local (e.g. this and other workspaces)
-
-/**
- * Types and interfaces
- */
-
-/**
- * Helpers
- */
+import { useState, useEffect } from "react";
+import NetInfo from "@react-native-community/netinfo";
 
 /**
  * Hook to check if the device is connected to the internet
@@ -37,11 +25,11 @@ export const useIsOnline = () => {
     try {
       const response = await NetInfo.refresh();
 
-      if (typeof response.isInternetReachable === 'boolean') {
+      if (typeof response.isInternetReachable === "boolean") {
         setIsOnline(response.isInternetReachable);
       }
     } catch (error) {
-      console.log('Net refresh error', error);
+      console.log("Net refresh error", error);
     } finally {
       setIsloading(false);
     }
@@ -49,13 +37,13 @@ export const useIsOnline = () => {
 
   useEffect(() => {
     NetInfo.fetch().then((s) => {
-      if (typeof s.isInternetReachable === 'boolean') {
+      if (typeof s.isInternetReachable === "boolean") {
         setIsOnline(s.isInternetReachable);
       }
     });
 
     const unsubscribe = NetInfo.addEventListener((s) => {
-      if (typeof s.isInternetReachable === 'boolean') {
+      if (typeof s.isInternetReachable === "boolean") {
         setIsOnline(s.isInternetReachable);
       }
     });

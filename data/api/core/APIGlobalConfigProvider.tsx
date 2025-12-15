@@ -10,17 +10,17 @@
  * Imports
  */
 // React and RN
-import { FC, PropsWithChildren } from 'react';
-import { AppState, AppStateStatus } from 'react-native';
-import NetInfo from '@react-native-community/netinfo';
+import { FC, PropsWithChildren } from "react";
+import { AppState, AppStateStatus } from "react-native";
+import NetInfo from "@react-native-community/netinfo";
 
 // Libraries
-import { SWRConfig } from 'swr';
-import { createMMKV } from 'react-native-mmkv';
+import { SWRConfig } from "swr";
+import { createMMKV } from "react-native-mmkv";
 
 // Local (e.g. this and other workspaces)
-import { useIsOnline } from '@/data/api/hooks/use-is-online';
-import { setupSWRCache } from './swr-cache';
+import { useIsOnline } from "hooks/use-is-online";
+import { setupSWRCache } from "./swr-cache";
 
 /**
  * Types and interfaces
@@ -37,8 +37,8 @@ const mmkvProvider = () => {
     get: storage.getString.bind(storage),
   });
 
-  AppState.addEventListener('change', function persistCacheOnAppBackground(s) {
-    if (s === 'background') {
+  AppState.addEventListener("change", function persistCacheOnAppBackground(s) {
+    if (s === "background") {
       persistCache();
     }
   });
@@ -52,7 +52,9 @@ const mmkvProvider = () => {
  * @param props Props of the component (children in this case)
  * @returns React context provider component
  */
-export const APIGlobalConfigProvider: FC<PropsWithChildren> = ({ children }) => {
+export const APIGlobalConfigProvider: FC<PropsWithChildren> = ({
+  children,
+}) => {
   const { isOnline } = useIsOnline();
 
   return (
@@ -63,7 +65,7 @@ export const APIGlobalConfigProvider: FC<PropsWithChildren> = ({ children }) => 
           return isOnline;
         },
         isVisible: () => {
-          return AppState.currentState === 'active';
+          return AppState.currentState === "active";
         },
         initFocus(callback) {
           let appState = AppState.currentState;
@@ -77,7 +79,7 @@ export const APIGlobalConfigProvider: FC<PropsWithChildren> = ({ children }) => 
                * either "inactive" or "background", do init focus stuff anyway
                */
               // appState.match(/inactive|background/) &&
-              nextAppState === 'active'
+              nextAppState === "active"
             ) {
               callback();
             }
@@ -85,7 +87,10 @@ export const APIGlobalConfigProvider: FC<PropsWithChildren> = ({ children }) => 
           };
 
           // Subscribe to the app state change events
-          const subscription = AppState.addEventListener('change', onAppStateChange);
+          const subscription = AppState.addEventListener(
+            "change",
+            onAppStateChange
+          );
 
           return () => {
             if (subscription) {

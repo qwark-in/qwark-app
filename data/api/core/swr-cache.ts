@@ -37,11 +37,13 @@ const persistCacheKeys = [`/user`];
  * @returns Cache storage instance and method to be called to persist the cache
  */
 export const setupSWRCache = ({ set, get }: SWRCacheType) => {
-  const appCache = get('app-cache');
-  const swrCacheMap = new Map<string, any>(appCache ? JSON.parse(appCache) : []);
+  const appCache = get("app-cache");
+  const swrCacheMap = new Map<string, any>(
+    appCache ? JSON.parse(appCache) : []
+  );
 
   const persistCache = () => {
-    const prevCache = get('app-cache');
+    const prevCache = get("app-cache");
     const prevMap = new Map(prevCache ? JSON.parse(prevCache) : []);
 
     persistCacheKeys.forEach((key) => {
@@ -52,7 +54,7 @@ export const setupSWRCache = ({ set, get }: SWRCacheType) => {
       }
     });
     const newAppCache = JSON.stringify(Array.from(prevMap.entries()));
-    set('app-cache', newAppCache);
+    set("app-cache", newAppCache);
   };
 
   return {

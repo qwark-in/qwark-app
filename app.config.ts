@@ -166,7 +166,7 @@ const getDynamicAppConfig = (
   // also, by default
   return {
     name: `${APP_NAME} (Dev)`,
-    androidPackageName: `${PACKAGE_NAME}.dev`,
+    androidPackageName: `${PACKAGE_NAME}.dev` + "new", //TODO: Remove new after transition is done.
     icon: `${ICON}__dev.png`,
     adaptiveIcon: `${ADAPTIVE_ICON}__dev.png`,
     scheme: `${SCHEME}-dev`,

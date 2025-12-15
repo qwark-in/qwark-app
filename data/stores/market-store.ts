@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { immer } from 'zustand/middleware/immer';
-import { MarketActions, MarketState } from '@/data/models/market';
+import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
+import { MarketActions, MarketState } from "data/models/market";
 
 export const useMarketStore = create<MarketState & MarketActions>()(
   immer((set, get) => ({

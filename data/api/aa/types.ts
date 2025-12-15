@@ -1,4 +1,4 @@
-import { Entity } from '@/data/models/account-aggregator';
+import { Entity } from "data/models/account-aggregator";
 
 export type FipType = {
   fip_id: string;
@@ -9,7 +9,7 @@ export type FipType = {
 
 // FIU Fips
 export type FetchFipListResponse = {
-  status: 'ok';
+  status: "ok";
   data: {
     fips: FipType[];
   };
@@ -23,7 +23,7 @@ export type FIUInitQueryBody = {
 };
 
 export type FIUInitResponse = {
-  status: 'ok';
+  status: "ok";
   data: {
     consent_handles: { fip_class: Entity; consent_handle: string }[];
   };
@@ -36,7 +36,7 @@ export type TriggerAuthOTPQueryBody = {
 };
 
 export type TriggerAuthOTPResponse = {
-  status: 'ok';
+  status: "ok";
   data: null;
 };
 
@@ -48,7 +48,7 @@ export type ValidateAuthOTPQueryBody = {
 };
 
 export type ValidateAuthOTPResponse = {
-  status: 'ok';
+  status: "ok";
   data: { session_id: string };
 };
 
@@ -70,7 +70,7 @@ export type DiscoverAccountsQueryBody = {
 };
 
 export type DiscoverAccountsResponse = {
-  status: 'ok';
+  status: "ok";
   data: {
     fip_name: string;
     accounts: DiscoveryAccountsInfo[];
@@ -95,7 +95,7 @@ export type LinkAccountsQueryBody = {
 };
 
 export type LinkAccountsResponse = {
-  status: 'ok';
+  status: "ok";
   data: {
     ref_number: string;
   };
@@ -113,7 +113,7 @@ export type LinkAccountsVerifyQueryBody = {
 };
 
 export type LinkAccountsVerifyResponse = {
-  status: 'ok';
+  status: "ok";
   data: {
     accounts: {
       fip_account_link_ref: string;
@@ -130,7 +130,7 @@ export type GetConsentDetailsQueryParams = {
   session_id: string;
 };
 export type GetConsentDetailsResponse = {
-  status: 'ok';
+  status: "ok";
   data: {
     lst: {
       PURPOSEDESC: string;
@@ -169,7 +169,7 @@ export type AcceptConsentQueryBody = {
   fip_details_list: FipDetails[];
 };
 export type AcceptConsentResponse = {
-  status: 'ok';
+  status: "ok";
   data: {
     consent_id: string;
   };
