@@ -1,10 +1,11 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-// import { SecureStorage } from './helpers/secure-storage.android';
+import { SecureStorage } from "./helpers/secure-storage.android";
+
 // import { devtools } from '@csark0812/zustand-expo-devtools';
-import { zustandStorage } from "./helpers/storage";
 import { AuthState, AuthActions } from "data/models/auth";
+import { zustandStorage } from "./helpers/storage";
 
 export const useAuthStore = create<AuthState & AuthActions>()(
   immer(

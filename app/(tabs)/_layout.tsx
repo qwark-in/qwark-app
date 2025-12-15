@@ -10,13 +10,6 @@ export default function TabLayout() {
         options={{
           title: "Tab One",
           tabBarIcon: ({ color }) => <Atom color={color as any} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Button mr="$4" size="$5">
-                Hello!
-              </Button>
-            </Link>
-          ),
         }}
       />
       <Tabs.Screen

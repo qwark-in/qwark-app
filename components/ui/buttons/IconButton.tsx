@@ -1,41 +1,16 @@
 /**
- * @name IconButton
- *
- * @description
- * Button with icon
- */
-
-/**
  * Imports
  */
-// React and RN
 import { Pressable, PressableProps } from "react-native";
-
-// Libraries providing UI-related utils (e.g. tamagui, form etc.)
-import { View } from "tamagui";
-
-// Local (e.g. this and other workspaces)
-import { SvgProps } from "react-native-svg";
 import { ReactNode } from "react";
+import { Icon } from "../icons";
+import { IconProps } from "../icons/types";
+import { getIconSize } from "../icons/getIconSize";
 
 /**
  * Types and interfaces
  */
-interface IconButtonProps extends PressableProps {
-  /**
-   * Icon to show
-   */
-  icon: React.FC<SvgProps>;
-  /**
-   * (Optional) Size of the icon
-   * @default [20]
-   */
-  size?: number;
-}
-
-/**
- * Helpers
- */
+interface IconButtonProps extends PressableProps, IconProps {}
 
 /**
  * Button with Icon
@@ -43,11 +18,12 @@ interface IconButtonProps extends PressableProps {
  * @returns {ReactNode} Button component
  */
 export const IconButton: React.FC<IconButtonProps> = ({
-  icon: Icon,
-  size = 20,
+  name,
+  size = "md",
+  color = "$qwark/black",
   ...props
 }: IconButtonProps): ReactNode => {
-  const hitSlopValue = size * 1.1;
+  const hitSlopValue = getIconSize(size);
   return (
     <Pressable
       android_ripple={{
@@ -56,6 +32,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
         radius: hitSlopValue,
         color: "rgba(0, 0, 0, 0.2)",
       }}
+      role="button"
       hitSlop={{
         top: hitSlopValue,
         bottom: hitSlopValue,
@@ -64,9 +41,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
       }}
       {...props}
     >
-      <View als="center">
-        <Icon width={size} height={size} />
-      </View>
+      <Icon name={name} size={size} color={color} />
     </Pressable>
   );
 };
