@@ -13,7 +13,11 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest",
-    "icons:generate": "pnpm svgr --config-file svgr.config.js --out-dir components/ui/icons/glyphs assets/icons"
+    "svgr:icons": "pnpm svgr --config-file config/svgr/svgr.icon.config.js --out-dir components/ui/icons/glyphs assets/svg/icons",
+    "svgr:logos": "pnpm svgr --config-file config/svgr/svgr.logo.config.js --out-dir components/ui/bank-logos/glyphs assets/svg/bank-logos",
+    "svgr:logos:height": "pnpm svgr --config-file config/svgr/svgr.logo-height.config.js --out-dir components/ui/logos/glyphs assets/svg/logos",
+    "svgr:illustrations": "pnpm svgr --config-file config/svgr/svgr.illustration.config.js --out-dir components/ui/illustrations/glyphs assets/svg/illustrations",
+    "svgr:all": "pnpm svgr:icons && pnpm svgr:logos && pnpm svgr:logos:height && pnpm svgr:illustrations"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^5.2.8",
