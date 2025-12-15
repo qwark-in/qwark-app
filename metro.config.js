@@ -14,7 +14,7 @@ config.resolver.sourceExts.push("mjs");
 
 module.exports = withTamagui(config, {
   components: ["tamagui"],
-  config: "./config/tamagui.config.ts",
+  config: "./tamagui.config.ts",
   outputCSS: "./tamagui-web.css",
   cssInterop: true,
 });

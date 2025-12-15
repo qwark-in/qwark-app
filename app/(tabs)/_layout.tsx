@@ -1,10 +1,8 @@
 import { Link, Tabs } from "expo-router";
-import { Button, useTheme } from "tamagui";
+import { Button } from "tamagui";
 import { Atom, AudioWaveform } from "@tamagui/lucide-icons";
 
 export default function TabLayout() {
-  const theme = useTheme();
-
   return (
     <Tabs>
       <Tabs.Screen
@@ -14,7 +12,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <Atom color={color as any} />,
           headerRight: () => (
             <Link href="/modal" asChild>
-              <Button mr="$4" size="$2.5">
+              <Button mr="$4" size="$5">
                 Hello!
               </Button>
             </Link>

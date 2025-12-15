@@ -1,2 +1,1 @@
-export { ShadowWrapper } from './ShadowWrapper';
-export { SVGWrapper } from './SVGWrapper';
+export { ShadowWrapper } from "./ShadowWrapper";
