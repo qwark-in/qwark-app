@@ -9,7 +9,7 @@ import { styled } from "tamagui";
 import { BaseButton } from "./BaseButton";
 
 /**
- * Tonal button (styled Tamagui Button)
+ * Tonal button (styled Base Button)
  */
 export const TonalButton = styled(BaseButton, {
   bg: "$cyan/10",

@@ -9,7 +9,7 @@ import { styled } from "tamagui";
 import { BaseButton } from "./BaseButton";
 
 /**
- * Outline button (styled Tamagui Button)
+ * Outline button (styled Base Button)
  */
 export const OutlineButton = styled(BaseButton, {
   bg: "#FFF",

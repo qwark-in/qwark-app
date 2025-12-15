@@ -13,6 +13,7 @@ import {
   TextButton,
   TonalButton,
 } from "components/ui/buttons";
+import { BaseButton } from "components/ui/buttons/BaseButton";
 
 export default function TabOneScreen() {
   return (

@@ -9,7 +9,7 @@ import { styled } from "tamagui";
 import { BaseButton } from "./BaseButton";
 
 /**
- * Text button (styled Tamagui Button)
+ * Text button (styled Base Button)
  */
 export const TextButton = styled(BaseButton, {
   boc: "#FFF",
