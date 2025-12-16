@@ -1,7 +1,7 @@
 import "../tamagui-web.css";
 
 import { useEffect } from "react";
-import { Platform, StatusBar } from "react-native";
+import { Platform } from "react-native";
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { SplashScreen, Stack } from "expo-router";
 import { Provider } from "components/Provider";
@@ -61,13 +61,12 @@ function RootLayoutNav() {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: "#FFF",
+      background: "#FFF", // For setting default background color for all screens
     },
   };
 
   return (
     <ThemeProvider value={BaseTheme}>
-      <StatusBar barStyle="dark-content" />
       <Stack>
         <Stack.Screen
           name="(tabs)"

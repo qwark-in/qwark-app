@@ -14,7 +14,7 @@ import Animated, {
 import { BodyText } from "components/ui/typography";
 
 /**
- * Map of bottom tab names from apps\mobile\app\(app)\(tabs)\_layout.tsx to test ids
+ * Map of bottom tab names from app\(app)\(tabs)\_layout.tsx to test ids
  */
 const BottomTabsTestIdsMap = {
   dashboard: "__dashboard-bot-tab-button",
@@ -79,10 +79,7 @@ export const CustomBottomTabs: React.FC<CustomBottomTabsProps> = ({
             >
               <View ai="center" gap="$2" pt="$3" pb="$2">
                 {options.tabBarIcon && (
-                  <AnimatedIcon
-                    isFocused={isFocused}
-                    tabBarIcon={options.tabBarIcon}
-                  />
+                  <AnimatedIcon isFocused={isFocused} tabBarIcon={options.tabBarIcon} />
                 )}
                 <BodyText size="$small" fow="$emphasized">
                   {options.tabBarLabel}
