@@ -27,10 +27,10 @@ export default function AuthScreen() {
       `${API_BASE_URL}/${type === "LOGIN" ? "login" : "sign_up"}?${params}`
     );
 
-    // router.navigate({
-    //   pathname: '/web-view',
-    //   params: { url: loginURL.href },
-    // });
+    router.navigate({
+      pathname: "/web-view",
+      params: { url: "https://qwark.in" },
+    });
   };
 
   return (
@@ -50,6 +50,7 @@ export default function AuthScreen() {
             fow="$emphasized"
             color="$qwark/primary"
             textDecorationLine="underline"
+            cursor="pointer"
             onPress={() => handlePress("LOGIN")}
           >
             Login here
