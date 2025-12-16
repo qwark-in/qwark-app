@@ -1,9 +1,6 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { SecureStorage } from "./helpers/secure-storage.android";
-
-// import { devtools } from '@csark0812/zustand-expo-devtools';
 import { AuthState, AuthActions } from "data/models/auth";
 import { zustandStorage } from "./helpers/storage";
 

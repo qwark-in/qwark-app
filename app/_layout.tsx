@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import { Platform } from "react-native";
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { SplashScreen, Stack } from "expo-router";
-import { Provider } from "Provider";
 import { useQwarkFonts } from "hooks/use-qwark-fonts";
 import { injectWebFonts } from "config/web-fonts";
+import { Provider } from "ui/Provider";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -15,7 +15,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
+  initialRouteName: "auth",
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -67,13 +67,12 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={BaseTheme}>
-      <Stack>
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            headerShown: false,
-          }}
-        />
+      <Stack
+        screenOptions={{ headerShown: false, statusBarStyle: "dark" }}
+        initialRouteName="auth"
+      >
+        <Stack.Screen name="auth" />
+        <Stack.Screen name="(tabs)" />
       </Stack>
     </ThemeProvider>
   );

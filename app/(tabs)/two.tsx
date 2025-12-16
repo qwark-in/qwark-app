@@ -1,5 +1,5 @@
-import { TitleText } from "ui/typography";
 import { View } from "tamagui";
+import { TitleText } from "ui/display/typography";
 
 export default function TabTwoScreen() {
   return (

@@ -1,12 +1,11 @@
-import { Link, Tabs } from "expo-router";
-import { Button } from "tamagui";
+import { Tabs } from "expo-router";
 import { Atom, AudioWaveform } from "@tamagui/lucide-icons";
 
 export default function TabLayout() {
   return (
     <Tabs>
       <Tabs.Screen
-        name="index"
+        name="one"
         options={{
           title: "Tab One",
           tabBarIcon: ({ color }) => <Atom color={color as any} />,

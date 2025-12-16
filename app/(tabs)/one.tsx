@@ -1,20 +1,7 @@
 import { XStack, YStack } from "tamagui";
-import { BodyText, HeadlineText, LabelText, TitleText } from "ui/typography";
-import {
-  FilledButton,
-  IconButton,
-  OutlineButton,
-  TextButton,
-  TonalButton,
-} from "ui/buttons";
-import { Icon } from "ui/icons";
-import {
-  CamsfinservLogo,
-  CamsfinservLogoLg,
-  QwarkLogo,
-  QwarkLogoWithText,
-} from "ui/logos/glyphs";
-import { FdEmpty, MutualFundsEmpty, StockEmpty } from "ui/illustrations/glyphs";
+import { FdEmpty, MutualFundsEmpty, StockEmpty } from "ui/assets/illustrations";
+import { QwarkLogo, QwarkLogoWithText } from "ui/assets/logos";
+import { IconButton } from "ui/controls/buttons";
 
 export default function TabOneScreen() {
   return (
