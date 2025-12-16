@@ -1,4 +1,4 @@
-import { FlatList, Platform, useWindowDimensions } from "react-native";
+import { FlatList, useWindowDimensions } from "react-native";
 import { View, YStack, Image } from "tamagui";
 import QwarkLogoWithTextMd from "ui/assets/logos/QwarkLogoWithTextMd";
 import { SliderPagination } from "ui/display/slider/SliderPagination";
@@ -13,14 +13,6 @@ export const AuthWelcomeCarousal = () => {
       numberOfPages: authCarousalData.length,
     });
 
-  const webScrollStyle =
-    Platform.OS === "web"
-      ? {
-          overflowX: "auto",
-          scrollSnapType: "x mandatory",
-        }
-      : {};
-
   return (
     <View f={1}>
       <FlatList
@@ -30,14 +22,22 @@ export const AuthWelcomeCarousal = () => {
         keyExtractor={(item) => item.id}
         horizontal
         pagingEnabled
-        disableIntervalMomentum
+        disableIntervalMomentum={true}
         snapToAlignment="center"
+        decelerationRate="normal"
         showsHorizontalScrollIndicator={false}
         onScroll={handleOnScroll}
         onViewableItemsChanged={viewableItemsChanged}
         viewabilityConfig={viewConfig}
-        style={webScrollStyle}
+        // This is an escape hatch to make the container of the Flatlist item grow.
+        // By default it doesn't.
+        CellRendererComponent={({ children, style, ...handlers }) => (
+          <View style={style} flexGrow={1} {...handlers}>
+            {children}
+          </View>
+        )}
       />
+
       <SliderPagination
         numberOfPages={authCarousalData.length}
         scrollX={scrollX}
@@ -54,20 +54,39 @@ export const AuthCarousalItem: React.FC<AuthCarousalItemProps> = ({ item }) => {
   const { width } = useWindowDimensions();
 
   return (
-    <View w={width}>
-      <View ai="center" mt="$8" f={1}>
+    <View f={1} w={width}>
+      <View f={1} ai="center" jc="center" mt="$8">
         <QwarkLogoWithTextMd />
-        <View f={1} als="stretch" ai="center">
-          <Image source={item.image} f={1} objectFit="contain" />
+        <View f={1} ai="center" jc="center">
+          <AuthCarouselImage image={item.image} />
         </View>
       </View>
 
-      <YStack gap="$2" py="$6" px="$5">
+      <YStack gap="$2" pt="$6" px="$5" pb={item.id === "1" ? "$10" : "$6"}>
         <TitleText size="$large" fow="$emphasized" color="$gray/100">
           {item.heading}
         </TitleText>
         <BodyText color="$text/secondary">{item.description}</BodyText>
       </YStack>
+    </View>
+  );
+};
+
+type AuthCarouselImageProps = {
+  image: any;
+};
+
+const AuthCarouselImage = ({ image }: AuthCarouselImageProps) => {
+  const { width } = useWindowDimensions();
+
+  return (
+    <View f={1} width={width}>
+      <Image
+        source={image}
+        style={{ width: "100%", height: "100%" }}
+        resizeMode="contain"
+        aspectRatio={1.75}
+      />
     </View>
   );
 };

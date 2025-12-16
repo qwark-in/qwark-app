@@ -1,11 +1,11 @@
-import { useRef, useState } from 'react';
+import { useRef, useState } from "react";
 import {
   Animated,
   FlatList,
   NativeScrollEvent,
   NativeSyntheticEvent,
   ViewToken,
-} from 'react-native';
+} from "react-native";
 
 /**
  * A custom hook that provides utility logic for implementing a horizontal slider using FlatList.
@@ -34,11 +34,17 @@ export const useSlider = ({ numberOfPages }: { numberOfPages: number }) => {
    * Callback triggered when the viewable items in the FlatList change.
    * Used to update `currentIndex`.
    */
-  const viewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
-    if (viewableItems[0]?.index !== null) {
-      setCurrentIndex(viewableItems[0].index);
+
+  const viewableItemsChanged = useRef(
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+      if (!viewableItems || viewableItems.length === 0) return;
+
+      const index = viewableItems[0]?.index;
+      if (index == null) return;
+
+      setCurrentIndex(index);
     }
-  }).current;
+  ).current;
 
   /**
    * Configuration for viewability detection in FlatList.
