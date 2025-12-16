@@ -1,11 +1,11 @@
 import React from "react";
 import { Pressable } from "react-native";
-import { View, ViewProps, XStack, getTokenValue } from "tamagui";
-import { LabelText } from "ui/typography";
+import { View, ViewProps, XStack, getTokens } from "tamagui";
+import { LabelText } from "ui/display/typography";
 import { SvgProps } from "react-native-svg";
 
 export type PillProps = {
-  textProps?: React.ComponentProps<typeof import("ui/typography").BodyText>;
+  textProps?: React.ComponentProps<typeof import("ui/display/typography").BodyText>;
   styleProps?: ViewProps;
 };
 
@@ -24,8 +24,9 @@ const _PillButton: React.FC<PillButtonProps> = ({
   textProps,
   styleProps,
 }) => {
+  const { space } = getTokens();
   const { px = 12, py = 6, mr = "$3", br } = styleProps || {}; // Default values for styleProps
-  const brValue = typeof br === "string" ? getTokenValue(br) : br ?? 9999;
+  const brValue = typeof br === "string" ? space[br].val : br ?? 9999;
 
   const Icon = icon;
 

@@ -16,9 +16,8 @@ import { Input, InputProps, View, XStack } from "tamagui";
 import { Controller, ControllerProps } from "react-hook-form";
 
 // Local (e.g. this and other workspaces)
-import { CrossRoundBorder } from "assets";
 import { IconButton } from "../buttons/IconButton";
-import { BodyText, TitleText } from "ui/typography";
+import { BodyText, TitleText } from "../../display/typography";
 
 /**
  * Types and interfaces
@@ -93,7 +92,7 @@ export const MobileNumberInput: React.FC<MobileNumberInputProps> = ({
                 bottom="$0"
                 justifyContent="center"
               >
-                <IconButton icon={CrossRoundBorder} onPress={() => onChange("")} />
+                <IconButton name="xmark-circle" onPress={() => onChange("")} />
               </View>
             )}
           </XStack>

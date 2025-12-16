@@ -3,7 +3,7 @@
  */
 // Libraries providing UI-related utils (e.g. tamagui, form etc.)
 import { View } from "tamagui";
-import { Icon } from "ui/assets/icons";
+import { Icon } from "ui/assets/icons/adaptive";
 
 /**
  * Types and interfaces

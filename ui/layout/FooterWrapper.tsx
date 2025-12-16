@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 import { XStack } from "tamagui";
 import { ShadowWrapper } from "./ShadowWrapper";
 import { BodyText } from "ui/display/typography";
-import { CamsfinservLogo } from "ui/assets/logos/glyphs";
+import { CamsfinservLogo } from "ui/assets/logos";
 
 type FooterProps = PropsWithChildren;
 

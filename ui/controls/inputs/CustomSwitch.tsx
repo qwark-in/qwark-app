@@ -2,13 +2,13 @@
  * Imports
  */
 // React and RN
-import { forwardRef, useEffect, useRef, ReactNode } from 'react';
-import type { View } from 'react-native';
-import { Animated, Pressable } from 'react-native';
+import { forwardRef, useEffect, useRef, ReactNode, useState } from "react";
+import type { View } from "react-native";
+import { Animated, Pressable } from "react-native";
 
 // Libraries providing UI-related utils (e.g. tamagui, form etc.)
-import type { SwitchProps as SwitchHeadlessProps } from '@tamagui/switch-headless';
-import { useSwitch } from '@tamagui/switch-headless';
+import type { SwitchProps as SwitchHeadlessProps } from "@tamagui/switch-headless";
+import { useSwitch } from "@tamagui/switch-headless";
 
 /**
  *
@@ -20,13 +20,14 @@ import { useSwitch } from '@tamagui/switch-headless';
  * Internal component for the headless switch
  */
 const HeadlessSwitch = forwardRef<View, SwitchHeadlessProps>((props, ref): ReactNode => {
-  const { checked, onCheckedChange } = props;
+  const [checked, onCheckedChange] = useState(props.defaultChecked || false);
   const { switchProps, switchRef, bubbleInput } = useSwitch(
     props,
-    [checked || false, onCheckedChange || (() => {})],
+    [checked, onCheckedChange],
     ref
   );
-  const animation = useRef(new Animated.Value(checked ? 1 : 0)).current;
+
+  const [animation] = useState(() => new Animated.Value(checked ? 1 : 0));
 
   useEffect(() => {
     Animated.timing(animation, {
@@ -34,7 +35,7 @@ const HeadlessSwitch = forwardRef<View, SwitchHeadlessProps>((props, ref): React
       duration: 200,
       useNativeDriver: true,
     }).start();
-  }, [checked]);
+  }, [checked, animation]);
 
   return (
     <>
@@ -43,8 +44,8 @@ const HeadlessSwitch = forwardRef<View, SwitchHeadlessProps>((props, ref): React
           width: 36,
           height: 20,
           borderRadius: 100,
-          backgroundColor: checked ? '#001484' : '#6E7678',
-          justifyContent: 'center',
+          backgroundColor: checked ? "#001484" : "#6E7678",
+          justifyContent: "center",
         }}
         ref={switchRef}
         {...switchProps}
@@ -52,7 +53,7 @@ const HeadlessSwitch = forwardRef<View, SwitchHeadlessProps>((props, ref): React
         <Animated.View
           style={[
             {
-              backgroundColor: '#fff',
+              backgroundColor: "#fff",
               borderRadius: 100,
               width: 14,
               height: 14,

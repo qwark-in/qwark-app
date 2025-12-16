@@ -9,12 +9,12 @@
  * Imports
  */
 // React and RN
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 // Libraries providing UI-related utils (e.g. tamagui, form etc.)
-import { Input, View, InputProps } from 'tamagui';
-import { Controller, ControllerProps } from 'react-hook-form';
-import { BodyText, TitleText } from '../typography';
+import { Input, View, InputProps } from "tamagui";
+import { Controller, ControllerProps } from "react-hook-form";
+import { BodyText, TitleText } from "../../display/typography";
 
 // Local (e.g. this and other workspaces)
 
@@ -22,8 +22,8 @@ import { BodyText, TitleText } from '../typography';
  * Types and interfaces
  */
 interface FormTextInputProps
-  extends Omit<InputProps, 'defaultValue'>,
-    Pick<ControllerProps, 'name' | 'control' | 'rules'> {
+  extends Omit<InputProps, "defaultValue">,
+    Pick<ControllerProps, "name" | "control" | "rules"> {
   /**
    * Label for the input field
    */
@@ -59,11 +59,11 @@ export const FormTextInput: React.FC<FormTextInputProps> = ({
             ff="$body"
             fos="$medium"
             fow="$emphasized"
-            fontVariant={['lining-nums', 'tabular-nums']}
+            fontVariant={["lining-nums", "tabular-nums"]}
             bbw="$px"
-            bbc={error ? '$stroke/error' : '$stroke/secondary'}
+            bbc={error ? "$stroke/error" : "$stroke/secondary"}
             focusStyle={{
-              borderBottomColor: error ? '$stroke/error' : '$stroke/primary',
+              borderBottomColor: error ? "$stroke/error" : "$stroke/primary",
             }}
             value={value}
             onChangeText={onChange}
@@ -71,7 +71,7 @@ export const FormTextInput: React.FC<FormTextInputProps> = ({
             {...rest}
           />
 
-          {error && <BodyText color="$text/error">{error.message || 'Error'}</BodyText>}
+          {error && <BodyText color="$text/error">{error.message || "Error"}</BodyText>}
         </View>
       )}
     />

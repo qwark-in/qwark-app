@@ -1,9 +1,15 @@
 import Svg, { Path } from "react-native-svg";
 export type BankIconProps = {
-  size?: number;
+  size?: number,
 };
 export const AxisBankLogo = ({ size = 24 }: BankIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 33 32" fill="none" focusable={false}>
+  <Svg
+    width={size}
+    height={size}
+    viewBox="0 0 33 32"
+    fill="none"
+    focusable={false}
+  >
     <Path
       d="M16.3393 3.45508C17.8529 6.11748 19.2913 8.64708 20.7569 11.2231C17.4897 16.9847 14.2241 22.7399 10.9489 28.5159C8.03852 28.5159 5.15532 28.5159 2.12012 28.5159C6.86412 20.1543 11.5633 11.8743 16.3393 3.45508Z"
       fill="#AE2860"

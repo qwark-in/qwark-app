@@ -1,7 +1,7 @@
 import { Pressable } from "react-native";
 import { Separator, View, XStack } from "tamagui";
-import { TitleText } from "ui/typography";
-import { RadioItem } from "ui/inputs";
+import { TitleText } from "ui/display/typography";
+import { RadioItem } from "ui/controls/inputs";
 
 type RadioListItemProps = {
   value: string;

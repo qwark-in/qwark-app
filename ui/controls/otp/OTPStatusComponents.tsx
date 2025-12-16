@@ -1,9 +1,9 @@
 import { Spinner, XStack } from "tamagui";
 
-import { BodyText } from "ui/typography";
-import { Verified } from "assets";
+import { BodyText } from "ui/display/typography";
 import { useToastController } from "@tamagui/toast";
 import { OTPCountdownTimer } from "./OTPCountdownTimer";
+import { Success } from "ui/assets/icons/fixed-color/glyphs";
 
 export const OTPVerifying = () => {
   return (
@@ -17,7 +17,7 @@ export const OTPVerifying = () => {
 export const OTPVerified = () => {
   return (
     <XStack mt="$6" gap="$2">
-      <Verified />
+      <Success size={32} />
       <BodyText color="#198038">Verified successfully</BodyText>
     </XStack>
   );

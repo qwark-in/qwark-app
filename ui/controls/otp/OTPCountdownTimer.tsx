@@ -12,7 +12,7 @@ import { ReactNode } from "react";
 import { View } from "tamagui";
 import { useCountdown } from "hooks/use-countdown";
 import { getExpiryTimestamp } from "helpers/get-expiry-timestamp";
-import { BodyText } from "ui/typography";
+import { BodyText } from "ui/display/typography";
 
 /**
  * Types and interfaces

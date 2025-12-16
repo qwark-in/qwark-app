@@ -4,7 +4,7 @@ import { View, Input } from "tamagui";
 import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 import { OTP_MAX_LENGTH } from "./constants";
 import { renderOTPStatus } from "./renderOTPStatus";
-import { BodyText } from "ui/typography";
+import { BodyText } from "ui/display/typography";
 
 type OTPInputProps = {
   code: string;

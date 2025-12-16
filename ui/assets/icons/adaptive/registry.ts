@@ -1,4 +1,12 @@
-import { ArrowLeft, Bell, Calendar, EyeHidden, EyeVisible, Check } from "./glyphs";
+import {
+  ArrowLeft,
+  Bell,
+  Calendar,
+  EyeHidden,
+  EyeVisible,
+  Check,
+  XmarkCircle,
+} from "./glyphs";
 
 export const iconRegistry = {
   "arrow-left": ArrowLeft,
@@ -7,6 +15,7 @@ export const iconRegistry = {
   "eye-hidden": EyeHidden,
   "eye-visible": EyeVisible,
   check: Check,
+  "xmark-circle": XmarkCircle,
 };
 
 export type IconName = keyof typeof iconRegistry;

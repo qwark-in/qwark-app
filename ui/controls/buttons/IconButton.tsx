@@ -3,9 +3,9 @@
  */
 import { ReactNode } from "react";
 import { Pressable, PressableProps } from "react-native";
-import { Icon } from "ui/assets/icons";
-import { getIconSize } from "ui/assets/icons/getIconSize";
-import { IconProps } from "ui/assets/icons/types";
+import { Icon } from "ui/assets/icons/adaptive";
+import { getIconSize } from "ui/assets/icons/adaptive/getIconSize";
+import { IconProps } from "ui/assets/icons/adaptive/types";
 
 /**
  * Types and interfaces
