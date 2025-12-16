@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Platform } from "react-native";
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { SplashScreen, Stack } from "expo-router";
-import { Provider } from "components/Provider";
+import { Provider } from "Provider";
 import { useQwarkFonts } from "hooks/use-qwark-fonts";
 import { injectWebFonts } from "config/web-fonts";
 

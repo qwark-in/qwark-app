@@ -8,16 +8,11 @@
 export { APIGlobalConfigProvider } from "./core/APIGlobalConfigProvider";
 
 // API hooks
-export { useGetUser, useUpdateUser } from "./user/use-user";
 export { getUser } from "./user/getUser";
 export { getFinProfile } from "./user/getFinProfile";
 export { createUser } from "./user/createUser";
 export { updateUser } from "./user/updateUser";
-export {
-  createUserMock,
-  getUserMock,
-  updateUserMock,
-} from "./user/userMockApis";
+export { createUserMock, getUserMock, updateUserMock } from "./user/userMockApis";
 
 // Account aggregator APIs
 export { useFetchFipList } from "./aa/useFetchFipList";

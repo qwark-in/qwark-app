@@ -11,7 +11,7 @@ import Animated, {
   withSequence,
   Easing,
 } from "react-native-reanimated";
-import { BodyText } from "components/ui/typography";
+import { BodyText } from "ui/display/typography";
 
 /**
  * Map of bottom tab names from app\(app)\(tabs)\_layout.tsx to test ids

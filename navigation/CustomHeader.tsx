@@ -3,9 +3,9 @@ import { FontSizeTokens, FontWeightTokens, View, XStack } from "tamagui";
 import { getHeaderTitle } from "@react-navigation/elements";
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import { useSafeAreaPadding } from "hooks/use-safearea-padding";
-import { ShadowWrapper } from "components/ui/misc";
-import { IconButton } from "components/ui/buttons";
-import { TitleText } from "components/ui/typography";
+import { ShadowWrapper } from "ui/layout/ShadowWrapper";
+import { IconButton } from "ui/controls/buttons";
+import { TitleText } from "ui/display/typography";
 
 type CustomHeaderProps = NativeStackHeaderProps & {
   size?: FontSizeTokens;
