@@ -2,10 +2,6 @@ import { useFonts } from "expo-font";
 
 export const useQwarkFonts = () => {
   const [fontsLoaded, fontsError] = useFonts({
-    // Tamagui built-ins
-    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
-    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
-
     // Custom
     BarlowRegular: require("../assets/fonts/barlow/Barlow-Regular.ttf"),
     BarlowMedium: require("../assets/fonts/barlow/Barlow-Medium.ttf"),
