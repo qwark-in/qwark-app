@@ -70,19 +70,23 @@ function RootLayoutNav() {
   const { isOnline } = useIsOnline();
   const authData = useAuthStore((store) => store.authData);
   const isLoggedIn = !!authData;
+
+  console.log("isLoggedIn: ", isLoggedIn);
+  console.log("isOnline: ", isOnline);
   return (
     <ThemeProvider value={BaseTheme}>
       <Stack screenOptions={{ headerShown: false, statusBarStyle: "dark" }}>
-        {/* <Stack.Protected guard={isLoggedIn && isOnline}> */}
-        <Stack.Screen name="(app)" />
-        {/* </Stack.Protected> */}
-        {/* <Stack.Protected guard={!isLoggedIn}> */}
-        <Stack.Screen name="(auth)" />
-        {/* </Stack.Protected> */}
+        <Stack.Protected guard={isLoggedIn && isOnline}>
+          <Stack.Screen name="(app)" />
+        </Stack.Protected>
 
-        {/* <Stack.Protected guard={!isOnline}> */}
-        <Stack.Screen name="offline" />
-        {/* </Stack.Protected> */}
+        <Stack.Protected guard={!isLoggedIn}>
+          <Stack.Screen name="(auth)" />
+        </Stack.Protected>
+
+        <Stack.Protected guard={!isOnline}>
+          <Stack.Screen name="offline" />
+        </Stack.Protected>
       </Stack>
     </ThemeProvider>
   );

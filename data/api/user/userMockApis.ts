@@ -20,7 +20,7 @@ const mockUser: GetUserResponse = {
   dob: "1997-06-15T00:00:00.000Z",
   pan: "EEJPM4774J",
   phone: "9737927175",
-  email: "harsh@example.com",
+  email: "harsh.mock@example.com",
   marital_status: "SINGLE",
   gender: "MALE",
 };

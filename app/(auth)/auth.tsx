@@ -7,12 +7,19 @@ import { AuthWelcomeCarousal } from "features/auth/components/AuthWelcomeCarousa
 import { useAuthURL } from "features/auth/hooks/use-auth-url";
 import { AuthType } from "features/auth/types";
 
+const IS_SSO_AUTH = process.env.EXPO_PUBLIC_FEATURE_SSO_AUTH === "true";
+
 export default function AuthScreen() {
   const router = useRouter();
   const { safeAreaPadding } = useSafeAreaPadding();
   const { getAuthURL } = useAuthURL();
 
   const handlePress = async (type: AuthType) => {
+    if (!IS_SSO_AUTH) {
+      router.navigate("/login");
+      return;
+    }
+
     const authURL = await getAuthURL(type);
 
     router.navigate({
