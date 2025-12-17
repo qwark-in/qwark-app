@@ -7,6 +7,8 @@ import { SplashScreen, Stack } from "expo-router";
 import { useQwarkFonts } from "hooks/use-qwark-fonts";
 import { injectWebFonts } from "config/web-fonts";
 import { Provider } from "ui/Provider";
+import { useIsOnline } from "hooks/use-is-online";
+import { useAuthStore } from "data/stores/auth-store";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -65,11 +67,22 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 };
 
 function RootLayoutNav() {
+  const { isOnline } = useIsOnline();
+  const authData = useAuthStore((store) => store.authData);
+  const isLoggedIn = !!authData;
   return (
     <ThemeProvider value={BaseTheme}>
       <Stack screenOptions={{ headerShown: false, statusBarStyle: "dark" }}>
+        {/* <Stack.Protected guard={isLoggedIn && isOnline}> */}
         <Stack.Screen name="(app)" />
+        {/* </Stack.Protected> */}
+        {/* <Stack.Protected guard={!isLoggedIn}> */}
         <Stack.Screen name="(auth)" />
+        {/* </Stack.Protected> */}
+
+        {/* <Stack.Protected guard={!isOnline}> */}
+        <Stack.Screen name="offline" />
+        {/* </Stack.Protected> */}
       </Stack>
     </ThemeProvider>
   );
