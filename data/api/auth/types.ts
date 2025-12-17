@@ -1,11 +1,5 @@
-export type TokenResponse = {
-  token: string;
-  uuid: string;
-  device: string;
-};
+import { AuthDataType } from "data/models/auth";
 
-export type DeviceResponse = {
-  token: string;
-  uuid: string;
-  device: string;
-};
+export type TokenResponse = AuthDataType;
+
+export type DeviceResponse = AuthDataType;

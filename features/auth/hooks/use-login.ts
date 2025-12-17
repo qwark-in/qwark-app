@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useRouter } from "expo-router";
 import { useToastController } from "@tamagui/toast";
 
@@ -7,23 +7,34 @@ import { exchangeToken } from "data/api/auth/token";
 import { registerDevice } from "data/api/auth/device";
 import { getFcmToken } from "features/auth/helpers/getFcmToken";
 
+const IS_SSO_ENABLED = process.env.EXPO_PUBLIC_FEATURE_SSO_AUTH === "true";
+
+const getErrorMessage = (err: unknown) => {
+  if (err instanceof Error) return err.message;
+  return "Login failed. Please try again.";
+};
+
 export const useLogin = () => {
   const toast = useToastController();
   const router = useRouter();
 
-  const codeVerifier = useAuthStore((s) => s.codeVerifier)!;
+  const codeVerifier = useAuthStore((s) => s.codeVerifier);
   const setToken = useAuthStore((s) => s.setToken);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
-  const login = async () => {
+  const login = useCallback(async () => {
+    if (isLoading) return;
+    if (!codeVerifier && IS_SSO_ENABLED) {
+      console.warn("Missing codeVerifier during login");
+      return;
+    }
+
     setIsLoading(true);
-    setIsError(false);
 
     try {
-      if (process.env.EXPO_PUBLIC_FEATURE_SSO_AUTH !== "true") {
+      if (!IS_SSO_ENABLED) {
+        // Mock login (dev / preview)
         setToken({
           token: "mock-token-123456",
           uuid: "mock-uuid-654321",
@@ -32,8 +43,7 @@ export const useLogin = () => {
         return;
       }
 
-      const tokenData = await exchangeToken(codeVerifier);
-
+      const tokenData = await exchangeToken(codeVerifier!);
       const fcmToken = await getFcmToken();
 
       const authData = await registerDevice({
@@ -42,24 +52,20 @@ export const useLogin = () => {
       });
 
       setToken(authData);
-    } catch (err: any) {
+    } catch (err) {
       console.error("Login error:", err);
 
-      setIsError(true);
-      setErrorMessage(err.message ?? "Login failed");
+      const message = getErrorMessage(err);
 
-      toast.show(err.message ?? "Login failed", { native: true });
-
+      toast.show(message, { native: true });
       router.dismissTo("/auth");
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [isLoading, codeVerifier, setToken, toast, router]);
 
   return {
     login,
     isLoading,
-    isError,
-    errorMessage,
   };
 };

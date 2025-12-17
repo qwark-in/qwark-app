@@ -3,32 +3,21 @@ import { useRouter } from "expo-router";
 import { FilledButton } from "ui/controls/buttons";
 import { BodyText } from "ui/display/typography";
 import { useSafeAreaPadding } from "hooks/use-safearea-padding";
-import { generateCodes } from "features/auth/helpers/generateCodes";
-import { getRedirectURL } from "features/auth/helpers/getRedirectURL";
 import { AuthWelcomeCarousal } from "features/auth/components/AuthWelcomeCarousal";
-import { useAuthStore } from "data/stores/auth-store";
-import { API_BASE_URL } from "data/api/auth/constants";
+import { useAuthURL } from "features/auth/hooks/use-auth-url";
+import { AuthType } from "features/auth/types";
 
 export default function AuthScreen() {
   const router = useRouter();
   const { safeAreaPadding } = useSafeAreaPadding();
-  const setCodeVerifier = useAuthStore((store) => store.setCodeVerifier);
+  const { getAuthURL } = useAuthURL();
 
-  const handlePress = async (type: "LOGIN" | "SIGNUP") => {
-    const { cc: code_challenge, cv: code_verifier } = await generateCodes();
-    setCodeVerifier(code_verifier);
-
-    const params = new URLSearchParams({
-      code_challenge: code_challenge,
-      redirect_to: getRedirectURL(),
-    });
-
-    const loginURL = new URL(
-      `${API_BASE_URL}/${type === "LOGIN" ? "login" : "sign_up"}?${params}`
-    );
+  const handlePress = async (type: AuthType) => {
+    const authURL = await getAuthURL(type);
 
     router.navigate({
       pathname: "/web-view",
+      // params: { url: authURL.href },
       params: { url: "https://qwark.in" },
     });
   };

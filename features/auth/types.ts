@@ -4,3 +4,5 @@ export type AuthCarousalDataType = {
   description: string;
   image: any;
 };
+
+export type AuthType = "LOGIN" | "SIGNUP";

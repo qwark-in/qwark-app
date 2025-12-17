@@ -2,9 +2,7 @@ import axios from "axios";
 import { API_BASE_URL } from "./constants";
 import { DeviceResponse, TokenResponse } from "./types";
 
-type RegisterDeviceParams = TokenResponse & {
-  device: string;
-};
+type RegisterDeviceParams = DeviceResponse;
 
 export const registerDevice = async ({
   token,
