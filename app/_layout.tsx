@@ -71,8 +71,8 @@ function RootLayoutNav() {
   const authData = useAuthStore((store) => store.authData);
   const isLoggedIn = !!authData;
 
-  console.log("isLoggedIn: ", isLoggedIn);
-  console.log("isOnline: ", isOnline);
+  // console.log("isLoggedIn: ", isLoggedIn);
+  // console.log("isOnline: ", isOnline);
   return (
     <ThemeProvider value={BaseTheme}>
       <Stack screenOptions={{ headerShown: false, statusBarStyle: "dark" }}>
@@ -81,7 +81,7 @@ function RootLayoutNav() {
         </Stack.Protected>
 
         <Stack.Protected guard={!isLoggedIn}>
-          <Stack.Screen name="(auth)" />
+          <Stack.Screen name="(auth)" options={{ animation: "slide_from_left" }} />
         </Stack.Protected>
 
         <Stack.Protected guard={!isOnline}>
