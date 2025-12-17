@@ -31,14 +31,10 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
   console.log("⦿ Building app for environment: ", process.env.APP_VARIANT);
   // console.debug('config =', config);
 
-  const { name, androidPackageName, icon, adaptiveIcon, scheme } =
-    getDynamicAppConfig(
-      (process.env.APP_VARIANT as
-        | "development"
-        | "preview"
-        | "production"
-        | "storybook") || "development"
-    );
+  const { name, androidPackageName, icon, adaptiveIcon, scheme } = getDynamicAppConfig(
+    (process.env.APP_VARIANT as "development" | "preview" | "production" | "storybook") ||
+      "development"
+  );
 
   return {
     ...config,
@@ -48,11 +44,7 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
     scheme: scheme,
     android: {
       ...config.android,
-      permissions: [
-        ...(config.android?.permissions ?? []),
-        "READ_SMS",
-        "RECEIVE_SMS",
-      ],
+      permissions: [...(config.android?.permissions ?? []), "READ_SMS", "RECEIVE_SMS"],
       package: androidPackageName,
       intentFilters: [
         {
@@ -84,6 +76,7 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
         foregroundImage: adaptiveIcon,
       },
       googleServicesFile: "./google-services.json",
+      newArchEnabled: true,
     },
     plugins: [
       "expo-router",
@@ -113,7 +106,6 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
         {
           android: {
             usesCleartextTraffic: process.env.APP_VARIANT === "preview",
-            newArchEnabled: true,
           },
         },
       ],
@@ -166,7 +158,7 @@ const getDynamicAppConfig = (
   // also, by default
   return {
     name: `${APP_NAME} (Dev)`,
-    androidPackageName: `${PACKAGE_NAME}.dev` + "new", //TODO: Remove new after transition is done.
+    androidPackageName: `${PACKAGE_NAME}.dev`,
     icon: `${ICON}__dev.png`,
     adaptiveIcon: `${ADAPTIVE_ICON}__dev.png`,
     scheme: `${SCHEME}-dev`,
