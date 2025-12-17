@@ -1,18 +1,18 @@
 import { View } from "tamagui";
-import { FilledButton } from "ui/controls/buttons";
-import { useSafeAreaPadding } from "hooks/use-safearea-padding";
-import { BodyText } from "ui/display/typography";
-import { generateCodes } from "features/auth/helpers/generateCodes";
-import { useAuthStore } from "data/stores/auth-store";
 import { useRouter } from "expo-router";
+import { FilledButton } from "ui/controls/buttons";
+import { BodyText } from "ui/display/typography";
+import { useSafeAreaPadding } from "hooks/use-safearea-padding";
+import { generateCodes } from "features/auth/helpers/generateCodes";
 import { getRedirectURL } from "features/auth/helpers/getRedirectURL";
-import { API_BASE_URL } from "data/api/auth/constants";
 import { AuthWelcomeCarousal } from "features/auth/components/AuthWelcomeCarousal";
+import { useAuthStore } from "data/stores/auth-store";
+import { API_BASE_URL } from "data/api/auth/constants";
 
 export default function AuthScreen() {
+  const router = useRouter();
   const { safeAreaPadding } = useSafeAreaPadding();
   const setCodeVerifier = useAuthStore((store) => store.setCodeVerifier);
-  const router = useRouter();
 
   const handlePress = async (type: "LOGIN" | "SIGNUP") => {
     const { cc: code_challenge, cv: code_verifier } = await generateCodes();

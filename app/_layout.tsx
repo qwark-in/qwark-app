@@ -18,6 +18,14 @@ export const unstable_settings = {
   initialRouteName: "index",
 };
 
+const BaseTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: "#FFF", // For setting default background color for all screens
+  },
+};
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -57,14 +65,6 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 };
 
 function RootLayoutNav() {
-  const BaseTheme = {
-    ...DefaultTheme,
-    colors: {
-      ...DefaultTheme.colors,
-      background: "#FFF", // For setting default background color for all screens
-    },
-  };
-
   return (
     <ThemeProvider value={BaseTheme}>
       <Stack screenOptions={{ headerShown: false, statusBarStyle: "dark" }}>
