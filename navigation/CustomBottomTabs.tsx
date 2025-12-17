@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Dimensions, Pressable } from "react-native";
-import { View } from "tamagui";
+import { Pressable } from "react-native";
+import { useWindowDimensions, View } from "tamagui";
 import * as Haptics from "expo-haptics";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
@@ -10,6 +10,7 @@ import Animated, {
   withTiming,
   withSequence,
   Easing,
+  useDerivedValue,
 } from "react-native-reanimated";
 import { BodyText } from "ui/display/typography";
 
@@ -24,15 +25,16 @@ const BottomTabsTestIdsMap = {
 
 interface CustomBottomTabsProps extends BottomTabBarProps {}
 
-const width = Dimensions.get("window").width;
-
 export const CustomBottomTabs: React.FC<CustomBottomTabsProps> = ({
   state,
   descriptors,
   navigation,
 }) => {
-  const TAB_WIDTH = width / state.routes.length;
+  const { width } = useWindowDimensions();
   const translateX = useSharedValue(0);
+  const containerWidth = useSharedValue(0);
+
+  const TAB_WIDTH = width / state.routes.length;
 
   useEffect(() => {
     translateX.value = withTiming(state.index * TAB_WIDTH, {
@@ -42,11 +44,23 @@ export const CustomBottomTabs: React.FC<CustomBottomTabsProps> = ({
   }, [state.index]);
 
   const tabIndicatorStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: translateX.value }],
+    transform: [
+      {
+        translateX: translateX.value,
+      },
+    ],
   }));
 
   return (
-    <View fd="row" bg="#FFF" elevationAndroid={20}>
+    <View
+      fd="row"
+      bg="#FFF"
+      bw={1}
+      boc="#E7E7E7"
+      onLayout={(e) => {
+        containerWidth.value = e.nativeEvent.layout.width;
+      }}
+    >
       <View ai="center" pos="absolute" w={TAB_WIDTH} h={"100%"}>
         <Animated.View
           style={[
@@ -69,7 +83,7 @@ export const CustomBottomTabs: React.FC<CustomBottomTabsProps> = ({
         const isFocused = state.index === index;
 
         return (
-          <View key={route.key} f={1}>
+          <View key={route.key} w={TAB_WIDTH}>
             <Pressable
               onPress={() => {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);

@@ -68,7 +68,7 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={BaseTheme}>
       <Stack screenOptions={{ headerShown: false, statusBarStyle: "dark" }}>
-        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(app)" />
         <Stack.Screen name="(auth)" />
       </Stack>
     </ThemeProvider>
