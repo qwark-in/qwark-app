@@ -6,6 +6,8 @@ import {
   EyeVisible,
   Check,
   XmarkCircle,
+  Filter,
+  Plus,
 } from "./glyphs";
 
 export const iconRegistry = {
@@ -15,6 +17,8 @@ export const iconRegistry = {
   "eye-hidden": EyeHidden,
   "eye-visible": EyeVisible,
   check: Check,
+  filter: Filter,
+  plus: Plus,
   "xmark-circle": XmarkCircle,
 };
 

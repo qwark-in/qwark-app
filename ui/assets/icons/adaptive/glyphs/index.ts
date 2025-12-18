@@ -4,4 +4,6 @@ export { default as Calendar } from "./Calendar";
 export { default as Check } from "./Check";
 export { default as EyeHidden } from "./EyeHidden";
 export { default as EyeVisible } from "./EyeVisible";
+export { default as Filter } from "./Filter";
+export { default as Plus } from "./Plus";
 export { default as XmarkCircle } from "./XmarkCircle";

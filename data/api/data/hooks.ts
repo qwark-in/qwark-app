@@ -6,9 +6,7 @@ import { DashboardState } from "data/models/dashboard";
 import { MarketState } from "data/models/market";
 import { useMarketStore } from "data/stores/market-store";
 
-const getDashboardDataFetcher = async (
-  url: string
-): Promise<DashboardState> => {
+const getDashboardDataFetcher = async (url: string): Promise<DashboardState> => {
   const response = await axios.get(url);
   return response.data;
 };

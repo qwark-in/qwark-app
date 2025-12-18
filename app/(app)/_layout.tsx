@@ -7,6 +7,7 @@ export default function AppLayout() {
   return (
     <Stack screenOptions={{ ...screenOptions, headerShown: false }}>
       <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="investments" />
     </Stack>
   );
 }
