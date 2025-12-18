@@ -5,6 +5,9 @@ import { useDashboardStore } from "data/stores/dashboard-store";
 import { DashboardState } from "data/models/dashboard";
 import { MarketState } from "data/models/market";
 import { useMarketStore } from "data/stores/market-store";
+import { mockMarketData } from "./mockData";
+
+const IS_MOCK_DATA_API = process.env.EXPO_PUBLIC_FEATURE_MOCK_DATA_API === "true";
 
 const getDashboardDataFetcher = async (url: string): Promise<DashboardState> => {
   const response = await axios.get(url);
@@ -43,13 +46,25 @@ const getMarketDataFetcher = async (url: string): Promise<MarketState> => {
   return response.data;
 };
 
+export const getMockMarketDataFetcher = async (_url: string): Promise<MarketState> => {
+  const response = {
+    data: mockMarketData,
+    status: 200,
+    statusText: "OK",
+  };
+
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(response.data), 500);
+  });
+};
+
 export const useGetMarketData = () => {
   const setEqHoldings = useMarketStore((store) => store.setEqHoldings);
   const setMfHoldings = useMarketStore((store) => store.setMfHoldings);
 
   const { data, error, isLoading, isValidating, mutate } = useSWR(
     `${BASE_URL}/market`,
-    getMarketDataFetcher,
+    IS_MOCK_DATA_API ? getMockMarketDataFetcher : getMarketDataFetcher,
     {
       onSuccess: (data) => {
         if (data.eqHoldings) {

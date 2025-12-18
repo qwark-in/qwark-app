@@ -1,0 +1,263 @@
+import { MarketState } from "data/models/market";
+
+export const mockMarketData: MarketState = {
+  eqHoldings: {
+    currentValue: 725000,
+    curretValueChartData: [
+      {
+        date: "2025-06-01",
+        value: 650000,
+      },
+      {
+        date: "2025-07-01",
+        value: 660000,
+      },
+      {
+        date: "2025-08-01",
+        value: 675000,
+      },
+      {
+        date: "2025-09-01",
+        value: 700000,
+      },
+      {
+        date: "2025-10-01",
+        value: 708000,
+      },
+      {
+        date: "2025-11-01",
+        value: 725000,
+      },
+    ],
+    holdingsData: [
+      {
+        cagr: 15.2,
+        companyName: "TCS",
+        currentValue: 195000,
+        investedValue: 150000,
+        lastTradedPrice: 3900,
+        monthlyReturn: {
+          percentage: 1.8,
+          value: 3500,
+        },
+        qty: 50,
+        transactions: [
+          {
+            exchange: "NSE",
+            price: 2800,
+            qty: 30,
+            tnxDateString: "2024-12-15",
+            tnxType: "BUY",
+          },
+          {
+            exchange: "NSE",
+            price: 3000,
+            qty: 20,
+            tnxDateString: "2025-03-10",
+            tnxType: "BUY",
+          },
+        ],
+      },
+      {
+        cagr: 9.1,
+        companyName: "HDFC Bank",
+        currentValue: 210000,
+        investedValue: 180000,
+        lastTradedPrice: 1750,
+        monthlyReturn: {
+          percentage: 2.2,
+          value: 4500,
+        },
+        qty: 120,
+        transactions: [
+          {
+            exchange: "BSE",
+            price: 1500,
+            qty: 100,
+            tnxDateString: "2024-09-01",
+            tnxType: "BUY",
+          },
+          {
+            exchange: "BSE",
+            price: 1800,
+            qty: 20,
+            tnxDateString: "2025-06-20",
+            tnxType: "BUY",
+          },
+        ],
+      },
+      {
+        cagr: 11.6,
+        companyName: "Reliance Industries",
+        currentValue: 320000,
+        investedValue: 270000,
+        lastTradedPrice: 8000,
+        monthlyReturn: {
+          percentage: 2.9,
+          value: 8000,
+        },
+        qty: 40,
+        transactions: [
+          {
+            exchange: "NSE",
+            price: 6750,
+            qty: 40,
+            tnxDateString: "2024-05-18",
+            tnxType: "BUY",
+          },
+          {
+            exchange: "NSE",
+            price: 8200,
+            qty: 10,
+            tnxDateString: "2025-09-02",
+            tnxType: "SELL",
+          },
+        ],
+      },
+    ],
+    investedValue: 600000,
+    lifetimeReturn: {
+      percentage: 20.83,
+      value: 125000,
+    },
+    monthlyReturn: {
+      percentage: 2.4,
+      value: 17000,
+    },
+  },
+  mfHoldings: {
+    currentValue: 520000,
+    curretValueChartData: [
+      {
+        date: "2025-06-01",
+        value: 480000,
+      },
+      {
+        date: "2025-07-01",
+        value: 490000,
+      },
+      {
+        date: "2025-08-01",
+        value: 500000,
+      },
+      {
+        date: "2025-09-01",
+        value: 505000,
+      },
+      {
+        date: "2025-10-01",
+        value: 512000,
+      },
+      {
+        date: "2025-11-01",
+        value: 520000,
+      },
+    ],
+    holdingsData: [
+      {
+        currentValue: 210000,
+        investedValue: 190000,
+        lifetimeReturn: {
+          percentage: 10.53,
+          value: 20000,
+        },
+        mfName: "Parag Parikh Flexi Cap",
+        nav: 246.85,
+        schemePlan: "DIRECT",
+        schemeType: "EQUITY_SCHEMES",
+        transactions: [
+          {
+            mfName: "Parag Parikh Flexi Cap",
+            movementType: "SIP",
+            transactionDate: "2025-01-05",
+            units: 20.5,
+            value: 5000,
+          },
+          {
+            mfName: "Parag Parikh Flexi Cap",
+            movementType: "ONE_TIME",
+            transactionDate: "2025-03-15",
+            units: 90.1,
+            value: 20000,
+          },
+          {
+            mfName: "Parag Parikh Flexi Cap",
+            movementType: "REDEEM",
+            transactionDate: "2025-08-01",
+            units: -40.5,
+            value: -10000,
+          },
+        ],
+        units: 850.75,
+        xirr: 13.5,
+      },
+      {
+        currentValue: 310000,
+        investedValue: 290000,
+        lifetimeReturn: {
+          percentage: 6.9,
+          value: 20000,
+        },
+        mfName: "HDFC Short Term Debt",
+        nav: 20.6,
+        schemePlan: "REGULAR",
+        schemeType: "DEBT_SCHEMES",
+        transactions: [
+          {
+            mfName: "HDFC Short Term Debt",
+            movementType: "SIP",
+            transactionDate: "2025-02-10",
+            units: 145.6,
+            value: 3000,
+          },
+          {
+            mfName: "HDFC Short Term Debt",
+            movementType: "ONE_TIME",
+            transactionDate: "2025-04-22",
+            units: 12500,
+            value: 250000,
+          },
+        ],
+        units: 1500,
+        xirr: 9.8,
+      },
+    ],
+    investedValue: 480000,
+    lifetimeReturn: {
+      percentage: 8.33,
+      value: 40000,
+    },
+    monthlyReturn: {
+      percentage: 1.7,
+      value: 8500,
+    },
+    sipData: [
+      {
+        folioNumber: "123456/78",
+        frequency: "MONTHLY",
+        mfCategory: "DIRECT",
+        mfName: "Nippon India Nifty 50",
+        mfSchemeOption: "GROWTH",
+        nextDueDate: "2025-12-05",
+        sipRefNumber: "SIP-987654",
+        sipValue: 5000,
+        startDate: "2023-12-05",
+        totalInvestment: 120000,
+      },
+      {
+        folioNumber: "654321/09",
+        frequency: "MONTHLY",
+        mfCategory: "REGULAR",
+        mfName: "HDFC Balanced Advantage",
+        mfSchemeOption: "REINVEST",
+        nextDueDate: "2025-12-10",
+        sipRefNumber: "SIP-135790",
+        sipValue: 3000,
+        startDate: "2024-06-10",
+        totalInvestment: 54000,
+      },
+    ],
+    xirr: 12.4,
+  },
+  fdHoldings: null,
+};
