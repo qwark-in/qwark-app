@@ -3,6 +3,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { AuthState, AuthActions } from "data/models/auth";
 import { zustandStorage } from "./helpers/storage";
+import { Platform } from "react-native";
 
 export const useAuthStore = create<AuthState & AuthActions>()(
   immer(
@@ -35,9 +36,18 @@ export const useAuthStore = create<AuthState & AuthActions>()(
       }),
       {
         name: "auth-storage",
-        partialize: (state) => ({
-          authData: state.authData,
-        }),
+        partialize: (state) => {
+          if (Platform.OS === "web") {
+            return {
+              authData: state.authData,
+              codeVerifier: state.codeVerifier,
+            };
+          } else {
+            return {
+              authData: state.authData,
+            };
+          }
+        },
         //TODO: switch to SecureStorage after testing
         storage: createJSONStorage(() => zustandStorage),
         onRehydrateStorage: (state) => {

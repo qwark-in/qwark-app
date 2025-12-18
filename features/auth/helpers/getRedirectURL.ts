@@ -12,8 +12,11 @@ export const getRedirectURL = (route: Route) => {
       return `${scheme}:/${route}`;
     case "ios":
       return IOS_REDIRECT_URL;
-    case "web":
-      return WEB_REDIRECT_URL;
+    case "web": {
+      const origin = window.location.origin;
+      return `${origin}/${route}`;
+    }
+
     default:
       console.error(
         "Qwark app getting installed on an unsupported platform, something is wrong."

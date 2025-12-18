@@ -22,9 +22,7 @@ export const useCheckAuthSession = () => {
         }
         console.log("Check session -> Status:", response.status);
       } catch (err) {
-        toast.show(err.message, {
-          native: true,
-        });
+        toast.show(err.message);
         setToken(null);
       }
     })();

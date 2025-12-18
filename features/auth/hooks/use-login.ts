@@ -6,6 +6,7 @@ import { useAuthStore } from "data/stores/auth-store";
 import { exchangeToken } from "data/api/auth/token";
 import { registerDevice } from "data/api/auth/device";
 import { getFcmToken } from "features/auth/helpers/getFcmToken";
+import { Platform } from "react-native";
 
 const IS_SSO_ENABLED = process.env.EXPO_PUBLIC_FEATURE_SSO_AUTH === "true";
 
@@ -19,6 +20,7 @@ export const useLogin = () => {
   const router = useRouter();
 
   const codeVerifier = useAuthStore((s) => s.codeVerifier);
+  const setCodeVerifier = useAuthStore((s) => s.setCodeVerifier);
   const setToken = useAuthStore((s) => s.setToken);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -44,6 +46,15 @@ export const useLogin = () => {
       }
 
       const tokenData = await exchangeToken(codeVerifier!);
+
+      if (Platform.OS === "web") {
+        // On web, we skip device registration for now
+        setToken(tokenData);
+        setCodeVerifier(null);
+
+        return;
+      }
+
       const fcmToken = await getFcmToken();
 
       const authData = await registerDevice({
@@ -52,12 +63,13 @@ export const useLogin = () => {
       });
 
       setToken(authData);
+      setCodeVerifier(null);
     } catch (err) {
       console.error("Login error:", err);
 
       const message = getErrorMessage(err);
 
-      toast.show(message, { native: true });
+      toast.show(message);
       router.dismissTo("/auth");
     } finally {
       setIsLoading(false);
