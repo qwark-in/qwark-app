@@ -1,24 +1,39 @@
+import { logout } from "data/api/auth";
 import {
   ArrowLeft,
   Bell,
+  Biometrics,
+  BankLogoPlaceholder,
   Calendar,
+  ChevronRight,
+  Check,
+  ConnectedAccounts,
   EyeHidden,
   EyeVisible,
-  Check,
+  Logout,
   XmarkCircle,
   Filter,
   Plus,
+  ProfileIcon,
+  Settings,
 } from "./glyphs";
 
 export const iconRegistry = {
   "arrow-left": ArrowLeft,
   bell: Bell,
+  biometrics: Biometrics,
+  "bank-logo-placeholder": BankLogoPlaceholder,
   calendar: Calendar,
+  check: Check,
+  "chevron-right": ChevronRight,
+  "connected-accounts": ConnectedAccounts,
   "eye-hidden": EyeHidden,
   "eye-visible": EyeVisible,
-  check: Check,
+  logout: Logout,
   filter: Filter,
   plus: Plus,
+  profile: ProfileIcon,
+  settings: Settings,
   "xmark-circle": XmarkCircle,
 };
 

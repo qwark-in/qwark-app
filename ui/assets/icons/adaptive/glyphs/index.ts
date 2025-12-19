@@ -1,9 +1,16 @@
 export { default as ArrowLeft } from "./ArrowLeft";
+export { default as BankLogoPlaceholder } from "./BankLogoPlaceholder";
 export { default as Bell } from "./Bell";
+export { default as Biometrics } from "./Biometrics";
 export { default as Calendar } from "./Calendar";
 export { default as Check } from "./Check";
+export { default as ChevronRight } from "./ChevronRight";
+export { default as ConnectedAccounts } from "./ConnectedAccounts";
 export { default as EyeHidden } from "./EyeHidden";
 export { default as EyeVisible } from "./EyeVisible";
 export { default as Filter } from "./Filter";
+export { default as Logout } from "./Logout";
 export { default as Plus } from "./Plus";
+export { default as ProfileIcon } from "./ProfileIcon";
+export { default as Settings } from "./Settings";
 export { default as XmarkCircle } from "./XmarkCircle";
