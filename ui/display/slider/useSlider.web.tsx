@@ -1,12 +1,15 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Animated,
   FlatList,
   NativeScrollEvent,
   NativeSyntheticEvent,
   Platform,
+  Dimensions,
   ViewToken,
 } from "react-native";
+
+const { width } = Dimensions.get("window");
 
 /**
  * A custom hook that provides utility logic for implementing a horizontal slider using FlatList.
@@ -36,14 +39,7 @@ export const useSlider = ({ numberOfPages }: { numberOfPages: number }) => {
    * Used to update `currentIndex`.
    */
 
-  const viewableItemsChanged =
-    Platform.OS === "web"
-      ? undefined
-      : useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
-          if (!viewableItems?.length) return;
-          const index = viewableItems[0]?.index;
-          if (index != null) setCurrentIndex(index);
-        }).current;
+  const viewableItemsChanged = undefined;
 
   /**
    * Configuration for viewability detection in FlatList.
@@ -58,37 +54,36 @@ export const useSlider = ({ numberOfPages }: { numberOfPages: number }) => {
    * @param event - The native scroll event from FlatList.
    */
   const handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    Animated.event(
-      [
-        {
-          nativeEvent: {
-            contentOffset: {
-              x: scrollX,
-            },
-          },
-        },
-      ],
-      {
-        useNativeDriver: false, // use true if scrollX is used with native animations
-      }
-    )(event);
-  };
+    const x = event.nativeEvent.contentOffset.x;
 
-  /**
-   * Scrolls the FlatList to the next item, if not at the end.
-   */
-  const scrollToNext = () => {
-    if (currentIndex < numberOfPages - 1) {
-      slidesRef.current?.scrollToIndex({ index: currentIndex + 1 });
+    scrollX.setValue(x);
+
+    console.log(x);
+
+    const index = Math.round(x / width);
+    if (index !== currentIndex) {
+      setCurrentIndex(index);
     }
   };
 
-  /**
-   * Scrolls the FlatList to the previous item, if not at the beginning.
-   */
+  const SLIDER_PADDING = 20 * 2;
+  const ITEM_WIDTH = width - SLIDER_PADDING;
+
+  const scrollToNext = () => {
+    if (currentIndex < numberOfPages - 1) {
+      slidesRef.current?.scrollToOffset({
+        offset: (currentIndex + 1) * ITEM_WIDTH,
+        animated: true,
+      });
+    }
+  };
+
   const scrollToPrevious = () => {
     if (currentIndex > 0) {
-      slidesRef.current?.scrollToIndex({ index: currentIndex - 1 });
+      slidesRef.current?.scrollToOffset({
+        offset: (currentIndex - 1) * ITEM_WIDTH,
+        animated: true,
+      });
     }
   };
 
@@ -97,11 +92,18 @@ export const useSlider = ({ numberOfPages }: { numberOfPages: number }) => {
    *
    * @param index - The target index to scroll to.
    */
-  const scrollToIndex = (index: number) => {
-    if (index >= 0 && index < numberOfPages) {
-      slidesRef.current?.scrollToIndex({ index });
-    }
+  const scrollToStart = () => {
+    slidesRef.current?.scrollToOffset({
+      offset: 0,
+      animated: false,
+    });
   };
+
+  useEffect(() => {
+    scrollToStart();
+  }, []);
+
+  console.log("Current Index", currentIndex);
 
   return {
     currentIndex,
@@ -110,7 +112,6 @@ export const useSlider = ({ numberOfPages }: { numberOfPages: number }) => {
     viewConfig,
     viewableItemsChanged,
     handleOnScroll,
-    scrollToIndex,
     scrollToNext,
     scrollToPrevious,
   };
