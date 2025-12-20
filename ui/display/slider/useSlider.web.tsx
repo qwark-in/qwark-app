@@ -88,7 +88,7 @@ export const useSlider = ({ numberOfPages }: { numberOfPages: number }) => {
   };
 
   /**
-   * Scrolls the FlatList to a specific index if within range.
+   * Scrolls the FlatList to a start the slider.
    *
    * @param index - The target index to scroll to.
    */

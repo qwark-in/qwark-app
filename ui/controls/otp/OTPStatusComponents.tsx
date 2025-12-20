@@ -16,8 +16,8 @@ export const OTPVerifying = () => {
 
 export const OTPVerified = () => {
   return (
-    <XStack mt="$6" gap="$2">
-      <Success size={32} />
+    <XStack mt="$6" gap="$2" ai="center">
+      <Success size={24} />
       <BodyText color="#198038">Verified successfully</BodyText>
     </XStack>
   );
