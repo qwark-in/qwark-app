@@ -3,7 +3,7 @@ import { Spinner, XStack } from "tamagui";
 import { BodyText } from "ui/display/typography";
 import { useToastController } from "@tamagui/toast";
 import { OTPCountdownTimer } from "./OTPCountdownTimer";
-import { Success } from "ui/assets/icons/fixed-color/glyphs";
+import { Success } from "ui/assets/icons/fixed-color";
 
 export const OTPVerifying = () => {
   return (
