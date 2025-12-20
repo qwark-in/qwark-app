@@ -19,7 +19,7 @@ export const BanksTab: React.FC<BanksTabProps> = () => {
   const totalBankAccounts = banks.reduce((acc, curr) => acc + curr.accounts.length, 0);
 
   return (
-    <View>
+    <>
       <View px="$5" pb="$1">
         <BodyText>{totalBankAccounts} bank accounts discovered</BodyText>
       </View>
@@ -40,6 +40,6 @@ export const BanksTab: React.FC<BanksTabProps> = () => {
         </XStack>
         <FindOutWhyBottomSheet ref={bottomSheetModalRef} />
       </ScrollView>
-    </View>
+    </>
   );
 };

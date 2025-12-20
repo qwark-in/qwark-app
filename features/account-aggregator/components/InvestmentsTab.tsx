@@ -21,7 +21,7 @@ export const InvestmentsTab: React.FC<InvestmentsTabProps> = () => {
   );
 
   return (
-    <View>
+    <>
       <View px="$5" pb="$1">
         <BodyText>{totalInvestmentAccounts} accounts discovered</BodyText>
       </View>
@@ -44,6 +44,6 @@ export const InvestmentsTab: React.FC<InvestmentsTabProps> = () => {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </>
   );
 };
