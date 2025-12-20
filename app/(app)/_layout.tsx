@@ -6,8 +6,11 @@ export default function AppLayout() {
   useCheckAuthSession();
   return (
     <Stack screenOptions={{ ...screenOptions, headerShown: false }}>
+      <Stack.Screen name="index" />
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="investments" />
+      <Stack.Screen name="profile" />
+      <Stack.Screen name="personal-details" />
     </Stack>
   );
 }

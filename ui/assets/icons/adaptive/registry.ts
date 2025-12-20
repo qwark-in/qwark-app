@@ -16,6 +16,7 @@ import {
   Plus,
   ProfileIcon,
   Settings,
+  Shield,
 } from "./glyphs";
 
 export const iconRegistry = {
@@ -34,6 +35,7 @@ export const iconRegistry = {
   plus: Plus,
   profile: ProfileIcon,
   settings: Settings,
+  shield: Shield,
   "xmark-circle": XmarkCircle,
 };
 

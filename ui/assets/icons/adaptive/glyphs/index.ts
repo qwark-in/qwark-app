@@ -13,4 +13,5 @@ export { default as Logout } from "./Logout";
 export { default as Plus } from "./Plus";
 export { default as ProfileIcon } from "./ProfileIcon";
 export { default as Settings } from "./Settings";
+export { default as Shield } from "./Shield";
 export { default as XmarkCircle } from "./XmarkCircle";

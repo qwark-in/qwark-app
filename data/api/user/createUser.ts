@@ -2,12 +2,30 @@ import axios, { AxiosError } from "axios";
 import { BASE_URL } from "./constants";
 import { CreateUserQueryBody, CreateUserResponse } from "./types";
 import { AuthDataType } from "data/models/auth";
+import { createUserMock } from "./userMockApis";
 
-export const createUser = async (
-  data: CreateUserQueryBody,
-  authData: AuthDataType
-) => {
+const IS_MOCK_USER_API = process.env.EXPO_PUBLIC_FEATURE_MOCK_USER_API === "true";
+
+export const createUser = async (data: CreateUserQueryBody, authData: AuthDataType) => {
   try {
+    if (IS_MOCK_USER_API) {
+      console.log("🧪 Mock Create User API");
+
+      const { data: mockData } = await createUserMock(data, authData);
+
+      const response = {
+        data: mockData,
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config: {},
+      };
+
+      console.log("✅ Create Mock User Response status:", response.status);
+
+      return response;
+    }
+
     const response = await axios.post<CreateUserResponse>(`${BASE_URL}`, data, {
       headers: {
         Token: JSON.stringify(authData),
@@ -27,9 +45,7 @@ export const createUser = async (
 
       throw new Error(
         `Create user failed: ${
-          error.response?.data?.message ||
-          error.response?.statusText ||
-          error.message
+          error.response?.data?.message || error.response?.statusText || error.message
         }`
       );
     } else {

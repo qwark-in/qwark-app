@@ -2,10 +2,38 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { FIN_PROFILE_BASE_URL } from "./constants";
 import { GetFinProfileResponse } from "./types";
 import { AuthDataType } from "data/models/auth";
+import { mockFinProfileData } from "./mockData";
 
-export const getFinProfile = async (authData: AuthDataType) => {
+const IS_MOCK_FIN_PROFILE_API =
+  process.env.EXPO_PUBLIC_FEATURE_MOCK_FIN_PROFILE_API === "true";
+
+export const getFinProfileMock = (): Promise<GetFinProfileResponse> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(mockFinProfileData);
+    }, 500);
+  });
+};
+
+export const getFinProfile = async (
+  authData: AuthDataType
+): Promise<AxiosResponse<GetFinProfileResponse>> => {
   try {
-    const response = await axios.get<GetFinProfileResponse>(`${FIN_PROFILE_BASE_URL}`, {
+    if (IS_MOCK_FIN_PROFILE_API) {
+      console.log("🧪 Mock Get Fin Profile API");
+
+      const mockData = await getFinProfileMock();
+
+      return {
+        data: mockData,
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config: {} as any,
+      };
+    }
+
+    const response = await axios.get<GetFinProfileResponse>(FIN_PROFILE_BASE_URL, {
       headers: {
         Token: JSON.stringify(authData),
       },
@@ -27,9 +55,9 @@ export const getFinProfile = async (authData: AuthDataType) => {
           error.response?.data?.message || error.response?.statusText || error.message
         }`
       );
-    } else {
-      console.error("❌ Unexpected Error:", err);
-      throw new Error("An unexpected error occurred while fetching the fin profile.");
     }
+
+    console.error("❌ Unexpected Error:", err);
+    throw new Error("An unexpected error occurred while fetching the fin profile.");
   }
 };
