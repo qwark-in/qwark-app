@@ -63,6 +63,7 @@ export const MobileNumberInput: React.FC<MobileNumberInputProps> = ({
               bbw="$px"
               bbc={error ? "$stroke/error" : "$warmgray/40"}
               disabled
+              width={33} // This is done because it breaks on web if not explicitly given
             />
             <Input
               testID="mobile-input"
