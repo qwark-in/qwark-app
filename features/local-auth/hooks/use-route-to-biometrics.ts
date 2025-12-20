@@ -1,7 +1,12 @@
 import { useRouter } from "expo-router";
 import { useEffect, useRef } from "react";
-import { AppState, AppStateStatus } from "react-native";
+import { AppState, AppStateStatus, Platform } from "react-native";
 import { useSettigsStore } from "data/stores/settings-store";
+
+/**
+ * Routes to biometric auth when app returns from background.
+ * No-op on web.
+ */
 
 export const useRouteToBiometrics = () => {
   const lastBackgroundTime = useRef<number | null>(null);
@@ -9,6 +14,10 @@ export const useRouteToBiometrics = () => {
   const router = useRouter();
 
   useEffect(() => {
+    // Ignore completely on web
+    if (Platform.OS === "web") {
+      return;
+    }
     const handleAppStateChange = (nextAppState: AppStateStatus) => {
       if (nextAppState === "background") {
         lastBackgroundTime.current = Date.now(); // Save timestamp when app goes to background

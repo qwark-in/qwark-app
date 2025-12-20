@@ -10,6 +10,7 @@ import { Provider } from "ui/Provider";
 import { useIsOnline } from "hooks/use-is-online";
 import { useAuthStore } from "data/stores/auth-store";
 import { useRequestSmsPermissions } from "features/profile/profile-settings/hooks";
+import { useRouteToBiometrics } from "features/local-auth/hooks/use-route-to-biometrics";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -73,6 +74,7 @@ function RootLayoutNav() {
   const isLoggedIn = !!authData;
 
   useRequestSmsPermissions();
+  useRouteToBiometrics();
 
   // console.log("isLoggedIn: ", isLoggedIn);
   // console.log("isOnline: ", isOnline);
