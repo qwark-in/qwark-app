@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
-import { NativeSyntheticEvent, TargetedEvent, TextInput } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { NativeSyntheticEvent, Platform, TargetedEvent, TextInput } from "react-native";
 import { View, Input } from "tamagui";
-import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 import { OTP_MAX_LENGTH } from "./constants";
 import { renderOTPStatus } from "./renderOTPStatus";
 import { BodyText } from "ui/display/typography";
@@ -27,69 +26,68 @@ export const OTPInput: React.FC<OTPInputProps> = ({
   isActive = true,
   variant = "default",
 }) => {
-  const InputComponent = variant === "bottom-sheet" ? BottomSheetTextInput : Input;
-  const inputsRef = useRef<Array<TextInput | null>>([]);
+  /**
+   * One stable ref per digit input
+   */
+  const inputRefs = useRef<Array<TextInput | null>>(
+    Array.from({ length: OTP_MAX_LENGTH }, () => null)
+  );
 
+  /**
+   * Derive active index from current code length
+   */
+  const activeIndex = Math.min(code.length, OTP_MAX_LENGTH - 1);
+
+  /**
+   * Centralized focus logic (web-safe)
+   */
+  useEffect(() => {
+    if (!isActive || isSubmitting || isSuccess) return;
+    inputRefs.current[activeIndex]?.focus();
+  }, [activeIndex, isActive, isSubmitting, isSuccess]);
+
+  /**
+   * Handle digit entry / paste
+   */
   const handleDigitChange = (text: string, index: number) => {
-    if (code.length === OTP_MAX_LENGTH) {
+    // Allow digits only
+    if (!/^\d*$/.test(text)) return;
+
+    // Full OTP paste
+    if (text.length > 1) {
+      handleCode(text.slice(0, OTP_MAX_LENGTH));
       return;
     }
 
-    // Pasted full OTP case
-    if (text.length > 1 && /^\d+$/.test(text)) {
-      const digits = text.slice(0, OTP_MAX_LENGTH).split("");
-      handleCode(digits.join(""));
-
-      // Focus the last filled input
-      const nextIndex = Math.min(digits.length, OTP_MAX_LENGTH) - 1;
-      inputsRef.current[nextIndex]?.focus();
-      return;
-    }
-
-    // Regular single-digit entry
-    if (!/^\d?$/.test(text)) return;
-
-    const newCode = code.split("");
-    newCode[index] = text;
-    handleCode(newCode.join(""));
-
-    // Focus next input only if input was added
-    if (text && index < OTP_MAX_LENGTH - 1) {
-      inputsRef.current[index + 1]?.focus();
-    }
+    const next = code.split("");
+    next[index] = text;
+    handleCode(next.join(""));
   };
 
+  /**
+   * Handle backspace behavior
+   */
   const handleKeyPress = (e: any, index: number) => {
-    const isBackspace = e.nativeEvent.key === "Backspace";
+    if (e.nativeEvent.key !== "Backspace") return;
 
-    if (isBackspace) {
-      const currentChar = code[index];
-      const newCode = code.split("");
+    const next = code.split("");
 
-      if (currentChar) {
-        // Clear current character first (no jump)
-        newCode[index] = "";
-        handleCode(newCode.join(""));
-      } else if (index > 0) {
-        // Move back if already empty
-        newCode[index - 1] = "";
-        handleCode(newCode.join(""));
-        inputsRef.current[index - 1]?.focus();
-      }
+    if (next[index]) {
+      next[index] = "";
+    } else if (index > 0) {
+      next[index - 1] = "";
     }
+
+    handleCode(next.join(""));
   };
 
+  /**
+   * Prevent focusing out-of-order inputs
+   */
   const handleFocusChange = (e: NativeSyntheticEvent<TargetedEvent>, index: number) => {
-    e.preventDefault();
-    const activeIndex = code.length;
-
-    if (activeIndex === OTP_MAX_LENGTH) {
-      inputsRef.current[activeIndex - 1]?.focus();
-      return;
-    }
-
     if (index !== activeIndex) {
-      inputsRef.current[activeIndex]?.focus();
+      e.preventDefault?.();
+      inputRefs.current[activeIndex]?.focus();
     }
   };
 
@@ -97,7 +95,7 @@ export const OTPInput: React.FC<OTPInputProps> = ({
     if (isError) return "#DA1E28";
     if (isSubmitting) return "#E7E7E7";
     if (isSuccess) return "#198038";
-    if (index < code.length) return "#FDDC69"; // current digit
+    if (index < code.length) return "#FDDC69";
     return "#C6C6C6";
   };
 
@@ -114,11 +112,12 @@ export const OTPInput: React.FC<OTPInputProps> = ({
             bbw={2}
             boc={getBorderColor(index)}
           >
-            <InputComponent
-              // @ts-ignore
-              ref={(ref: TextInput | null) => (inputsRef.current[index] = ref)}
-              value={code[index] || ""}
-              maxLength={index === OTP_MAX_LENGTH - 1 ? 1 : OTP_MAX_LENGTH}
+            <Input
+              ref={(ref: TextInput | null) => {
+                inputRefs.current[index] = ref;
+              }}
+              value={code[index] ?? ""}
+              maxLength={1}
               onChangeText={(text) => handleDigitChange(text, index)}
               onKeyPress={(e) => handleKeyPress(e, index)}
               onFocus={(e) => handleFocusChange(e, index)}
