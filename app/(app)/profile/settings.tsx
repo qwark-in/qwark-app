@@ -1,7 +1,6 @@
-import { useToastController } from "@tamagui/toast";
-import { useAuthStore } from "data/stores/auth-store";
+import { Platform, Pressable } from "react-native";
+import { ListItem, View } from "tamagui";
 import { useSettigsStore } from "data/stores/settings-store";
-import { useUserStore } from "data/stores/user-store";
 import { useLogout } from "features/auth/hooks";
 import { authenticateWithBiometrics } from "features/local-auth/authenticateWithBiometrics";
 import { useCheckBiometricsAvailable } from "features/local-auth/hooks/use-check-biometrics";
@@ -10,24 +9,18 @@ import {
   requestPermissions,
 } from "features/profile/profile-settings/helpers";
 import { useCheckSmsPermissionsOnAppStateChange } from "features/profile/profile-settings/hooks";
-import { Pressable } from "react-native";
-import { ListItem, View } from "tamagui";
 import { Icon } from "ui/assets/icons/adaptive";
 import { CustomSwitch } from "ui/controls/inputs";
 import { LabelText } from "ui/display/typography";
 
 export default function SettingsScreen() {
-  const authData = useAuthStore((store) => store.authData);
-  const setToken = useAuthStore((store) => store.setToken);
-  const resetUser = useUserStore((store) => store.resetUser);
+  const { logout } = useLogout();
   const isBiometricsEnabled = useSettigsStore((store) => store.isBiometricsEnabled);
   const setIsBiometricsEnabled = useSettigsStore((store) => store.setIsBiometricsEnabled);
   const isSmsPermissionGranted = useSettigsStore((store) => store.isSmsPermissionGranted);
   const setIsSmsPermissionGranted = useSettigsStore(
     (store) => store.setIsSmsPermissionGranted
   );
-  const toast = useToastController();
-  const { logout } = useLogout();
 
   /**
    * These two hooks below are defined at the end after the screen.
@@ -87,21 +80,23 @@ export default function SettingsScreen() {
               </ListItem>
             )}
 
-            <ListItem
-              p="$5"
-              fontSize="$medium"
-              fontFamily="$body"
-              fontWeight="$emphasized"
-              icon={() => <Icon name="bell" />}
-              iconAfter={
-                <CustomSwitch
-                  checked={isSmsPermissionGranted === "GRANTED"}
-                  onCheckedChange={handleSMSPermission}
-                />
-              }
-            >
-              SMS Permission
-            </ListItem>
+            {Platform.OS !== "web" && (
+              <ListItem
+                p="$5"
+                fontSize="$medium"
+                fontFamily="$body"
+                fontWeight="$emphasized"
+                icon={() => <Icon name="bell" />}
+                iconAfter={
+                  <CustomSwitch
+                    checked={isSmsPermissionGranted === "GRANTED"}
+                    onCheckedChange={handleSMSPermission}
+                  />
+                }
+              >
+                SMS Permission
+              </ListItem>
+            )}
 
             <Pressable
               android_ripple={{

@@ -2,7 +2,7 @@
  * Imports
  */
 // React and RN
-import { forwardRef, useEffect, useRef, ReactNode, useState } from "react";
+import { forwardRef, useEffect, useRef, ReactNode } from "react";
 import type { View } from "react-native";
 import { Animated, Pressable } from "react-native";
 
@@ -20,14 +20,13 @@ import { useSwitch } from "@tamagui/switch-headless";
  * Internal component for the headless switch
  */
 const HeadlessSwitch = forwardRef<View, SwitchHeadlessProps>((props, ref): ReactNode => {
-  const [checked, onCheckedChange] = useState(props.defaultChecked || false);
+  const { checked, onCheckedChange } = props;
   const { switchProps, switchRef, bubbleInput } = useSwitch(
     props,
-    [checked, onCheckedChange],
+    [checked || false, onCheckedChange || (() => {})],
     ref
   );
-
-  const [animation] = useState(() => new Animated.Value(checked ? 1 : 0));
+  const animation = useRef(new Animated.Value(checked ? 1 : 0)).current;
 
   useEffect(() => {
     Animated.timing(animation, {
@@ -35,7 +34,7 @@ const HeadlessSwitch = forwardRef<View, SwitchHeadlessProps>((props, ref): React
       duration: 200,
       useNativeDriver: true,
     }).start();
-  }, [checked, animation]);
+  }, [checked]);
 
   return (
     <>

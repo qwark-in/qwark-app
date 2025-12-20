@@ -24,10 +24,11 @@ export default function LinkedBanksScreen() {
         {banks.map((item) => (
           <ConnectedAccountsCard
             key={item.fip_id}
-            fip_id={item.fip_id}
             fip_name={item.fip_name}
-            asset_class_id={item.asset_class_id}
-            accounts={item.accounts} // ← IMPORTANT FIX
+            accounts={item.accounts.map((acc) => ({
+              account_number: acc.accountDetails.account_number,
+              account_type: acc.accountDetails.account_type,
+            }))}
           />
         ))}
       </ScrollView>

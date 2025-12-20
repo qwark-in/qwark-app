@@ -1,12 +1,9 @@
 import axios, { AxiosError } from "axios";
 import { BASE_URL } from "./constants";
 import { UpdateUserQueryBody, UpdateUserResponse } from "./types";
-import { AuthDataType } from "data/stores/auth-store";
+import { AuthDataType } from "data/models/auth";
 
-export const updateUser = async (
-  data: UpdateUserQueryBody,
-  authData: AuthDataType
-) => {
+export const updateUser = async (data: UpdateUserQueryBody, authData: AuthDataType) => {
   try {
     const response = await axios.post<UpdateUserResponse>(`${BASE_URL}`, data, {
       headers: {
@@ -27,9 +24,7 @@ export const updateUser = async (
 
       throw new Error(
         `Update user failed: ${
-          error.response?.data?.message ||
-          error.response?.statusText ||
-          error.message
+          error.response?.data?.message || error.response?.statusText || error.message
         }`
       );
     } else {

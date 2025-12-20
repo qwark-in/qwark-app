@@ -5,13 +5,10 @@ import {
   createMaterialTopTabNavigator,
 } from "@react-navigation/material-top-tabs";
 import { ParamListBase, TabNavigationState } from "@react-navigation/native";
-import { useEffect, useState } from "react";
-import { useToastController } from "@tamagui/toast";
 import { View } from "tamagui";
 import { ActivityIndicator } from "react-native";
-import { useAuthStore } from "data/stores/auth-store";
 import { useFinancialProfileStore } from "data/stores/financial-profile-store";
-import { getFinProfile } from "data/api";
+import { useGetFinancialProfileData } from "features/profile/connected-accounts/hooks/useGetFinancialProfile";
 
 const { Navigator } = createMaterialTopTabNavigator();
 
@@ -23,32 +20,11 @@ export const MaterialTopTabs = withLayoutContext<
 >(Navigator);
 
 export default function TabLayout() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState();
-  const toast = useToastController();
-  const authData = useAuthStore((store) => store.authData)!;
   const connectedAccounts = useFinancialProfileStore((store) => store.connectedAccounts);
-  const setFinancialProfile = useFinancialProfileStore(
-    (store) => store.setFinancialProfile
-  );
+  const { isLoading } = useGetFinancialProfileData();
 
   const banks = connectedAccounts.filter((bank) => bank.asset_class_id === "BANK");
   const investments = connectedAccounts.filter((item) => item.asset_class_id !== "BANK");
-
-  useEffect(() => {
-    (async function () {
-      setIsLoading(true);
-      try {
-        const response = await getFinProfile(authData);
-        setFinancialProfile(response.data);
-      } catch (error) {
-        toast.show("Something went wrong");
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, []);
 
   if (isLoading) {
     return (

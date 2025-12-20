@@ -26,10 +26,17 @@ export default function LinkedInvestmentsScreen() {
         {investments.map((item) => (
           <ConnectedAccountsCard
             key={item.fip_id}
-            fip_id={item.fip_id}
-            asset_class_id={item.asset_class_id}
             fip_name={item.fip_name}
-            accounts={item.accounts}
+            accounts={item.accounts.map((acc) => ({
+              account_number:
+                item.asset_class_id === "EQUITIES"
+                  ? acc.accountDetails.demat_account_number
+                  : acc.accountDetails.folio_number,
+              account_type:
+                item.asset_class_id === "EQUITIES"
+                  ? acc.accountDetails.broker
+                  : acc.accountDetails.folio_name,
+            }))}
           />
         ))}
       </ScrollView>

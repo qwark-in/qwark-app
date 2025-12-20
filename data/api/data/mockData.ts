@@ -1,3 +1,4 @@
+import { DashboardState } from "data/models/dashboard";
 import { MarketState } from "data/models/market";
 
 export const mockMarketData: MarketState = {
@@ -260,4 +261,144 @@ export const mockMarketData: MarketState = {
     xirr: 12.4,
   },
   fdHoldings: null,
+};
+
+export const mockDashboardData: DashboardState = {
+  cashflow: [
+    {
+      accountDetails: {
+        accountNumber: "XXXX1234",
+        accountRefNumber: "HDFC-XXXX1234",
+        fipId: "HDFC-BANK",
+        fipName: "HDFC Bank",
+      },
+      currentBalance: 25432.1,
+      firstTransactionDate: "2025-10-01",
+      lastTransactionDate: "2025-11-12",
+      transactions: [
+        {
+          amount: 18500,
+          date: "2025-10-05",
+          mode: "UPI",
+          narration: "Salary Oct - ACME Corp",
+          transactionalBalance: 18500,
+          type: "CREDIT",
+        },
+        {
+          amount: 2500,
+          date: "2025-10-06",
+          mode: "CARD",
+          narration: "Groceries - SuperMart",
+          transactionalBalance: 16000,
+          type: "DEBIT",
+        },
+        {
+          amount: 2000,
+          date: "2025-10-10",
+          mode: "ATM",
+          narration: "ATM Cash Withdrawal",
+          transactionalBalance: 14000,
+          type: "DEBIT",
+        },
+        {
+          amount: 50,
+          date: "2025-10-31",
+          mode: "INTEREST_CREDIT",
+          narration: "Monthly Interest",
+          transactionalBalance: 14050,
+          type: "CREDIT",
+        },
+        {
+          amount: 1728.5,
+          date: "2025-11-02",
+          mode: "UPI",
+          narration: "Dining - FoodHub",
+          transactionalBalance: 12321.5,
+          type: "DEBIT",
+        },
+        {
+          amount: 61100,
+          date: "2025-11-05",
+          mode: "AUTO_DEBIT",
+          narration: "Credit Card Payment",
+          transactionalBalance: 73421.5,
+          type: "DEBIT",
+        },
+        {
+          amount: 20000.6,
+          date: "2025-11-12",
+          mode: "IMPS",
+          narration: "Transfer from Savings",
+          transactionalBalance: 25432.1,
+          type: "CREDIT",
+        },
+      ],
+    },
+    {
+      accountDetails: {
+        accountNumber: "XXXX9876",
+        accountRefNumber: "ICICI-XXXX9876",
+        fipId: "ICICI-BANK",
+        fipName: "ICICI Bank",
+      },
+      currentBalance: 987654.32,
+      firstTransactionDate: "2025-09-15",
+      lastTransactionDate: "2025-11-10",
+      transactions: [
+        {
+          amount: 900000,
+          date: "2025-09-30",
+          mode: "NEFT",
+          narration: "Fixed Deposit Maturity",
+          transactionalBalance: 900000,
+          type: "CREDIT",
+        },
+        {
+          amount: 500000,
+          date: "2025-10-01",
+          mode: "RTGS",
+          narration: "Home Loan Prepayment",
+          transactionalBalance: 400000,
+          type: "DEBIT",
+        },
+        {
+          amount: 588765.43,
+          date: "2025-11-10",
+          mode: "REMITTANCE",
+          narration: "Overseas Remittance",
+          transactionalBalance: 988765.43,
+          type: "CREDIT",
+        },
+      ],
+    },
+  ],
+  networth: {
+    amount: 1.523456745e7,
+    chartData: [
+      {
+        date: "2025-06-01",
+        value: 13500000,
+      },
+      {
+        date: "2025-07-01",
+        value: 14050000,
+      },
+      {
+        date: "2025-08-01",
+        value: 14620000,
+      },
+      {
+        date: "2025-09-01",
+        value: 14980000,
+      },
+      {
+        date: "2025-10-01",
+        value: 15120000,
+      },
+      {
+        date: "2025-11-01",
+        value: 1.523456745e7,
+      },
+    ],
+  },
 };

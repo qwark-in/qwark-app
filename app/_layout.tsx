@@ -9,6 +9,7 @@ import { injectWebFonts } from "config/web-fonts";
 import { Provider } from "ui/Provider";
 import { useIsOnline } from "hooks/use-is-online";
 import { useAuthStore } from "data/stores/auth-store";
+import { useRequestSmsPermissions } from "features/profile/profile-settings/hooks";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -70,6 +71,8 @@ function RootLayoutNav() {
   const { isOnline } = useIsOnline();
   const authData = useAuthStore((store) => store.authData);
   const isLoggedIn = !!authData;
+
+  useRequestSmsPermissions();
 
   // console.log("isLoggedIn: ", isLoggedIn);
   // console.log("isOnline: ", isOnline);
