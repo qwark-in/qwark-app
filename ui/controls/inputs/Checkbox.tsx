@@ -44,6 +44,7 @@ export const Checkbox: React.FC<CheckBoxProps> = ({ checked, borderHidden = fals
       ai="center"
       bg={checked ? "$qwark/primary" : "$colorTransparent"}
       pointerEvents="none"
+      disableClassName
     >
       {checked && (
         <View key="check-icon">
