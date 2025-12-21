@@ -2,7 +2,6 @@ import React from "react";
 import { Pressable } from "react-native";
 import { View, ViewProps, XStack, getTokens } from "tamagui";
 import { LabelText } from "ui/display/typography";
-import { SvgProps } from "react-native-svg";
 
 export type PillProps = {
   textProps?: React.ComponentProps<typeof import("ui/display/typography").BodyText>;
@@ -11,7 +10,7 @@ export type PillProps = {
 
 type PillButtonProps = PillProps & {
   title: string;
-  icon?: React.FC<SvgProps>;
+  icon?: React.ReactElement;
   selected: boolean;
   onSelect: () => void;
 };
@@ -27,8 +26,6 @@ const _PillButton: React.FC<PillButtonProps> = ({
   const { space } = getTokens();
   const { px = 12, py = 6, mr = "$3", br } = styleProps || {}; // Default values for styleProps
   const brValue = typeof br === "string" ? space[br].val : br ?? 9999;
-
-  const Icon = icon;
 
   return (
     <View
@@ -49,7 +46,7 @@ const _PillButton: React.FC<PillButtonProps> = ({
       >
         <View px={px} py={py}>
           <XStack gap="$2" ai="center">
-            {Icon && <Icon height={16} width={16} />}
+            {icon}
             <LabelText
               pt={2}
               {...textProps}

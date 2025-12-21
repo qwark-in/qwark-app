@@ -7,6 +7,7 @@ export { default as ChainLink } from "./ChainLink";
 export { default as Check } from "./Check";
 export { default as ChevronLeft } from "./ChevronLeft";
 export { default as ChevronRight } from "./ChevronRight";
+export { default as Close } from "./Close";
 export { default as ConnectedAccounts } from "./ConnectedAccounts";
 export { default as Cross } from "./Cross";
 export { default as EyeHidden } from "./EyeHidden";

@@ -76,8 +76,6 @@ function RootLayoutNav() {
   useRequestSmsPermissions();
   useRouteToBiometrics();
 
-  // console.log("isLoggedIn: ", isLoggedIn);
-  // console.log("isOnline: ", isOnline);
   return (
     <ThemeProvider value={BaseTheme}>
       <Stack screenOptions={{ headerShown: false, statusBarStyle: "dark" }}>

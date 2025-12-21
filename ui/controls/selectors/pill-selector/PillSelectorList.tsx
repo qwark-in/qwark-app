@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { FlatList, ListRenderItem } from "react-native";
 import { PillButton, PillProps } from "./PillButton";
-import { SvgProps } from "react-native-svg";
 
 type PillSelectorListProps<T extends string> = PillProps & {
-  pills: readonly { title: T; icon?: React.FC<SvgProps> }[];
+  pills: readonly { title: T; icon?: React.ReactElement }[];
   selected: T;
   onSelect: (pillTitle: T) => void;
 };

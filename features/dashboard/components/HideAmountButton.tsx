@@ -1,5 +1,6 @@
 import { useAudioPlayer } from "expo-audio";
 import { IconButton } from "ui/controls/buttons";
+import { useDashboardScreenStore } from "../store/dashboardScreenStore";
 
 export const HideAmountButton = () => {
   const isVisible = useDashboardScreenStore((store) => store.isVisible);

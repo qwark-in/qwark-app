@@ -12,6 +12,7 @@ export const iconRegistry = {
   "chevron-right": icons.ChevronRight,
   "connected-accounts": icons.ConnectedAccounts,
   cross: icons.Cross,
+  close: icons.Close,
   "eye-hidden": icons.EyeHidden,
   "eye-visible": icons.EyeVisible,
   logout: icons.Logout,

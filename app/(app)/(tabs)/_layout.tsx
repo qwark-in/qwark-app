@@ -44,7 +44,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <FontAwesome size={24} name="home" color={color} />,
           tabBarLabel: "Dashboard",
           headerShown: true,
-          // headerRight: () => <HideAmountButton />,
+          headerRight: () => <HideAmountButton />,
           headerRightContainerStyle: {
             paddingRight: 16,
           },
