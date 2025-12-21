@@ -1,4 +1,4 @@
-import { SectionList } from "react-native";
+import { Platform, SectionList } from "react-native";
 import { Separator, View, XStack } from "tamagui";
 import { format } from "date-fns";
 import { CashflowTransactionType, convertToSectionListFormat } from "../helpers";
@@ -14,12 +14,14 @@ export const TransactionList = ({ cashflow }: { cashflow: CashFlow[] }) => {
     10
   );
 
+  const scrollEnabled = Platform.OS === "web";
+
   return (
     <View px="$5">
       <TitleText>Transactions</TitleText>
 
       <SectionList
-        scrollEnabled={false}
+        scrollEnabled={scrollEnabled}
         sections={sectionedTransactions}
         keyExtractor={(_, i) => i.toString()}
         renderItem={({ item }) => <CashflowTransactionsListItem {...item} />}

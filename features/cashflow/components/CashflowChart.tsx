@@ -55,7 +55,9 @@ export const CashflowChart: React.FC<CashflowChartProps> = ({ cashflow }) => {
     <View mb="$3">
       {dataSorted.length !== 0 ? (
         // <ChartComponent chartData={chartData} />
-        <BodyText>Chart Placeholder</BodyText>
+        <View h={CHART_HEIGHT + YAXIS_EXTRA_HEIGHT + 5} ai="center" jc="center">
+          <TitleText>No Data Found</TitleText>
+        </View>
       ) : (
         <View h={CHART_HEIGHT + YAXIS_EXTRA_HEIGHT + 5} ai="center" jc="center">
           <TitleText>No Data Found</TitleText>
