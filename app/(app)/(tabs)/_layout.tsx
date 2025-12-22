@@ -1,10 +1,9 @@
 import { Tabs } from "expo-router";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { getAnalytics } from "@react-native-firebase/analytics";
 import { CustomBottomTabs } from "navigation/CustomBottomTabs";
 import { HideAmountButton } from "features/dashboard/components/HideAmountButton";
+import { Icon } from "ui/assets/icons/adaptive";
+import { RawColor } from "ui/assets/icons/adaptive/types";
 
 export const BottomTabScreensFbAnalyticsIds = [
   "dashboard-screen",
@@ -20,6 +19,8 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         animation: "fade",
+        tabBarActiveTintColor: "#001484",
+        tabBarInactiveTintColor: "#6F6F6F",
       }}
       screenListeners={{
         state: (e) => {
@@ -41,7 +42,9 @@ export default function TabLayout() {
         name="dashboard-tab"
         options={{
           title: "Dashboard",
-          tabBarIcon: ({ color }) => <FontAwesome size={24} name="home" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <Icon size="lg" name="home" color={color as RawColor} />
+          ),
           tabBarLabel: "Dashboard",
           headerShown: true,
           headerRight: () => <HideAmountButton />,
@@ -61,11 +64,7 @@ export default function TabLayout() {
         options={{
           title: "Journey Screen",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="star-shooting-outline"
-              size={24}
-              color={color}
-            />
+            <Icon size="lg" name="journey" color={color as RawColor} />
           ),
           tabBarLabel: "Journey",
         }}
@@ -75,7 +74,7 @@ export default function TabLayout() {
         options={{
           title: "Investments",
           tabBarIcon: ({ color }) => (
-            <Ionicons size={24} name="stats-chart" color={color} />
+            <Icon size="lg" name="investments" color={color as RawColor} />
           ),
           tabBarLabel: "Investment",
           headerShown: true,
@@ -92,7 +91,7 @@ export default function TabLayout() {
         options={{
           title: "Profile Screen",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={24} name="user-circle-o" color={color} />
+            <Icon size="lg" name="profile-tab" color={color as RawColor} />
           ),
           tabBarLabel: "Profile",
         }}

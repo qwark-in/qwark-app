@@ -30,60 +30,18 @@ export const CustomBottomTabs: React.FC<CustomBottomTabsProps> = ({
   descriptors,
   navigation,
 }) => {
-  const { width } = useWindowDimensions();
-  const translateX = useSharedValue(0);
-  const containerWidth = useSharedValue(0);
-
-  const TAB_WIDTH = width / state.routes.length;
-
-  useEffect(() => {
-    translateX.value = withTiming(state.index * TAB_WIDTH, {
-      duration: 200,
-      easing: Easing.out(Easing.cubic),
-    });
-  }, [state.index]);
-
-  const tabIndicatorStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX: translateX.value,
-      },
-    ],
-  }));
-
   return (
-    <View
-      fd="row"
-      bg="#FFF"
-      bw={1}
-      boc="#E7E7E7"
-      onLayout={(e) => {
-        containerWidth.value = e.nativeEvent.layout.width;
-      }}
-    >
-      <View ai="center" pos="absolute" w={TAB_WIDTH} h={"100%"}>
-        <Animated.View
-          style={[
-            {
-              width: 50,
-              height: 46,
-              backgroundColor: "#001484",
-              borderBottomLeftRadius: 9999,
-              borderBottomRightRadius: 9999,
-              top: 0,
-              position: "absolute",
-            },
-            tabIndicatorStyle,
-          ]}
-        />
-      </View>
-
+    <View fd="row" bg="#FFF" bw={1} boc="#E7E7E7" jc="space-around">
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const isFocused = state.index === index;
 
+        const color = isFocused
+          ? options.tabBarActiveTintColor
+          : options.tabBarInactiveTintColor;
+
         return (
-          <View key={route.key} w={TAB_WIDTH}>
+          <View key={route.key}>
             <Pressable
               onPress={() => {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -93,9 +51,13 @@ export const CustomBottomTabs: React.FC<CustomBottomTabsProps> = ({
             >
               <View ai="center" gap="$2" pt="$3" pb="$2">
                 {options.tabBarIcon && (
-                  <AnimatedIcon isFocused={isFocused} tabBarIcon={options.tabBarIcon} />
+                  <AnimatedIcon
+                    isFocused={isFocused}
+                    tabBarIcon={options.tabBarIcon}
+                    color={color}
+                  />
                 )}
-                <BodyText size="$small" fow="$emphasized">
+                <BodyText size="$xsmall" fow="$emphasized" color={color}>
                   {options.tabBarLabel}
                 </BodyText>
               </View>
@@ -107,33 +69,23 @@ export const CustomBottomTabs: React.FC<CustomBottomTabsProps> = ({
   );
 };
 
-const AnimatedIcon = ({ isFocused, tabBarIcon }) => {
-  const translateY = useSharedValue(0);
+const AnimatedIcon = ({ isFocused, tabBarIcon, color }) => {
   const scale = useSharedValue(1);
 
   useEffect(() => {
     scale.value = withSequence(
-      withTiming(isFocused ? 0.5 : 1, { duration: 100 }),
-      withTiming(isFocused ? 1.1 : 1, {
-        duration: 200,
+      withTiming(isFocused ? 1.2 : 1, {
+        duration: 300,
         easing: Easing.out(Easing.cubic),
       })
     );
-    translateY.value = withTiming(isFocused ? -4 : 0, {
-      duration: 200,
-      easing: Easing.out(Easing.cubic),
-    });
   }, [isFocused]);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }, { translateY: translateY.value }],
+    transform: [{ scale: scale.value }],
   }));
 
   const Icon = tabBarIcon;
 
-  return (
-    <Animated.View style={[animatedStyle]}>
-      <Icon color={isFocused ? "#FFF" : "#6F6F6F"} />
-    </Animated.View>
-  );
+  return <Animated.View style={[animatedStyle]}>{<Icon color={color} />}</Animated.View>;
 };
