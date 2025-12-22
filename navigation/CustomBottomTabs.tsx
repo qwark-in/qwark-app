@@ -41,7 +41,7 @@ export const CustomBottomTabs: React.FC<CustomBottomTabsProps> = ({
           : options.tabBarInactiveTintColor;
 
         return (
-          <View key={route.key}>
+          <View key={route.key} f={1}>
             <Pressable
               onPress={() => {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);

@@ -35,7 +35,7 @@ export const Networth = () => {
           toFixed={2}
           locale={"en-IN"}
           useGrouping
-          enableCompactNotation={true}
+          enableCompactNotation
           // formattedText={hide ? '₹******' : undefined}
           textStyle={{
             color: "#262626",
