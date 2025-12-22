@@ -1,4 +1,5 @@
 import { useMarketStore } from "data/stores/market-store";
+import { MiniChart } from "features/dashboard/components/MiniChart";
 import { Separator, View, XStack, YStack } from "tamagui";
 import { BodyText, TitleText } from "ui/display/typography";
 
@@ -41,7 +42,7 @@ export const StocksAndETFsHoldingsInfo = () => {
             {formattedCurrentValue}
           </TitleText>
 
-          {/* <MiniChart chartData={curretValueChartData} /> */}
+          <MiniChart chartData={curretValueChartData} />
         </XStack>
         <Separator bg="#E7E7E7" />
         <YStack gap="$3">

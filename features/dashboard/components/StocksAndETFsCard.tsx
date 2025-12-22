@@ -4,6 +4,7 @@ import { useMarketStore } from "data/stores/market-store";
 import { View, XStack } from "tamagui";
 import { BodyText } from "ui/display/typography";
 import { AnimatedRollingNumber } from "ui/display/animated-rolling-number/AnimatedRollingNumber";
+import { MiniChart } from "./MiniChart";
 
 export const StocksAndETFsCard = () => {
   const router = useRouter();
@@ -62,7 +63,7 @@ export const StocksAndETFsCard = () => {
           }}
         />
 
-        {/* <MiniChart chartData={eqHoldings.curretValueChartData} /> */}
+        <MiniChart chartData={eqHoldings.curretValueChartData} />
       </XStack>
     </View>
   );

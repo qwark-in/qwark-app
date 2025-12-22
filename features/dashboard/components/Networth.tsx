@@ -3,6 +3,7 @@ import { useDashboardStore } from "data/stores/dashboard-store";
 import { useDashboardScreenStore } from "../store/dashboardScreenStore";
 import { TitleText } from "ui/display/typography";
 import { AnimatedRollingNumber } from "ui/display/animated-rolling-number/AnimatedRollingNumber";
+import { NetworthChart } from "./NetworthChart";
 
 export const Networth = () => {
   const networth = useDashboardStore((store) => store.networth);
@@ -53,7 +54,7 @@ export const Networth = () => {
           }}
         />
 
-        {/* <NetworthChart /> */}
+        <NetworthChart />
       </View>
     </View>
   );

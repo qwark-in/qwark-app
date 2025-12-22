@@ -4,6 +4,7 @@ import { useMarketStore } from "data/stores/market-store";
 import { BodyText } from "ui/display/typography";
 import { View, XStack } from "tamagui";
 import { AnimatedRollingNumber } from "ui/display/animated-rolling-number/AnimatedRollingNumber";
+import { MiniChart } from "./MiniChart";
 
 export const MutualFundsCard = () => {
   const router = useRouter();
@@ -60,7 +61,7 @@ export const MutualFundsCard = () => {
             fontVariant: ["tabular-nums", "lining-nums"],
           }}
         />
-        {/* <MiniChart chartData={mfHoldings.curretValueChartData} /> */}
+        <MiniChart chartData={mfHoldings.curretValueChartData} />
       </XStack>
     </View>
   );

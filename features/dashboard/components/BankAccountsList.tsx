@@ -4,6 +4,7 @@ import { Icon } from "ui/assets/icons/adaptive";
 import { BodyText, TitleText } from "ui/display/typography";
 import { AnimatedRollingNumber } from "ui/display/animated-rolling-number/AnimatedRollingNumber";
 import { CashFlow } from "data/models/dashboard";
+import { MiniChart } from "./MiniChart";
 
 export const BankAccountsList = ({ cashflow }: { cashflow: CashFlow[] }) => {
   return (
@@ -72,7 +73,7 @@ const BankAccountsListItem = ({ details }: { details: CashFlow }) => {
           }}
         />
 
-        {/* <MiniChart chartData={chartData} /> */}
+        <MiniChart chartData={chartData} />
       </XStack>
     </View>
   );
