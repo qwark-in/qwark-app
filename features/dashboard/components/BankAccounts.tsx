@@ -32,11 +32,8 @@ export const BankAccounts = () => {
           Bank Accounts
         </TitleText>
         <OutlineButton
-          fontFamily="$label"
-          fontWeight="400"
-          scaleSpace={0.2}
-          fontSize={12}
-          iconAfter={<Icon name="plus" size="md" />}
+          small
+          iconAfter={<Icon name="plus" size="md" color="$buttonIcon/secondary" />}
           onPress={handlePress}
         >
           Add More

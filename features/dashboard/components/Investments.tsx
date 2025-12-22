@@ -1,7 +1,7 @@
 import { ActivityIndicator } from "react-native";
 import { useAddInvestments } from "features/account-aggregator/hooks/use-add-investments";
 import { View, XStack, YStack } from "tamagui";
-import { TitleText } from "ui/display/typography";
+import { BodyText, TitleText } from "ui/display/typography";
 import { OutlineButton } from "ui/controls/buttons";
 import { Icon } from "ui/assets/icons/adaptive";
 import { StocksAndETFsCard } from "./StocksAndETFsCard";
@@ -17,10 +17,7 @@ export const Investments = () => {
           Investments
         </TitleText>
         <OutlineButton
-          fontFamily="$label"
-          fontWeight="400"
-          scaleSpace={0.2}
-          fontSize={12}
+          small
           iconAfter={isLoading ? <ActivityIndicator /> : <Icon name="plus" size="sm" />}
           onPress={addInvestments}
         >

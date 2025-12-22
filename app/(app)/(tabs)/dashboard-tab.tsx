@@ -1,6 +1,6 @@
 import { ScrollView, View, YStack } from "tamagui";
 import { ActivityIndicator } from "react-native";
-import { useGetDashboardData } from "data/api";
+import { useGetDashboardData, useGetMarketData } from "data/api";
 import { useExitAppOnBackPress } from "hooks/use-exit-app-on-back-press";
 import { Networth } from "features/dashboard/components/Networth";
 import { Investments } from "features/dashboard/components/Investments";
@@ -8,11 +8,12 @@ import { Cashflow } from "features/dashboard/components/Cashflow";
 import { BankAccounts } from "features/dashboard/components/BankAccounts";
 
 export default function DashboardScreen() {
-  const { data, isLoading } = useGetDashboardData();
+  const { isLoading: isLoadingDashboard } = useGetDashboardData();
+  const { isLoading: isLoadingMarket } = useGetMarketData();
 
   useExitAppOnBackPress();
 
-  if (isLoading && !data) {
+  if (isLoadingDashboard || isLoadingMarket) {
     return (
       <View f={1} bg="#FAFAFC" jc="center" ai="center">
         <ActivityIndicator size="large" />
