@@ -103,8 +103,6 @@ export const useSlider = ({ numberOfPages }: { numberOfPages: number }) => {
     scrollToStart();
   }, []);
 
-  console.log("Current Index", currentIndex);
-
   return {
     currentIndex,
     scrollX,

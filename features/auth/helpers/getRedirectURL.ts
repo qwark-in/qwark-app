@@ -4,7 +4,6 @@ import Constants from "expo-constants";
 
 const scheme = Constants.expoConfig?.scheme ?? "exp+qwark";
 const IOS_REDIRECT_URL = ""; // TODO
-const WEB_REDIRECT_URL = ""; // TODO
 
 export const getRedirectURL = (route: Route) => {
   switch (Platform.OS) {

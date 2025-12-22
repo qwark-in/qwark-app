@@ -37,7 +37,7 @@ export const useGetFinancialProfileData = () => {
   );
 
   const { data, error, isLoading, isValidating, mutate } = useSWR(
-    `${FIN_PROFILE_BASE_URL}/market`,
+    `${FIN_PROFILE_BASE_URL}`,
     IS_MOCK_FIN_PROFILE_API
       ? getMockGetFinancialProfileDataFetcher
       : getGetFinancialProfileDataFetcher,
