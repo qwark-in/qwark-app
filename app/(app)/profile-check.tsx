@@ -26,6 +26,8 @@ export default function ProfileCheck() {
     try {
       // 1. Check if user exists
       const user = await getUser(authData);
+      // console.log("uuid: ", authData.uuid);
+      // console.log(user.data);
 
       if (user.data.name.first === "") {
         throw new Error("User does not exist");
