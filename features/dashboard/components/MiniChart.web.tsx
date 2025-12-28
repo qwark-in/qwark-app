@@ -54,7 +54,7 @@ export const MiniChart = ({
           />
           <VictoryArea
             domain={{
-              y: [minValue, maxValue],
+              y: [minValue, maxValue + (maxValue - minValue) * 0.02],
             }}
             data={chartData.map((item) => ({ x: item.date, y: item.value }))}
             style={{
