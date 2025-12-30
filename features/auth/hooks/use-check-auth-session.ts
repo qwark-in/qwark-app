@@ -22,7 +22,7 @@ export const useCheckAuthSession = () => {
         }
         console.log("Check session -> Status:", response.status);
       } catch (err) {
-        toast.show(err.message);
+        toast.show("Session expired. Login again");
         setToken(null);
       }
     })();
