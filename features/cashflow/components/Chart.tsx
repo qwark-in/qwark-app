@@ -11,11 +11,8 @@ import {
   Line,
 } from "@shopify/react-native-skia";
 import { useDerivedValue, useSharedValue } from "react-native-reanimated";
-import { useEffect } from "react";
-import * as Haptics from "expo-haptics";
 
 const CHART_HEIGHT = 180;
-
 const TOOLTIP_PADDING_X = 10;
 const TOOLTIP_PADDING_Y = 6;
 const TOOLTIP_RADIUS = 8;
