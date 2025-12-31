@@ -48,6 +48,7 @@ export default function LinkedInvestmentsScreen() {
         <FilledButton
           onPress={addInvestments}
           iconAfter={isLoading ? <ActivityIndicator color="#FFF" /> : null}
+          disabled={isLoading}
         >
           Connect More Accounts
         </FilledButton>

@@ -26,6 +26,8 @@
     "prebuild:prod:android": "cross-env APP_VARIANT='production' expo prebuild --platform android --clean",
     "prebuild:prev:android": "cross-env APP_VARIANT='preview' expo prebuild --platform android --clean",
     "prebuild:dev:android": "cross-env APP_VARIANT='development' expo prebuild --platform android --clean",
+    "update:prev:android": "eas update --channel preview --environment preview --platform android",
+    "update:prod:android": "eas update --channel production --environment production --platform android",
     "start:dev": "cross-env APP_VARIANT='development' expo start --dev-client",
     "start:storybook": "cross-env APP_VARIANT='storybook' expo start --dev-client",
     "start:web": "expo start --web",
