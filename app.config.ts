@@ -10,8 +10,8 @@ type DynamicConfig = {
   googleServiceFile?: string;
 };
 
-const EAS_PROJECT_ID = "45be6eeb-3cdd-48e9-8275-c1e05271b107";
-const PROJECT_SLUG = "qwark";
+const EAS_PROJECT_ID = "0d2a808f-3eeb-4136-91f9-3068122c0829";
+const EAS_PROJECT_SLUG = "qwark-singular-app";
 const EAS_OWNER = "qwark-in";
 
 /*
@@ -31,20 +31,28 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
   console.log("⦿ Building app for environment: ", process.env.APP_VARIANT);
   // console.debug('config =', config);
 
-  const { name, androidPackageName, icon, adaptiveIcon, scheme } = getDynamicAppConfig(
-    (process.env.APP_VARIANT as "development" | "preview" | "production" | "storybook") ||
-      "development"
-  );
+  const { name, androidPackageName, icon, adaptiveIcon, scheme } =
+    getDynamicAppConfig(
+      (process.env.APP_VARIANT as
+        | "development"
+        | "preview"
+        | "production"
+        | "storybook") || "development"
+    );
 
   return {
     ...config,
     name: name,
-    slug: PROJECT_SLUG,
+    slug: EAS_PROJECT_SLUG,
     icon: icon,
     scheme: scheme,
     android: {
       ...config.android,
-      permissions: [...(config.android?.permissions ?? []), "READ_SMS", "RECEIVE_SMS"],
+      permissions: [
+        ...(config.android?.permissions ?? []),
+        "READ_SMS",
+        "RECEIVE_SMS",
+      ],
       package: androidPackageName,
       intentFilters: [
         {
@@ -106,6 +114,10 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
         {
           android: {
             usesCleartextTraffic: process.env.APP_VARIANT === "preview",
+            newArchEnabled: true,
+          },
+          ios: {
+            newArchEnabled: true,
           },
         },
       ],

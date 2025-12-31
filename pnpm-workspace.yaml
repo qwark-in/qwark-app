@@ -1,2 +1,6 @@
 onlyBuiltDependencies:
+  - '@firebase/util'
   - '@shopify/react-native-skia'
+  - esbuild
+  - protobufjs
+  - react-native-nitro-modules

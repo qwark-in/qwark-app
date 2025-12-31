@@ -1,0 +1,75 @@
+{
+  "cli": {
+    "version": ">= 16.1.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "base": {
+      "node": "22.16.0",
+      "pnpm": "10.11.0",
+      "env": {
+        "owner": "qwark-in"
+      },
+      "android": {
+        "image": "auto",
+        "env": {
+          "PLATFORM": "android"
+        }
+      },
+      "ios": {
+        "image": "latest",
+        "env": {
+          "PLATFORM": "ios"
+        }
+      }
+    },
+    "development": {
+      "extends": "base",
+      "withoutCredentials": true,
+      "developmentClient": true,
+      "distribution": "internal",
+      "environment": "development",
+      "channel": "development"
+    },
+    "preview": {
+      "extends": "base",
+      "withoutCredentials": true,
+      "distribution": "internal",
+      "environment": "preview",
+      "android": {
+        "buildType": "apk"
+      },
+      "channel": "preview"
+    },
+    "production": {
+      "extends": "base",
+      "autoIncrement": true,
+      "android": {
+        "buildType": "app-bundle",
+        "applicationArchivePath": "android/app/build/outputs/**/*.aab"
+      },
+      "environment": "production",
+      "channel": "production"
+    },
+    "custom-prev": {
+      "android": {
+        "config": "android--custom_prev.yaml"
+      }
+    },
+    "storybook": {
+      "extends": "preview",
+      "env": {
+        "APP_VARIANT": "storybook"
+      },
+      "channel": "storybook"
+    }
+  },
+  "submit": {
+    "production": {
+      "android": {
+        "track": "internal",
+        "releaseStatus": "draft"
+      }
+    }
+  }
+}
