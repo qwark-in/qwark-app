@@ -44,6 +44,7 @@ export const useLogin = () => {
         });
         return;
       }
+      // console.log("Exchanging token with codeVerifier:", codeVerifier);
 
       const tokenData = await exchangeToken(codeVerifier!);
 
