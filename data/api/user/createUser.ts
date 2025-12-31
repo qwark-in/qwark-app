@@ -38,7 +38,7 @@ export const createUser = async (data: CreateUserQueryBody, authData: AuthDataTy
     if (axios.isAxiosError(err)) {
       const error = err as AxiosError<{ message?: string }>;
 
-      console.error("❌ Create User Axios Error:", {
+      console.log("❌ Create User Axios Error:", {
         status: error.response?.status,
         message: error.response?.data?.message || error.message,
       });
@@ -49,7 +49,7 @@ export const createUser = async (data: CreateUserQueryBody, authData: AuthDataTy
         }`
       );
     } else {
-      console.error("❌ Unexpected Error:", err);
+      console.log("❌ Unexpected Error:", err);
       throw new Error("An unexpected error occurred while creating the user.");
     }
   }

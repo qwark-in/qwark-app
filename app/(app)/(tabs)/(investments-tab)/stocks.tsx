@@ -5,11 +5,13 @@ import { StockEmpty } from "ui/assets/illustrations";
 import { TitleText } from "ui/display/typography";
 import { useMarketStore } from "data/stores/market-store";
 import { StocksAndETFsHoldingsList } from "features/investments/stocksAndETFs/components/StocksAndETFsHoldingsList";
+import { FilledButton } from "ui/controls/buttons";
+import { useAddInvestments } from "features/account-aggregator/hooks/use-add-investments";
+import { ActivityIndicator } from "react-native";
 
 export default function StocksAndETFsScreen() {
   const eqHoldings = useMarketStore((store) => store.eqHoldings);
-  //TODO: Add after aa code is moved.
-  // const { addInvestments, isLoading } = useAddInvestments();
+  const { addInvestments, isLoading } = useAddInvestments();
 
   if (!eqHoldings) {
     return (
@@ -19,14 +21,13 @@ export default function StocksAndETFsScreen() {
           Connect your Stocks & ETFs and track progress easily.
         </TitleText>
 
-        {/* //TODO: Add after aa code is moved. */}
-        {/* <FilledButton
+        <FilledButton
           als="stretch"
           onPress={addInvestments}
           iconAfter={isLoading ? <ActivityIndicator color="#FFF" /> : null}
         >
           Connect Account
-        </FilledButton> */}
+        </FilledButton>
       </View>
     );
   }

@@ -58,8 +58,6 @@ export const useSlider = ({ numberOfPages }: { numberOfPages: number }) => {
 
     scrollX.setValue(x);
 
-    console.log(x);
-
     const index = Math.round(x / width);
     if (index !== currentIndex) {
       setCurrentIndex(index);

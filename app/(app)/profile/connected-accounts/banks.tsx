@@ -4,6 +4,7 @@ import { useFinancialProfileStore } from "data/stores/financial-profile-store";
 import { FilledButton } from "ui/controls/buttons";
 import { CamsfinservLogo } from "ui/assets/logos";
 import { ConnectedAccountsCard } from "features/profile/connected-accounts/components/ConnectedAccountsCard";
+import { Link } from "expo-router";
 
 export default function LinkedBanksScreen() {
   const connectedAccounts = useFinancialProfileStore((store) => store.connectedAccounts);
@@ -36,7 +37,9 @@ export default function LinkedBanksScreen() {
       <Separator bg={"#E7E7E7"} />
 
       <View p="$5">
-        <FilledButton>Connect More Accounts</FilledButton>
+        <Link href="/(app)/account-aggregator/select-banks" asChild>
+          <FilledButton>Connect More Accounts</FilledButton>
+        </Link>
 
         <XStack gap="$1" jc="center" mt="$3" ai="center">
           <BodyText size="$xsmall">RBI regulated Account Aggregator</BodyText>

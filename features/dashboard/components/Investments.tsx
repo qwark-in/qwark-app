@@ -6,9 +6,17 @@ import { OutlineButton } from "ui/controls/buttons";
 import { Icon } from "ui/assets/icons/adaptive";
 import { StocksAndETFsCard } from "./StocksAndETFsCard";
 import { MutualFundsCard } from "./MutualFundsCard";
+import { useMarketStore } from "data/stores/market-store";
 
 export const Investments = () => {
   const { addInvestments, isLoading } = useAddInvestments();
+
+  const eqHoldings = useMarketStore((s) => s.eqHoldings);
+  const mfHoldings = useMarketStore((s) => s.mfHoldings);
+
+  if (!(eqHoldings || mfHoldings)) {
+    return null;
+  }
 
   return (
     <View>

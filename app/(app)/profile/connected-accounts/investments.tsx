@@ -4,9 +4,12 @@ import { BodyText, TitleText } from "ui/display/typography";
 import { FilledButton } from "ui/controls/buttons";
 import { CamsfinservLogo } from "ui/assets/logos";
 import { ConnectedAccountsCard } from "features/profile/connected-accounts/components/ConnectedAccountsCard";
+import { useAddInvestments } from "features/account-aggregator/hooks/use-add-investments";
+import { ActivityIndicator } from "react-native";
 
 export default function LinkedInvestmentsScreen() {
   const connectedAccounts = useFinancialProfileStore((store) => store.connectedAccounts);
+  const { addInvestments, isLoading } = useAddInvestments();
 
   const investments = connectedAccounts.filter(
     (account) => account.asset_class_id !== "BANK"
@@ -42,7 +45,12 @@ export default function LinkedInvestmentsScreen() {
       </ScrollView>
       <Separator bg={"#E7E7E7"} />
       <View p="$5">
-        <FilledButton>Connect More Accounts</FilledButton>
+        <FilledButton
+          onPress={addInvestments}
+          iconAfter={isLoading ? <ActivityIndicator color="#FFF" /> : null}
+        >
+          Connect More Accounts
+        </FilledButton>
         <XStack gap="$1" jc="center" mt="$3" ai="center">
           <BodyText size="$xsmall">RBI regulated Account Aggregator</BodyText>
           <CamsfinservLogo />

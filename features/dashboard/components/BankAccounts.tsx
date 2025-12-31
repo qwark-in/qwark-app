@@ -18,11 +18,7 @@ export const BankAccounts = () => {
   };
 
   if (!cashflow) {
-    return (
-      <View>
-        <TitleText>Data Not Avaialble</TitleText>
-      </View>
-    );
+    return null;
   }
 
   return (

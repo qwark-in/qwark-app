@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BackHandler } from "react-native";
+import { ActivityIndicator, BackHandler } from "react-native";
 import { Separator, View, XStack, YStack } from "tamagui";
 import { useForm } from "react-hook-form";
 import { useRouter } from "expo-router";
@@ -17,6 +17,7 @@ import { Checkbox, FormTextInput, MobileNumberInput } from "ui/controls/inputs";
 import { BodyText, TitleText } from "ui/display/typography";
 import { Icon } from "ui/assets/icons/adaptive";
 import { createUser } from "data/api";
+import { useToastController } from "@tamagui/toast";
 
 const PAN_REGEX = /[A-Z]{5}[0-9]{4}[A-Z]{1}/;
 
@@ -41,6 +42,8 @@ const PersonalDetailsScreen = () => {
   const [checked, setChecked] = useState<boolean>(true);
   const { safeAreaPadding } = useSafeAreaPadding();
   const router = useRouter();
+  const toast = useToastController();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const authData = useAuthStore((store) => store.authData)!;
   const setIsOnboardingCompleted = useGlobalStore(
     (store) => store.setIsOnboardingCompleted
@@ -64,29 +67,43 @@ const PersonalDetailsScreen = () => {
   });
 
   const handleConfirm = async (data: SchemaType) => {
-    //TODO: Call KYC API before creating user
+    if (isSubmitting) return;
 
-    const response = await createUser(
-      {
-        user_id: authData.uuid,
-        dob: "1996-09-09T08:30:00Z",
-        email: "placeholder@abc.com",
-        gender: "SomeGender",
-        marital_status: "PreferNotToSay",
-        pan: data.pan,
-        joining_time: new Date().toISOString(),
-        name: {
-          first: data.firstname,
-          last: data.lastname,
-          middle: "",
+    setIsSubmitting(true);
+
+    try {
+      // TODO: Call KYC API before creating user
+
+      const response = await createUser(
+        {
+          user_id: authData.uuid,
+          dob: "1996-09-09T08:30:00Z",
+          email: "placeholder@abc.com",
+          gender: "SomeGender",
+          marital_status: "PreferNotToSay",
+          pan: data.pan,
+          joining_time: new Date().toISOString(),
+          name: {
+            first: data.firstname,
+            last: data.lastname,
+            middle: "",
+          },
+          phone: data.mobileNumber,
         },
-        phone: data.mobileNumber,
-      },
-      authData
-    );
-    setUser(response.data);
-    router.replace("/account-aggregator/select-banks");
-    setIsOnboardingCompleted(true);
+        authData
+      );
+
+      setUser(response.data);
+      setIsOnboardingCompleted(true);
+      router.replace("/account-aggregator/select-banks");
+    } catch (error) {
+      toast.show(error.message, {
+        type: "error",
+        duration: 4000,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   useEffect(() => {
@@ -163,8 +180,9 @@ const PersonalDetailsScreen = () => {
           </XStack>
           <FilledButton
             mt="$5"
-            disabled={!isDirty || !checked}
+            disabled={!isDirty || !checked || isSubmitting}
             onPress={handleSubmit(handleConfirm)}
+            iconAfter={isSubmitting ? <ActivityIndicator color="#6F6F6F" /> : null}
           >
             Confirm
           </FilledButton>

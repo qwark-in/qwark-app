@@ -7,11 +7,7 @@ export const Cashflow = () => {
   const cashflow = useDashboardStore((store) => store.cashflow);
 
   if (!cashflow) {
-    return (
-      <View>
-        <TitleText>Cashflow Not Avaialble</TitleText>
-      </View>
-    );
+    return null;
   }
 
   return (
