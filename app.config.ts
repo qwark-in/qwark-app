@@ -45,7 +45,13 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
     scheme: scheme,
     android: {
       ...config.android,
-      permissions: [...(config.android?.permissions ?? []), "READ_SMS", "RECEIVE_SMS"],
+      permissions: [
+        ...(config.android?.permissions ?? []),
+        "READ_SMS",
+        "RECEIVE_SMS",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+      ],
       package: androidPackageName,
       intentFilters: [
         {
@@ -106,9 +112,7 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
         "expo-build-properties",
         {
           android: {
-            usesCleartextTraffic:
-              process.env.APP_VARIANT === "preview" ||
-              process.env.APP_VARIANT === "development",
+            usesCleartextTraffic: process.env.APP_VARIANT === "preview",
             newArchEnabled: true,
           },
           ios: {
