@@ -10,13 +10,9 @@ export const useDiscoverMultipleAccounts = () => {
   const selectedBanks = useAAStore((store) => store.selectedBanks);
   const consentHandles = useAAStore((store) => store.consent_handles);
   const sessionId = useAAStore((store) => store.session_id);
-  const setDiscoveredAccounts = useAAStore(
-    (store) => store.setDiscoveredAccounts
-  );
-  // const selectAllAccounts = useAAStore((store) => store.selectAllAccounts); //TODO: Un-comment this in production to auto-select every discovered and un-linked account
-  const resetDiscoveredAccounts = useAAStore(
-    (store) => store.resetDiscoveredAccounts
-  );
+  const setDiscoveredAccounts = useAAStore((store) => store.setDiscoveredAccounts);
+  const selectAllAccounts = useAAStore((store) => store.selectAllAccounts);
+  const resetDiscoveredAccounts = useAAStore((store) => store.resetDiscoveredAccounts);
   const { discoverAccounts, discoverAccountsIsLoading, discoverAccountsError } =
     useDiscoverAccounts();
 
@@ -54,11 +50,18 @@ export const useDiscoverMultipleAccounts = () => {
           ];
         });
 
-        //TODO: Un-comment this in production to auto-select every discovered and un-linked account
-
-        // selectAllAccounts((prev) => {
-        //   return [...prev, ...accountToSelect];
-        // });
+        selectAllAccounts((prev) => {
+          return [
+            ...prev,
+            ...response.data.accounts.map((item) => ({
+              fip_id: fip_id,
+              fip_name: response.data.fip_name,
+              asset_class_id: asset_class_id,
+              account_ref_number: item.account_ref_number,
+              account_type: item.account_type,
+            })),
+          ];
+        });
       } catch (err) {
         console.log(err);
       }

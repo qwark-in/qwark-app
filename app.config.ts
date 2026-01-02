@@ -31,28 +31,21 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
   console.log("⦿ Building app for environment: ", process.env.APP_VARIANT);
   // console.debug('config =', config);
 
-  const { name, androidPackageName, icon, adaptiveIcon, scheme } =
-    getDynamicAppConfig(
-      (process.env.APP_VARIANT as
-        | "development"
-        | "preview"
-        | "production"
-        | "storybook") || "development"
-    );
+  const { name, androidPackageName, icon, adaptiveIcon, scheme } = getDynamicAppConfig(
+    (process.env.APP_VARIANT as "development" | "preview" | "production" | "storybook") ||
+      "development"
+  );
 
   return {
     ...config,
     name: name,
+    owner: EAS_OWNER,
     slug: EAS_PROJECT_SLUG,
     icon: icon,
     scheme: scheme,
     android: {
       ...config.android,
-      permissions: [
-        ...(config.android?.permissions ?? []),
-        "READ_SMS",
-        "RECEIVE_SMS",
-      ],
+      permissions: [...(config.android?.permissions ?? []), "READ_SMS", "RECEIVE_SMS"],
       package: androidPackageName,
       intentFilters: [
         {
@@ -113,7 +106,9 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
         "expo-build-properties",
         {
           android: {
-            usesCleartextTraffic: process.env.APP_VARIANT === "preview",
+            usesCleartextTraffic:
+              process.env.APP_VARIANT === "preview" ||
+              process.env.APP_VARIANT === "development",
             newArchEnabled: true,
           },
           ios: {
@@ -129,7 +124,6 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
       },
       appVariant: process.env.APP_VARIANT,
     },
-    owner: EAS_OWNER,
   };
 };
 
