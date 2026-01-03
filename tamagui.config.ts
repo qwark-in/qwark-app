@@ -13,6 +13,7 @@ export const config = createTamagui({
   themes,
   settings: {
     onlyAllowShorthands: false,
+    disableSSR: true,
   },
 });
 

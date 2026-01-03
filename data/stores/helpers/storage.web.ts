@@ -1,17 +1,24 @@
-import { StateStorage } from "zustand/middleware";
+import type { StateStorage } from "zustand/middleware";
 import { get, set, del } from "idb-keyval";
 
+const isBrowser =
+  typeof window !== "undefined" && typeof window.indexedDB !== "undefined";
+
 export const zustandStorage: StateStorage = {
-  getItem: async (name: string): Promise<string | null> => {
-    console.log(name, "has been retrieved");
-    return (await get(name)) || null;
+  getItem: async (key: string) => {
+    if (!isBrowser) return null;
+
+    const value = await get(key);
+    return value ?? null;
   },
-  setItem: async (name: string, value: string): Promise<void> => {
-    console.log(name, "with value", value, "has been saved");
-    await set(name, value);
+
+  setItem: async (key: string, value: string) => {
+    if (!isBrowser) return;
+    await set(key, value);
   },
-  removeItem: async (name: string): Promise<void> => {
-    console.log(name, "has been deleted");
-    await del(name);
+
+  removeItem: async (key: string) => {
+    if (!isBrowser) return;
+    await del(key);
   },
 };
