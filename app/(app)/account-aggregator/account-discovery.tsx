@@ -56,9 +56,11 @@ const AccountDiscoveryScreen = () => {
 
   useEffect(() => {
     const onBackPress = () => {
-      if (router.canGoBack() && discoveredAccounts.length > 0) {
+      if (discoveredAccounts.length > 0) {
         resetDiscoveredAccounts();
         resetFips();
+      }
+      if (router.canGoBack()) {
         router.back(); // then go back
       }
       return true; // prevent default back

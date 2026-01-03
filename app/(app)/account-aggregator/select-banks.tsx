@@ -99,7 +99,7 @@ export default function SelectBanksScreen() {
           console.log("session_id status ->", sessionResponse.status);
 
           if (sessionResponse.status === "ok") {
-            router.navigate("/(app)/account-aggregator/account-discovery");
+            router.replace("/(app)/account-aggregator/account-discovery");
           }
         } catch (error) {
           presentBottomSheetModal();
