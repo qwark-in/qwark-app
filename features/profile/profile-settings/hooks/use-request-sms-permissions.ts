@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { PermissionsAndroid } from "react-native";
+import { PermissionsAndroid, Platform } from "react-native";
 import { useSettigsStore } from "data/stores/settings-store";
 import { requestPermissions } from "../helpers";
 
@@ -10,6 +10,11 @@ export const useRequestSmsPermissions = () => {
   );
 
   useEffect(() => {
+    // skip sms permission for web app
+    if (Platform.OS === "web") {
+      return;
+    }
+
     const request = async () => {
       const result = await requestPermissions();
       if (result) {

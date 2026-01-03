@@ -1,4 +1,4 @@
-import { FlatList, useWindowDimensions } from "react-native";
+import { FlatList, Platform, useWindowDimensions } from "react-native";
 import { View, YStack, Image } from "tamagui";
 import QwarkLogoWithTextMd from "ui/assets/logos/QwarkLogoWithTextMd";
 import { SliderPagination } from "ui/display/slider/SliderPagination";
@@ -31,11 +31,18 @@ export const AuthWelcomeCarousal = () => {
         viewabilityConfig={viewConfig}
         // This is an escape hatch to make the container of the Flatlist item grow.
         // By default it doesn't.
-        CellRendererComponent={({ children, style, ...handlers }) => (
-          <View style={style} flexGrow={1} {...handlers}>
-            {children}
-          </View>
-        )}
+        CellRendererComponent={({ children, style, ...handlers }) => {
+          const { cellKey, ...handlersWithoutCellKey } = handlers;
+
+          // This is done to mitigate cellKey error on DOM for web
+          const finalHandlers = Platform.OS === "web" ? handlersWithoutCellKey : handlers;
+
+          return (
+            <View style={style} flexGrow={1} {...finalHandlers}>
+              {children}
+            </View>
+          );
+        }}
       />
 
       <SliderPagination
