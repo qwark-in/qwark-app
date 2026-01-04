@@ -4,6 +4,8 @@ import { Separator, View, XStack, YStack } from "tamagui";
 import { capitalize } from "helpers/capitalize";
 import { Icon } from "ui/assets/icons/adaptive";
 import { BodyText, TitleText } from "ui/display/typography";
+import { Entity } from "data/models/financial-profile";
+import { useRouter } from "expo-router";
 
 // -------------------------
 // Types
@@ -11,6 +13,7 @@ import { BodyText, TitleText } from "ui/display/typography";
 
 type ConnectedAccountsCardProps = {
   fip_name: string;
+  asset_class_id: Entity;
   accounts: {
     account_number: string;
     account_type: string;
@@ -23,10 +26,17 @@ type ConnectedAccountsCardProps = {
 export const ConnectedAccountsCard: React.FC<ConnectedAccountsCardProps> = ({
   accounts,
   fip_name,
+  asset_class_id,
 }) => {
+  const router = useRouter();
   const numberOfAccounts = accounts.length;
 
-  const handlePress = () => {};
+  const handlePress = (account_number: string) => {
+    router.navigate({
+      pathname: "/profile/account-details",
+      params: { asset_class_id: asset_class_id, account_number: account_number },
+    });
+  };
 
   return (
     <View mb="$6">
@@ -50,7 +60,7 @@ export const ConnectedAccountsCard: React.FC<ConnectedAccountsCardProps> = ({
               key={`${acc.account_number}-${index}`}
               account_number={acc.account_number}
               account_type={acc.account_type}
-              onPress={handlePress}
+              onPress={() => handlePress(acc.account_number)}
             />
           ))}
         </YStack>

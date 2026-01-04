@@ -30,6 +30,7 @@ export default function LinkedInvestmentsScreen() {
           <ConnectedAccountsCard
             key={item.fip_id}
             fip_name={item.fip_name}
+            asset_class_id={item.asset_class_id}
             accounts={item.accounts.map((acc) => ({
               account_number:
                 item.asset_class_id === "EQUITIES"

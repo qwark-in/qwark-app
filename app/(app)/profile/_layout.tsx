@@ -32,6 +32,13 @@ export default function StackLayout() {
           headerBackVisible: true,
         }}
       />
+      <Stack.Screen
+        name="account-details"
+        options={{
+          title: "",
+          headerBackVisible: true,
+        }}
+      />
     </Stack>
   );
 }

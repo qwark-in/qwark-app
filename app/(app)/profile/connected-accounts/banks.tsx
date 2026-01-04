@@ -26,6 +26,7 @@ export default function LinkedBanksScreen() {
           <ConnectedAccountsCard
             key={item.fip_id}
             fip_name={item.fip_name}
+            asset_class_id={item.asset_class_id}
             accounts={item.accounts.map((acc) => ({
               account_number: acc.accountDetails.account_number,
               account_type: acc.accountDetails.account_type,

@@ -6,6 +6,7 @@ import { checkSession } from "data/api/auth";
 export const useCheckAuthSession = () => {
   const authData = useAuthStore((store) => store.authData);
   const setToken = useAuthStore((store) => store.setToken);
+  const setCodeVerifier = useAuthStore((store) => store.setCodeVerifier);
   const toast = useToastController();
 
   useEffect(() => {
@@ -24,6 +25,7 @@ export const useCheckAuthSession = () => {
       } catch (err) {
         toast.show("Session expired. Login again");
         setToken(null);
+        setCodeVerifier(null);
       }
     })();
   }, [authData]);
