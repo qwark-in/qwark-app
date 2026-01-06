@@ -4,6 +4,15 @@ import { getRedirectURL } from "../helpers/getRedirectURL";
 import { API_BASE_URL } from "data/api/auth/constants";
 import { AuthType } from "../types";
 
+const getBaseURL = (): string => {
+  const BASE_URL = process.env.EXPO_PUBLIC_DEV_API_BASE_URL;
+  if (BASE_URL) {
+    return BASE_URL;
+  } else {
+    throw new Error("EXPO_PUBLIC_DEV_API_BASE_URL not set in environment");
+  }
+};
+
 export const useAuthURL = () => {
   const setCodeVerifier = useAuthStore((store) => store.setCodeVerifier);
 
@@ -17,7 +26,7 @@ export const useAuthURL = () => {
     });
 
     const loginURL = new URL(
-      `${API_BASE_URL}/${type === "LOGIN" ? "login" : "sign_up"}?${params}`
+      `${getBaseURL()}/${type === "LOGIN" ? "login" : "sign_up"}?${params}`
     );
 
     return loginURL;
