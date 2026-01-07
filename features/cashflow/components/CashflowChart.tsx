@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Platform, useWindowDimensions } from "react-native";
+import React, { useEffect } from "react";
 import { View, XStack } from "tamagui";
 import { format, isAfter, isWithinInterval } from "date-fns";
-import * as Haptics from "expo-haptics";
-import { getDataTotalByDuration, sortChartData, getPointerLabelWidth } from "../helpers";
+import { getDataTotalByDuration, sortChartData } from "../helpers";
 import { getChartData } from "../helpers/getChartData";
 import { CashFlow } from "data/models/dashboard";
 import { useCashflowScreenStore } from "../store/CashflowScreenStore";
@@ -22,7 +20,9 @@ type CashflowChartProps = {
 };
 
 export const CashflowChart: React.FC<CashflowChartProps> = ({ cashflow }) => {
-  const appliedFilters = useCashflowScreenStore((store) => store.appliedFilters);
+  const appliedFilters = useCashflowScreenStore(
+    (store) => store.appliedFilters
+  );
   const setDuration = useCashflowScreenStore((store) => store.setDuration);
 
   const data = cashflow.flatMap((item) =>
