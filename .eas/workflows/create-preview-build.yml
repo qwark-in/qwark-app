@@ -2,14 +2,15 @@ name: Create Preview Builds
 
 on:
   push:
-    branches: ["master"]
+    branches:
+      - "master"
+    tags:
+      - "preview*"
 
-  tags: ["v1-preview"]
-
-  jobs:
-    build_android_preview:
-      name: Build Anroid Preview
-      type: build
-      params:
-        platform: android
-        profile: preview
+jobs:
+  build_android:
+    name: Build Android Preview
+    type: build
+    params:
+      platform: android
+      profile: preview
