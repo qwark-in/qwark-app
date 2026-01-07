@@ -8,11 +8,17 @@ import { TransactionList } from "features/cashflow/components/TransactionList";
 import { activeTabMap } from "features/cashflow/constants";
 import { useCashflowScreenStore } from "features/cashflow/store/CashflowScreenStore";
 import { Icon } from "ui/assets/icons/adaptive";
-import { PillSelectorList, usePillSelector } from "ui/controls/selectors/pill-selector";
+import {
+  PillSelectorList,
+  usePillSelector,
+} from "ui/controls/selectors/pill-selector";
+import { BankLogo } from "ui/display/bank-logo/BankLogo";
 
 export default function CashflowScreen() {
   const scrollRef = useRef<ScrollView>(null);
-  const isPointerEnabled = useCashflowScreenStore((store) => store.isPointerEnabled);
+  const isPointerEnabled = useCashflowScreenStore(
+    (store) => store.isPointerEnabled
+  );
   const cashflow = useDashboardStore((store) => store.cashflow);
   const activeTab = useCashflowScreenStore((store) => store.activeTab);
 
@@ -36,8 +42,10 @@ export default function CashflowScreen() {
 
   const banks = cashflow.map((item) => ({
     title:
-      item.accountDetails.fipName + " | " + item.accountDetails.accountNumber.slice(-4),
-    icon: <Icon name="bank-logo-placeholder" size="md" />,
+      item.accountDetails.fipName +
+      " | " +
+      item.accountDetails.accountNumber.slice(-4),
+    icon: <BankLogo fipId={item.accountDetails.fipId} />,
   }));
 
   const pills = [
@@ -51,7 +59,9 @@ export default function CashflowScreen() {
     )
     .map((item) => ({
       ...item,
-      transactions: item.transactions.filter((t) => t.type === activeTabMap[activeTab]),
+      transactions: item.transactions.filter(
+        (t) => t.type === activeTabMap[activeTab]
+      ),
     }));
 
   useEffect(() => {
@@ -70,7 +80,11 @@ export default function CashflowScreen() {
       <CashflowTopTabs />
 
       <View px="$5">
-        <PillSelectorList pills={pills} onSelect={onSelect} selected={selected} />
+        <PillSelectorList
+          pills={pills}
+          onSelect={onSelect}
+          selected={selected}
+        />
         <Total cashflow={filteredCashflow} />
         <CashflowChart cashflow={filteredCashflow} />
       </View>

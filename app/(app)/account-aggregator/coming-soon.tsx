@@ -10,6 +10,7 @@ import { CheckRound } from "ui/assets/icons/fixed-color";
 import { SharedProgressbar } from "features/account-aggregator/components/shared/SharedProgressBar";
 import { FilledButton } from "ui/controls/buttons";
 import { CamsfinservLogo } from "ui/assets/logos";
+import { BankLogo } from "ui/display/bank-logo/BankLogo";
 
 type ComingSoonBankType = {
   fip_name: string;
@@ -28,8 +29,12 @@ const comingSoonBanks: ComingSoonBankType[] = [
 
 export default function ComingSoonScreen() {
   const router = useRouter();
-  const subscribedBanks = useFinancialProfileStore((store) => store.subscribedBanks);
-  const subscribeBank = useFinancialProfileStore((store) => store.subscribeBank);
+  const subscribedBanks = useFinancialProfileStore(
+    (store) => store.subscribedBanks
+  );
+  const subscribeBank = useFinancialProfileStore(
+    (store) => store.subscribeBank
+  );
   const toast = useToastController();
 
   const handleSubscribeBank = (fip_name: string) => {
@@ -63,7 +68,7 @@ export default function ComingSoonScreen() {
         bg="#FFF"
         pos="relative"
       >
-        <Icon name="bank-logo-placeholder" size="md" />
+        <BankLogo fipId={item.fip_name} />
         <View flex={1} fd="row" ai="flex-start">
           <TitleText numberOfLines={1} ellipsizeMode="tail">
             {item.fip_name}
@@ -86,7 +91,11 @@ export default function ComingSoonScreen() {
           >
             {({ pressed }) => {
               return (
-                <Icon name="bell" size="md" color={pressed ? "#001484" : "#697077"} />
+                <Icon
+                  name="bell"
+                  size="md"
+                  color={pressed ? "#001484" : "#697077"}
+                />
               );
             }}
           </Pressable>
@@ -101,7 +110,10 @@ export default function ComingSoonScreen() {
       return true; // prevent default back
     };
 
-    const subscription = BackHandler.addEventListener("hardwareBackPress", onBackPress);
+    const subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      onBackPress
+    );
 
     return () => subscription.remove(); // cleanup on unmount
   }, []);

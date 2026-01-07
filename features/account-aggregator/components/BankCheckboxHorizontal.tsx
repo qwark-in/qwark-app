@@ -4,6 +4,7 @@ import { Icon } from "ui/assets/icons/adaptive";
 import { Checkbox } from "ui/controls/inputs";
 import { TitleText } from "ui/display/typography";
 import { FipDataType, SelectedBankType } from "data/models/account-aggregator";
+import { BankLogo } from "ui/display/bank-logo/BankLogo";
 
 type BankCheckboxHorizontalProps = {
   checked: boolean;
@@ -11,8 +12,8 @@ type BankCheckboxHorizontalProps = {
   handleSelectedBanks: (fip: SelectedBankType) => void;
 };
 
-export const BankCheckboxHorizontal: React.FC<BankCheckboxHorizontalProps> = React.memo(
-  ({ bank, checked, handleSelectedBanks }) => {
+export const BankCheckboxHorizontal: React.FC<BankCheckboxHorizontalProps> =
+  React.memo(({ bank, checked, handleSelectedBanks }) => {
     const handlePress = () => {
       handleSelectedBanks(bank);
     };
@@ -32,7 +33,7 @@ export const BankCheckboxHorizontal: React.FC<BankCheckboxHorizontalProps> = Rea
         pos="relative"
         onPress={handlePress}
       >
-        <Icon name="bank-logo-placeholder" size="md" />
+        <BankLogo fipId={bank.fip_id} />
         <View flex={1} fd="row" ai="flex-start">
           <TitleText numberOfLines={1} ellipsizeMode="tail">
             {bank.fip_name}
@@ -41,5 +42,4 @@ export const BankCheckboxHorizontal: React.FC<BankCheckboxHorizontalProps> = Rea
         <Checkbox checked={checked} borderHidden />
       </View>
     );
-  }
-);
+  });

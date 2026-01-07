@@ -3,9 +3,13 @@ import { CashflowCard } from "./CashflowCard";
 import { useMemo } from "react";
 import { useRouter } from "expo-router";
 import { CashFlow } from "data/models/dashboard";
-import { PillSelectorList, usePillSelector } from "ui/controls/selectors/pill-selector";
+import {
+  PillSelectorList,
+  usePillSelector,
+} from "ui/controls/selectors/pill-selector";
 import { useCashflowScreenStore } from "features/cashflow/store/CashflowScreenStore";
 import { Icon } from "ui/assets/icons/adaptive";
+import { BankLogo } from "ui/display/bank-logo/BankLogo";
 
 export const CashflowList = ({ cashflow }: { cashflow: CashFlow[] }) => {
   const router = useRouter();
@@ -16,7 +20,9 @@ export const CashflowList = ({ cashflow }: { cashflow: CashFlow[] }) => {
     () =>
       cashflow
         .filter((account) =>
-          selected === "All" ? true : selected.includes(account.accountDetails.fipName)
+          selected === "All"
+            ? true
+            : selected.includes(account.accountDetails.fipName)
         )
         .flatMap((account) =>
           account.transactions
@@ -31,7 +37,9 @@ export const CashflowList = ({ cashflow }: { cashflow: CashFlow[] }) => {
     () =>
       cashflow
         .filter((account) =>
-          selected === "All" ? true : selected.includes(account.accountDetails.fipName)
+          selected === "All"
+            ? true
+            : selected.includes(account.accountDetails.fipName)
         )
         .flatMap((account) =>
           account.transactions
@@ -44,11 +52,16 @@ export const CashflowList = ({ cashflow }: { cashflow: CashFlow[] }) => {
 
   const banks = cashflow.map((item) => ({
     title:
-      item.accountDetails.fipName + " | " + item.accountDetails.accountNumber.slice(-4),
-    icon: <Icon name="bank-logo-placeholder" />,
+      item.accountDetails.fipName +
+      " | " +
+      item.accountDetails.accountNumber.slice(-4),
+    icon: <BankLogo fipId={item.accountDetails.fipId} />,
   }));
 
-  const pills = [{ title: "All", icon: <Icon name="bank-logo-placeholder" /> }, ...banks];
+  const pills = [
+    { title: "All", icon: <Icon name="bank-logo-placeholder" /> },
+    ...banks,
+  ];
 
   return (
     <View pt="$3">

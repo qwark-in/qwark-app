@@ -7,6 +7,7 @@ import { AccountAggregatorState, useAAStore } from "data/stores/aa-store";
 import { Icon } from "ui/assets/icons/adaptive";
 import { Checkbox } from "ui/controls/inputs";
 import { BodyText, TitleText } from "ui/display/typography";
+import { BankLogo } from "ui/display/bank-logo/BankLogo";
 
 type AccountSelectionCardProps = {
   fip_id: string;
@@ -25,7 +26,9 @@ export const AccountSelectionCard: React.FC<AccountSelectionCardProps> = ({
   const setSelectedAccounts = useAAStore((store) => store.setSelectedAccounts);
 
   const numberOfSelectedAccounts = selectedAccounts.filter((item) =>
-    accounts.map((item) => item.account_ref_number).includes(item.account_ref_number)
+    accounts
+      .map((item) => item.account_ref_number)
+      .includes(item.account_ref_number)
   ).length;
 
   const onAccountSelect = (
@@ -38,7 +41,7 @@ export const AccountSelectionCard: React.FC<AccountSelectionCardProps> = ({
     <View mt="$6">
       <View bw={1} br="$4" boc="$stroke/disabled">
         <XStack p="$4" gap="$3" ai="center">
-          <Icon name="bank-logo-placeholder" size="md" />
+          <BankLogo fipId={fip_id} />
           <YStack jc="space-between">
             <TitleText>{fip_name}</TitleText>
             {numberOfSelectedAccounts ? (

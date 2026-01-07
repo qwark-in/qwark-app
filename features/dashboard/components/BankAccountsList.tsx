@@ -5,6 +5,7 @@ import { BodyText, TitleText } from "ui/display/typography";
 import { AnimatedRollingNumber } from "ui/display/animated-rolling-number/AnimatedRollingNumber";
 import { CashFlow } from "data/models/dashboard";
 import { MiniChart } from "./MiniChart";
+import { BankLogo } from "ui/display/bank-logo/BankLogo";
 
 export const BankAccountsList = ({ cashflow }: { cashflow: CashFlow[] }) => {
   return (
@@ -29,7 +30,7 @@ const BankAccountsListItem = ({ details }: { details: CashFlow }) => {
     <View bg="#FFF" px="$3" py="$4" br="$4" boc="$stroke/disabled" bw={1}>
       <XStack gap="$1">
         <View h="$12" w="$12" jc="center" ai="center">
-          <Icon name="bank-logo-placeholder" />
+          <BankLogo fipId={details.accountDetails.fipId} />
         </View>
         <YStack>
           <TitleText>{details.accountDetails.fipName}</TitleText>

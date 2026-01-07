@@ -34,7 +34,10 @@ export const ConnectedAccountsCard: React.FC<ConnectedAccountsCardProps> = ({
   const handlePress = (account_number: string) => {
     router.navigate({
       pathname: "/profile/account-details",
-      params: { asset_class_id: asset_class_id, account_number: account_number },
+      params: {
+        asset_class_id: asset_class_id,
+        account_number: account_number,
+      },
     });
   };
 
