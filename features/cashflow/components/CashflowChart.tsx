@@ -34,13 +34,16 @@ export const CashflowChart: React.FC<CashflowChartProps> = ({ cashflow }) => {
       .map((a) => ({ value: a.amount, date: a.date }))
   );
 
-  const dataTotalByDate = getDataTotalByDuration(data, appliedFilters.duration);
+  const dataTotalByDate = getDataTotalByDuration(data, appliedFilters.duration, {
+    startDate: appliedFilters.dates.fromDate.toISOString(),
+    endDate: appliedFilters.dates.toDate.toISOString(),
+  });
   const dataSorted = sortChartData(dataTotalByDate);
   const chartData = getChartData(dataSorted);
 
   // Chart X-axis labels
-  const startLabel = format(appliedFilters.dates.fromDate, "dd MMM");
-  const endLabel = format(appliedFilters.dates.toDate, "dd MMM");
+  const startLabel = format(appliedFilters.dates.fromDate, "dd MMM yy");
+  const endLabel = format(appliedFilters.dates.toDate, "dd MMM yy");
 
   useEffect(() => {
     const lastTransactionDate = cashflow

@@ -9,167 +9,141 @@ import {
 
 type Input = { date: string; value: number };
 
-const getTotalBalanceByDate = (
-  data: Input[]
-): {
-  date: string;
-  value: number;
-}[] => {
-  if (data.length === 0) return [];
+type Dates = { startDate: string; endDate: string };
 
-  // Step 1: Aggregate amounts per date
+const getTotalBalanceByDate = (
+  data: Input[],
+  appliedDates: Dates
+): { date: string; value: number }[] => {
   const result: Record<string, number> = {};
+
   data.forEach((item) => {
-    const date = parseISO(item.date).toISOString().split("T")[0];
-    result[date] = (result[date] || 0) + item.value;
+    const key = parseISO(item.date).toISOString().split("T")[0];
+    result[key] = (result[key] || 0) + item.value;
   });
 
-  // Step 2: Find start and end dates
-  const dates = data.map((d) => parseISO(d.date));
-  const startDate = new Date(Math.min(...dates.map((d) => d.getTime())));
-  const endDate = new Date(Math.max(...dates.map((d) => d.getTime())));
+  const start = parseISO(appliedDates.startDate);
+  const end = parseISO(appliedDates.endDate);
 
-  // Step 3: Fill missing dates with amount 0
-  const filledDates: { date: string; value: number }[] = [];
-  eachDayOfInterval({ start: startDate, end: endDate }).forEach((d) => {
+  return eachDayOfInterval({ start, end }).map((d) => {
     const key = d.toISOString().split("T")[0];
-    filledDates.push({
+    return {
       date: d.toISOString(),
       value: result[key] || 0,
-    });
+    };
   });
-
-  return filledDates;
 };
 
 const getTotalBalanceByWeek = (
-  data: Input[]
-): {
-  week: string;
-  value: number;
-}[] => {
-  if (data.length === 0) return [];
-
-  // Parse all dates
-  const parsed = data.map((item) => ({
-    ...item,
-    date: parseISO(item.date),
-  }));
-
-  // Group amounts into fixed 4 buckets per month
+  data: Input[],
+  appliedDates: Dates
+): { week: string; value: number }[] => {
   const result: Record<string, number> = {};
 
-  parsed.forEach((item) => {
-    const day = getDate(item.date);
-    const month = format(item.date, "MMM");
+  data.forEach((item) => {
+    const date = parseISO(item.date);
+    const day = getDate(date);
+    const monthKey = format(date, "yyyy-MM");
+    const monthLabel = format(date, "MMM");
 
-    let weekNum: number;
-    if (day <= 7) weekNum = 1;
-    else if (day <= 14) weekNum = 2;
-    else if (day <= 21) weekNum = 3;
-    else weekNum = 4;
+    const weekNum = day <= 7 ? 1 : day <= 14 ? 2 : day <= 21 ? 3 : 4;
 
-    const weekLabel = `${month}: week ${String(weekNum)}`;
-
-    result[weekLabel] = (result[weekLabel] || 0) + item.value;
+    const key = `${monthKey}|${weekNum}|${monthLabel}`;
+    result[key] = (result[key] || 0) + item.value;
   });
 
-  // Build final array (ensures weeks are in correct order)
-  const uniqueMonths = Array.from(
-    new Set(parsed.map((item) => format(item.date, "yyyy-MM")))
-  );
+  const start = parseISO(appliedDates.startDate);
+  const end = parseISO(appliedDates.endDate);
 
   const output: { week: string; value: number }[] = [];
 
-  uniqueMonths.forEach((monthKey) => {
-    const monthDate = parseISO(monthKey + "-01");
-    const monthLabel = format(monthDate, "MMM");
+  let cursor = new Date(start);
 
-    for (let i = 1; i <= 4; i++) {
-      const weekLabel = `${monthLabel}: week ${String(i)}`;
+  while (cursor <= end) {
+    const monthKey = format(cursor, "yyyy-MM");
+    const monthLabel = format(cursor, "MMM");
+
+    for (let week = 1; week <= 4; week++) {
+      const key = `${monthKey}|${week}|${monthLabel}`;
       output.push({
-        week: weekLabel,
-        value: result[weekLabel] || 0,
+        week: `${monthLabel}: week ${week}`,
+        value: result[key] || 0,
       });
     }
-  });
+
+    cursor.setMonth(cursor.getMonth() + 1);
+  }
 
   return output;
 };
 
 const getTotalBalanceByMonth = (
-  data: Input[]
-): {
-  month: string; // e.g. "Aug"
-  value: number;
-}[] => {
-  if (data.length === 0) return [];
-
-  // Parse and group
-  const grouped: Record<string, number> = {};
+  data: Input[],
+  appliedDates: Dates
+): { month: string; value: number }[] => {
+  const result: Record<string, number> = {};
 
   data.forEach((item) => {
     const date = parseISO(item.date);
-    const monthKey = format(date, "yyyy-MM"); // for ordering
-    const monthLabel = format(date, "MMM"); // display label
-
-    const key = `${monthKey}|${monthLabel}`;
-    grouped[key] = (grouped[key] || 0) + item.value;
+    const key = format(date, "yyyy-MM");
+    result[key] = (result[key] || 0) + item.value;
   });
 
-  // Sort by month (chronologically)
-  const sortedKeys = Object.keys(grouped).sort();
+  const start = parseISO(appliedDates.startDate);
+  const end = parseISO(appliedDates.endDate);
 
-  return sortedKeys.map((key) => {
-    const [_, label] = key.split("|");
-    return {
-      month: label,
-      value: grouped[key],
-    };
-  });
+  const output: { month: string; value: number }[] = [];
+
+  let cursor = new Date(start);
+  cursor.setDate(1);
+
+  while (cursor <= end) {
+    const key = format(cursor, "yyyy-MM");
+    output.push({
+      month: format(cursor, "MMM yyyy"),
+      value: result[key] || 0,
+    });
+
+    cursor.setMonth(cursor.getMonth() + 1);
+  }
+
+  return output;
 };
 
-const getTotalBalanceByCustomDates = (
-  data: Input[]
-):
-  | { date: string; value: number }[]
-  | { week: string; value: number }[]
-  | { month: string; value: number }[] => {
-  if (data.length === 0) return [];
+const getTotalBalanceByCustomDates = (data: Input[], appliedDates: Dates) => {
+  const start = parseISO(appliedDates.startDate);
+  const end = parseISO(appliedDates.endDate);
 
-  // Parse dates to find interval length
-  const parsedDates = data.map((d) => parseISO(d.date));
-  const minDate = new Date(Math.min(...parsedDates.map((d) => d.getTime())));
-  const maxDate = new Date(Math.max(...parsedDates.map((d) => d.getTime())));
-
-  // Calculate interval in months
-  const monthsDiff = differenceInMonths(maxDate, minDate);
+  const monthsDiff = differenceInMonths(end, start);
 
   if (monthsDiff < 1) {
-    // Interval under 1 month → daily data
-    return getTotalBalanceByDate(data);
-  } else if (monthsDiff <= 6) {
-    // Interval between 1 and 6 months → weekly data
-    return getTotalBalanceByWeek(data);
-  } else {
-    // Interval greater than 6 months → monthly data
-    return getTotalBalanceByMonth(data);
+    return getTotalBalanceByDate(data, appliedDates);
   }
+
+  if (monthsDiff <= 6) {
+    return getTotalBalanceByWeek(data, appliedDates);
+  }
+
+  return getTotalBalanceByMonth(data, appliedDates);
 };
 
-export const getDataTotalByDuration = (data: Input[], duration: DurationType) => {
+export const getDataTotalByDuration = (
+  data: Input[],
+  duration: DurationType,
+  dates: Dates
+) => {
   switch (duration) {
     case "1M":
-      return getTotalBalanceByDate(data);
+      return getTotalBalanceByDate(data, dates);
 
     case "3M":
     case "6M":
-      return getTotalBalanceByWeek(data);
+      return getTotalBalanceByWeek(data, dates);
 
     case "1Y":
-      return getTotalBalanceByMonth(data);
+      return getTotalBalanceByMonth(data, dates);
 
     default:
-      return getTotalBalanceByCustomDates(data);
+      return getTotalBalanceByCustomDates(data, dates);
   }
 };
