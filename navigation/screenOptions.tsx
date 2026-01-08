@@ -3,7 +3,6 @@ import { CustomHeader } from "./CustomHeader";
 
 export const screenOptions: NativeStackNavigationOptions = {
   statusBarStyle: "dark",
-  statusBarTranslucent: true,
   statusBarBackgroundColor: "#fff",
   header: (props) => <CustomHeader {...props} />,
 };

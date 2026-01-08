@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { getAnalytics } from "@react-native-firebase/analytics";
-import { useCashflowScreenStore } from "../store/CashflowScreenStore";
+import { useCashflowScreenStore } from "../store/cashflow-screen-store";
 import { Category } from "../types";
 import { AnimatedTabType, AnimatedTopTabs } from "ui/layout/AnimatedTopTabs";
 

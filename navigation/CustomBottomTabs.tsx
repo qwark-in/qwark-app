@@ -73,12 +73,10 @@ const AnimatedIcon = ({ isFocused, tabBarIcon, color }) => {
   const scale = useSharedValue(1);
 
   useEffect(() => {
-    scale.value = withSequence(
-      withTiming(isFocused ? 1.2 : 1, {
-        duration: 300,
-        easing: Easing.out(Easing.cubic),
-      })
-    );
+    scale.value = withTiming(isFocused ? 1.2 : 1, {
+      duration: 300,
+      easing: Easing.out(Easing.cubic),
+    });
   }, [isFocused]);
 
   const animatedStyle = useAnimatedStyle(() => ({

@@ -7,7 +7,6 @@ import { startOfMonth, subMonths } from "date-fns";
 export type CashflowTab = "EXPENSES" | "INCOMES";
 
 type CashflowScreenState = {
-  isPointerEnabled: boolean;
   activeTab: CashflowTab;
 
   // Filter State
@@ -23,7 +22,6 @@ type CashflowScreenState = {
 
 type CashflowScreenActions = {
   setActiveTab: (tab: "EXPENSES" | "INCOMES") => void;
-  setIsPointerEnabled: (isPointerEnabled: boolean) => void;
   setDuration: (duration: DurationType, toDate: Date) => void;
   setCustomDates: (dates: DatesType) => void;
 
@@ -61,12 +59,6 @@ export const useCashflowScreenStore = create<
           state.activeTab = tab;
         });
       },
-      setIsPointerEnabled: (isPointerEnabled) => {
-        set((state) => {
-          state.isPointerEnabled = isPointerEnabled;
-        });
-      },
-
       setDuration: (duration, toDate) => {
         set((state) => {
           if (duration === "CUSTOM_DATES") {

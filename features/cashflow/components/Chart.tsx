@@ -1,4 +1,4 @@
-import { useCashflowScreenStore } from "../store/CashflowScreenStore";
+import { useCashflowScreenStore } from "../store/cashflow-screen-store";
 import { View } from "tamagui";
 import { Bar, CartesianChart, useChartPressState } from "victory-native";
 import {

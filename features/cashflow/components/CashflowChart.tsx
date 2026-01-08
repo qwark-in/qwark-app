@@ -4,7 +4,7 @@ import { format, isAfter, isWithinInterval } from "date-fns";
 import { getDataTotalByDuration, sortChartData } from "../helpers";
 import { getChartData } from "../helpers/getChartData";
 import { CashFlow } from "data/models/dashboard";
-import { useCashflowScreenStore } from "../store/CashflowScreenStore";
+import { useCashflowScreenStore } from "../store/cashflow-screen-store";
 import { BodyText, TitleText } from "ui/display/typography";
 import { timeframes } from "features/dashboard/constants";
 import { TimeframeSelector } from "features/dashboard/components/TimeframeSelectorCustom";
@@ -20,9 +20,7 @@ type CashflowChartProps = {
 };
 
 export const CashflowChart: React.FC<CashflowChartProps> = ({ cashflow }) => {
-  const appliedFilters = useCashflowScreenStore(
-    (store) => store.appliedFilters
-  );
+  const appliedFilters = useCashflowScreenStore((store) => store.appliedFilters);
   const setDuration = useCashflowScreenStore((store) => store.setDuration);
 
   const data = cashflow.flatMap((item) =>

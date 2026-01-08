@@ -1,5 +1,5 @@
 import { XStack, YStack } from "tamagui";
-import { useCashflowScreenStore } from "../store/CashflowScreenStore";
+import { useCashflowScreenStore } from "../store/cashflow-screen-store";
 import { CashFlow } from "data/models/dashboard";
 import { BodyText } from "ui/display/typography";
 import { capitalize } from "helpers/capitalize";

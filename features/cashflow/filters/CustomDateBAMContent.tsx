@@ -2,7 +2,7 @@ import { View, XStack } from "tamagui";
 import { DatesType } from "../../dashboard/types";
 import { CustomDatePicker } from "./CustomDatePicker";
 import { isAfter, isBefore } from "date-fns";
-import { useCashflowScreenStore } from "../store/CashflowScreenStore";
+import { useCashflowScreenStore } from "../store/cashflow-screen-store";
 import { useDashboardStore } from "data/stores/dashboard-store";
 
 type CustomDateBAMContentProps = {};

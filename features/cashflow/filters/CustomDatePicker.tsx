@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Platform, TouchableOpacity } from "react-native";
 import { Input, View, XStack } from "tamagui";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { LabelText } from "ui/display/typography";
 import { IconButton } from "ui/controls/buttons";
 import { DatePicker } from "ui/controls/inputs/DatePicker";
@@ -38,14 +37,7 @@ export const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
             }
           }}
         >
-          <XStack
-            p={0}
-            pb="$2"
-            ai="center"
-            jc="space-between"
-            bbw={1}
-            bbc={"#6F6F6F"}
-          >
+          <XStack p={0} pb="$2" ai="center" jc="space-between" bbw={1} bbc={"#6F6F6F"}>
             <Input
               value={
                 value &&

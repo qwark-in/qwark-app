@@ -6,19 +6,13 @@ import { CashflowTopTabs } from "features/cashflow/components/CashflowTopTabs";
 import { Total } from "features/cashflow/components/Total";
 import { TransactionList } from "features/cashflow/components/TransactionList";
 import { activeTabMap } from "features/cashflow/constants";
-import { useCashflowScreenStore } from "features/cashflow/store/CashflowScreenStore";
+import { useCashflowScreenStore } from "features/cashflow/store/cashflow-screen-store";
 import { Icon } from "ui/assets/icons/adaptive";
-import {
-  PillSelectorList,
-  usePillSelector,
-} from "ui/controls/selectors/pill-selector";
+import { PillSelectorList, usePillSelector } from "ui/controls/selectors/pill-selector";
 import { BankLogo } from "ui/display/bank-logo/BankLogo";
 
 export default function CashflowScreen() {
   const scrollRef = useRef<ScrollView>(null);
-  const isPointerEnabled = useCashflowScreenStore(
-    (store) => store.isPointerEnabled
-  );
   const cashflow = useDashboardStore((store) => store.cashflow);
   const activeTab = useCashflowScreenStore((store) => store.activeTab);
 
@@ -42,9 +36,7 @@ export default function CashflowScreen() {
 
   const banks = cashflow.map((item) => ({
     title:
-      item.accountDetails.fipName +
-      " | " +
-      item.accountDetails.accountNumber.slice(-4),
+      item.accountDetails.fipName + " | " + item.accountDetails.accountNumber.slice(-4),
     icon: <BankLogo fipId={item.accountDetails.fipId} />,
   }));
 
@@ -59,9 +51,7 @@ export default function CashflowScreen() {
     )
     .map((item) => ({
       ...item,
-      transactions: item.transactions.filter(
-        (t) => t.type === activeTabMap[activeTab]
-      ),
+      transactions: item.transactions.filter((t) => t.type === activeTabMap[activeTab]),
     }));
 
   useEffect(() => {
@@ -71,7 +61,6 @@ export default function CashflowScreen() {
   return (
     <ScrollView
       ref={scrollRef}
-      scrollEnabled={!isPointerEnabled}
       stickyHeaderIndices={[0]}
       flex={1}
       showsVerticalScrollIndicator={false}
@@ -80,11 +69,7 @@ export default function CashflowScreen() {
       <CashflowTopTabs />
 
       <View px="$5">
-        <PillSelectorList
-          pills={pills}
-          onSelect={onSelect}
-          selected={selected}
-        />
+        <PillSelectorList pills={pills} onSelect={onSelect} selected={selected} />
         <Total cashflow={filteredCashflow} />
         <CashflowChart cashflow={filteredCashflow} />
       </View>
