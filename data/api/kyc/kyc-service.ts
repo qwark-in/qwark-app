@@ -10,7 +10,7 @@ const IS_KYC_MOCK = process.env.EXPO_PUBLIC_FEATURE_MOCK_KYC_API === "true";
 const getKYCStatusMock = async (pan: string): Promise<GetKYCStatusResponse> => {
   const response = {
     data: {
-      verified: false,
+      verified: true,
     },
     status: 200,
     statusText: "OK",
