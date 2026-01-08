@@ -39,7 +39,11 @@ export const MutualFundsHoldingsList: React.FC<MutualFundsHoldingsListProps> = (
     bottomSheetModalRef: bottomSheetModalRefSip,
     presentBottomSheetModal: presentBottomSheetModalSip,
   } = useCustomBottomSheetModal();
-  const { selected, onSelect } = usePillSelector<typeof pills>("Holdings");
+
+  const pillsWithSips = pills.map((pill) =>
+    pill.title === "Active SIPs" ? { title: pill.title + ` (${sipData?.length})` } : pill
+  );
+  const { selected, onSelect } = usePillSelector<typeof pillsWithSips>("Holdings");
   const { value, onValueChange } =
     useRadioSelector<typeof holdingsSortRadioListData>("Alphabetical");
   const { value: valueSipSort, onValueChange: onValueChangeSipSort } =
@@ -80,7 +84,7 @@ export const MutualFundsHoldingsList: React.FC<MutualFundsHoldingsListProps> = (
                 />
               </XStack>
               <PillSelectorList
-                pills={pills}
+                pills={pillsWithSips}
                 selected={selected}
                 onSelect={onSelect}
                 textProps={{ fos: "$small" }}
