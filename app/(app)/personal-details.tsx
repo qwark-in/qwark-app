@@ -18,6 +18,9 @@ import { BodyText, TitleText } from "ui/display/typography";
 import { Icon } from "ui/assets/icons/adaptive";
 import { createUser } from "data/api";
 import { useToastController } from "@tamagui/toast";
+import { getKYCStatus } from "data/api/kyc/kyc-service";
+import { KYCBottomSheet } from "features/kyc/KYCBottomSheet";
+import useCustomBottomSheetModal from "hooks/use-custom-bottom-sheet-modal";
 
 const PAN_REGEX = /[A-Z]{5}[0-9]{4}[A-Z]{1}/;
 
@@ -45,6 +48,7 @@ const PersonalDetailsScreen = () => {
   const toast = useToastController();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const authData = useAuthStore((store) => store.authData)!;
+  const { bottomSheetModalRef, presentBottomSheetModal } = useCustomBottomSheetModal();
   const setIsOnboardingCompleted = useGlobalStore(
     (store) => store.setIsOnboardingCompleted
   );
@@ -73,6 +77,13 @@ const PersonalDetailsScreen = () => {
 
     try {
       // TODO: Call KYC API before creating user
+
+      const kycResponse = await getKYCStatus(data.pan);
+
+      if (!kycResponse.verified) {
+        presentBottomSheetModal();
+        return;
+      }
 
       const response = await createUser(
         {
@@ -194,6 +205,7 @@ const PersonalDetailsScreen = () => {
           </XStack>
         </View>
       </View>
+      <KYCBottomSheet bottomSheetModalRef={bottomSheetModalRef} />
     </View>
   );
 };
