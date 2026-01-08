@@ -121,13 +121,12 @@ export const Chart = ({
         xKey="date"
         yKeys={["value"]}
         padding={{ left: -5, right: -2 }}
-        domainPadding={{ left: 40, right: 40, top: 40 }}
+        domainPadding={{ left: 20, right: 20, top: 40 }}
         axisOptions={{ lineWidth: 0 }}
         frame={{ lineWidth: 0 }}
         chartPressState={state}
       >
         {({ points, chartBounds }) => {
-          // update bounds (no hooks here)
           chartLeft.value = chartBounds.left;
           chartRight.value = chartBounds.right;
 
@@ -137,7 +136,7 @@ export const Chart = ({
                 points={points.value}
                 chartBounds={chartBounds}
                 innerPadding={0.45}
-                roundedCorners={{ topLeft: 5, topRight: 5 }}
+                // roundedCorners={{ topLeft: 5, topRight: 5 }}
                 animate={{ type: "timing", duration: 500 }}
               >
                 <LinearGradient

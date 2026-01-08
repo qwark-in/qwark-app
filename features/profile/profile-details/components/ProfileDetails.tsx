@@ -23,12 +23,12 @@ const profileDetailsListItemsData: {
   subtitle: string;
 }[] = [
   { key: "name", subtitle: "Name" },
-  { key: "primaryPhone", subtitle: "Phone number" },
-  { key: "pan", subtitle: "Pan number" },
   { key: "dob", subtitle: "DOB" },
+  { key: "pan", subtitle: "Pan Number" },
+  { key: "primaryPhone", subtitle: "Mobile number" },
   { key: "email", subtitle: "Email address" },
-  { key: "marital_status", subtitle: "Marital status" },
   { key: "gender", subtitle: "Gender" },
+  { key: "marital_status", subtitle: "Marital status" },
 ];
 
 export const ProfileDetails: FC<ProfileDetailsProps> = (profileDetails) => {

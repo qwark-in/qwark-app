@@ -12,6 +12,7 @@ import { useSafeAreaPadding } from "hooks/use-safearea-padding";
 
 export default function Profile() {
   const name = useUserStore((state) => state.name);
+  const phone = useUserStore((state) => state.phone);
   const router = useRouter();
   const { safeAreaPadding } = useSafeAreaPadding();
 
@@ -19,14 +20,17 @@ export default function Profile() {
     <View flex={1} {...safeAreaPadding} bg="#FAFAFC">
       <YStack gap="$4" mt="$8" alignItems="center">
         <ProfileAvatar name={name} />
-        <View gap="$_5">
-          <TitleText size="$large" fow="$emphasized" color="$text/accent">
+        <View gap="$_5" ai="center">
+          <TitleText size="$large" fow="$emphasized" color="$text/primary">
             {computeUserFullName(name)}
           </TitleText>
+          <BodyText size="$large" fow="$emphasized" color="$text/secondary">
+            +91*******{phone.slice(-3)}
+          </BodyText>
         </View>
       </YStack>
 
-      <View mt="$2" bg="#FFF">
+      <View mt="$8" bg="#FFF">
         {userProfileOptions.map((option, i, arr) => {
           return (
             <Pressable

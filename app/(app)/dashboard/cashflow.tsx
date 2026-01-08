@@ -41,7 +41,7 @@ export default function CashflowScreen() {
   }));
 
   const pills = [
-    { title: "All", icon: <Icon name="bank-logo-placeholder" size="md" /> },
+    { title: "All", icon: <Icon name="bank-logo-placeholder" color="#6F6F6F" /> },
     ...banks,
   ];
 

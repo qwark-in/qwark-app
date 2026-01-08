@@ -5,7 +5,7 @@ type BankLogoProps = {
   size?: number;
 };
 
-export const BankLogo = ({ fipId, size = 20 }: BankLogoProps) => {
+export const BankLogo = ({ fipId, size = 24 }: BankLogoProps) => {
   const Logo = getBankLogo(fipId);
 
   return <Logo size={size} />;

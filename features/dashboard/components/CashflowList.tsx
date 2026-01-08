@@ -49,7 +49,10 @@ export const CashflowList = ({ cashflow }: { cashflow: CashFlow[] }) => {
     icon: <BankLogo fipId={item.accountDetails.fipId} />,
   }));
 
-  const pills = [{ title: "All", icon: <Icon name="bank-logo-placeholder" /> }, ...banks];
+  const pills = [
+    { title: "All", icon: <Icon name="bank-logo-placeholder" color="#6F6F6F" /> },
+    ...banks,
+  ];
 
   return (
     <View pt="$3">
