@@ -27,7 +27,7 @@ export const OTPResend = ({ isActive, onResend }) => {
   const toast = useToastController();
   return (
     <XStack mt="$6" gap="$1">
-      <BodyText color="$text/secondary">Didn't receive the OTP?</BodyText>
+      <BodyText color="$text/secondary">Didn't receive OTP?</BodyText>
       {isActive && (
         <OTPCountdownTimer
           timerSeconds={60}

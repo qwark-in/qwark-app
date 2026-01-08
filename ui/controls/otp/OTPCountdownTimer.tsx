@@ -52,8 +52,11 @@ export const OTPCountdownTimer: React.FC<OTPCountdownTimerProps> = ({
   return (
     <View>
       {isRunning ? (
-        <BodyText fow="$emphasized" color="$text/accent">
-          {formattedMinutes}:{formattedSeconds}
+        <BodyText fow="$emphasized">
+          Resend in{" "}
+          <BodyText fow="$emphasized" color="$text/accent">
+            {formattedMinutes}:{formattedSeconds}
+          </BodyText>
         </BodyText>
       ) : (
         <BodyText

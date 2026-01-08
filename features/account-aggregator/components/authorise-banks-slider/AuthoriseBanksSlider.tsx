@@ -62,7 +62,7 @@ export const AuthoriseBanksSlider: React.FC<AuthoriseBanksSliderProps> = ({
 
       <View px="$5">
         <TitleText mt="$5" size="$large" fow="$emphasized">
-          Securely authorize your Bank account
+          Securely authorize your account
         </TitleText>
 
         <FlatList
