@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { FlatList } from "react-native";
 import { useRouter } from "expo-router";
 import { Separator, View, XStack, YStack } from "tamagui";
 import { SortByBottomSheet } from "../../shared/SortByBottomSheet";
 import {
   pillButtonsMutualFundsHoldingsList as pills,
-  radioListData as radioList,
-} from "../contants";
+  activeSipsSortRadioListData,
+  holdingsSortRadioListData,
+} from "../constants";
 import { MutualFundsHoldingsInfo } from "./MutualFundsHoldingsInfo";
 import { format } from "date-fns";
 import { useMarketStore } from "data/stores/market-store";
@@ -16,6 +17,8 @@ import { useRadioSelector } from "ui/controls/selectors/radio-selector";
 import { BodyText, TitleText } from "ui/display/typography";
 import { capitalize } from "helpers/capitalize";
 import { MFHoldingsDataType, SipHoldingsDataType } from "data/models/market";
+import { IconButton } from "ui/controls/buttons";
+import { sortActiveSipList, sortMfTransactions } from "../helpers";
 
 type MutualFundsHoldingsListProps = {};
 
@@ -32,8 +35,29 @@ export const MutualFundsHoldingsList: React.FC<MutualFundsHoldingsListProps> = (
   const sipData = useMarketStore((store) => store.mfHoldings?.sipData);
 
   const { bottomSheetModalRef, presentBottomSheetModal } = useCustomBottomSheetModal();
+  const {
+    bottomSheetModalRef: bottomSheetModalRefSip,
+    presentBottomSheetModal: presentBottomSheetModalSip,
+  } = useCustomBottomSheetModal();
   const { selected, onSelect } = usePillSelector<typeof pills>("Holdings");
-  const { value, onValueChange } = useRadioSelector<typeof radioList>("Alphabetically");
+  const { value, onValueChange } =
+    useRadioSelector<typeof holdingsSortRadioListData>("Alphabetical");
+  const { value: valueSipSort, onValueChange: onValueChangeSipSort } =
+    useRadioSelector<typeof activeSipsSortRadioListData>("Alphabetical");
+
+  if (!holdingsData) {
+    return null; // Handled in parent container
+  }
+
+  const sortedHoldingsData = useMemo(
+    () => sortMfTransactions(holdingsData, value),
+    [value]
+  );
+
+  const sortedActiveSipsData = useMemo(
+    () => sortActiveSipList(sipData ?? [], valueSipSort),
+    [valueSipSort]
+  );
 
   return (
     <View flex={1}>
@@ -42,11 +66,19 @@ export const MutualFundsHoldingsList: React.FC<MutualFundsHoldingsListProps> = (
           <View>
             <MutualFundsHoldingsInfo />
             <XStack gap="$3" my="$4" ai="center" mx="$5">
-              {/** TODO: Implement this sorting feature */}
-              {/* <XStack gap="$1" ai="center">
-                <TitleText>Sort</TitleText>
-                <IconButton icon={Filter} onPress={presentBottomSheetModal} />
-              </XStack> */}
+              <XStack gap="$1" ai="center">
+                <BodyText size="$small" fow="$emphasized">
+                  Sort
+                </BodyText>
+                <IconButton
+                  name="filter"
+                  onPress={
+                    selected === "Holdings"
+                      ? presentBottomSheetModal
+                      : presentBottomSheetModalSip
+                  }
+                />
+              </XStack>
               <PillSelectorList
                 pills={pills}
                 selected={selected}
@@ -62,7 +94,7 @@ export const MutualFundsHoldingsList: React.FC<MutualFundsHoldingsListProps> = (
             </XStack>
           </View>
         }
-        data={selected === "Holdings" ? holdingsData : sipData}
+        data={selected === "Holdings" ? sortedHoldingsData : sortedActiveSipsData ?? []}
         renderItem={({ item }: { item: MFHoldingsDataType | SipHoldingsDataType }) =>
           selected === "Holdings" ? (
             <HoldingsListItem {...(item as MFHoldingsDataType)} />
@@ -76,9 +108,15 @@ export const MutualFundsHoldingsList: React.FC<MutualFundsHoldingsListProps> = (
       />
       <SortByBottomSheet
         bottomSheetModalRef={bottomSheetModalRef}
-        radioList={radioList}
+        radioList={holdingsSortRadioListData}
         value={value}
         onValueChange={onValueChange}
+      />
+      <SortByBottomSheet
+        bottomSheetModalRef={bottomSheetModalRefSip}
+        radioList={activeSipsSortRadioListData}
+        value={valueSipSort}
+        onValueChange={onValueChangeSipSort}
       />
     </View>
   );
