@@ -52,7 +52,7 @@ export default function ProfileCheck() {
       setIsAccountAggregatorCompleted(hasAccounts);
 
       // 4. No accounts → go to select banks flow
-      if (hasAccounts) {
+      if (!hasAccounts) {
         router.replace("/(app)/account-aggregator/select-banks");
         return;
       }
