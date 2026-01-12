@@ -4,12 +4,24 @@ import { useFinancialProfileStore } from "data/stores/financial-profile-store";
 import { FilledButton } from "ui/controls/buttons";
 import { CamsfinservLogo } from "ui/assets/logos";
 import { ConnectedAccountsCard } from "features/profile/connected-accounts/components/ConnectedAccountsCard";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
+import { useAAStore } from "data/stores/aa-store";
 
 export default function LinkedBanksScreen() {
-  const connectedAccounts = useFinancialProfileStore((store) => store.connectedAccounts);
+  const connectedAccounts = useFinancialProfileStore(
+    (store) => store.connectedAccounts
+  );
+  const setSelectedEntities = useAAStore((store) => store.setSelectedEntities);
+  const router = useRouter();
 
-  const banks = connectedAccounts.filter((account) => account.asset_class_id === "BANK");
+  const handlePress = () => {
+    setSelectedEntities(["BANK"]);
+    router.navigate("/account-aggregator/select-banks");
+  };
+
+  const banks = connectedAccounts.filter(
+    (account) => account.asset_class_id === "BANK"
+  );
 
   if (banks.length === 0) {
     return (
@@ -38,9 +50,7 @@ export default function LinkedBanksScreen() {
       <Separator bg={"#E7E7E7"} />
 
       <View p="$5">
-        <Link href="/(app)/account-aggregator/select-banks" asChild>
-          <FilledButton>Connect More Accounts</FilledButton>
-        </Link>
+        <FilledButton onPress={handlePress}>Connect More Accounts</FilledButton>
 
         <XStack gap="$1" jc="center" mt="$3" ai="center">
           <BodyText size="$xsmall">RBI regulated Account Aggregator</BodyText>

@@ -69,7 +69,7 @@ const BottomSheetContent = () => {
   const { validateAuthOTP } = useValidateAuthOTP();
 
   const onVerify = () => {
-    router.replace("/(app)/account-aggregator/account-discovery");
+    router.navigate("/(app)/account-aggregator/account-discovery");
   };
 
   const verifyFn = async (code: string) => {

@@ -26,7 +26,8 @@ import { AuthoriseBanksBottomSheet } from "features/account-aggregator/component
 const AccountDiscoveryScreen = () => {
   const scrollViewRef = useRef<ScrollView>(null);
   const scrollX = useRef(new Animated.Value(0)).current;
-  const { bottomSheetModalRef, presentBottomSheetModal } = useCustomBottomSheetModal();
+  const { bottomSheetModalRef, presentBottomSheetModal } =
+    useCustomBottomSheetModal();
   const {
     bottomSheetModalRef: consentDetailsBottomSheetRef,
     presentBottomSheetModal: consentDetailsPresentBottomSheetModal,
@@ -35,7 +36,9 @@ const AccountDiscoveryScreen = () => {
   const discoveredAccounts = useAAStore((store) => store.discoveredAccounts);
   const selectedAccounts = useAAStore((store) => store.selectedAccounts);
   const selectedEntities = useAAStore((store) => store.selectedEntities);
-  const resetDiscoveredAccounts = useAAStore((store) => store.resetDiscoveredAccounts);
+  const resetDiscoveredAccounts = useAAStore(
+    (store) => store.resetDiscoveredAccounts
+  );
   const resetFips = useAAStore((store) => store.resetFips);
   const { triggerDiscoverAccounts, discoverAccountsIsLoading } =
     useDiscoverMultipleAccounts();
@@ -50,7 +53,9 @@ const AccountDiscoveryScreen = () => {
   const investments = discoveredAccounts.filter(
     (account) => account.asset_class_id !== "BANK"
   );
-  const banks = discoveredAccounts.filter((account) => account.asset_class_id === "BANK");
+  const banks = discoveredAccounts.filter(
+    (account) => account.asset_class_id === "BANK"
+  );
 
   const scrollEnabled = investments.length > 0 && banks.length > 0;
 
@@ -66,7 +71,10 @@ const AccountDiscoveryScreen = () => {
       return true; // prevent default back
     };
 
-    const subscription = BackHandler.addEventListener("hardwareBackPress", onBackPress);
+    const subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      onBackPress
+    );
 
     return () => subscription.remove(); // cleanup on unmount
   }, [discoveredAccounts]);
@@ -89,8 +97,8 @@ const AccountDiscoveryScreen = () => {
               Couldnt find your account?
             </TitleText>
             <BodyText color="$text/secondary">
-              Unable to locate your account using RBI's Account Aggregator Ecosystem, see
-              possible reasons.
+              Unable to locate your account using RBI's Account Aggregator
+              Ecosystem, see possible reasons.
             </BodyText>
           </YStack>
 
@@ -111,6 +119,12 @@ const AccountDiscoveryScreen = () => {
                 triggerDiscoverAccounts();
               }
             }}
+            disabled={discoverAccountsIsLoading}
+            iconAfter={
+              discoverAccountsIsLoading ? (
+                <ActivityIndicator size="small" color="#6F6F6F" />
+              ) : null
+            }
           >
             Try Again
           </FilledButton>
@@ -142,9 +156,12 @@ const AccountDiscoveryScreen = () => {
           pagingEnabled
           scrollEnabled={scrollEnabled}
           showsHorizontalScrollIndicator={false}
-          onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], {
-            useNativeDriver: false,
-          })}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+            {
+              useNativeDriver: false,
+            }
+          )}
         >
           {banks.length > 0 && <BanksTab />}
           {investments.length > 0 && <InvestmentsTab />}
@@ -170,7 +187,10 @@ const AccountDiscoveryScreen = () => {
               See Details
             </LabelText>
           </XStack>
-          <FilledButton disabled={isButtonDisabled} onPress={presentBottomSheetModal}>
+          <FilledButton
+            disabled={isButtonDisabled}
+            onPress={presentBottomSheetModal}
+          >
             Connect Accounts
           </FilledButton>
         </YStack>

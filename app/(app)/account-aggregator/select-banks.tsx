@@ -24,11 +24,13 @@ import { SharedProgressbar } from "features/account-aggregator/components/shared
 import { SearchBanksInput } from "features/account-aggregator/components/SearchBanksInput";
 import { SelectedBanksPillsView } from "features/account-aggregator/components/SelectedBanksPillsView";
 import { LinkAccountsBottomSheet } from "features/account-aggregator/components/bottom-sheets/LinkAccountsBottomSheet";
+import { useLogout } from "features/auth/hooks";
 
 export default function SelectBanksScreen() {
   const [filterText, setFilterText] = useState<string>("");
   const debouncedFilterText = useDebounce(filterText, 150);
-  const { bottomSheetModalRef, presentBottomSheetModal } = useCustomBottomSheetModal();
+  const { bottomSheetModalRef, presentBottomSheetModal } =
+    useCustomBottomSheetModal();
   const fips = useAAStore((store) => store.fips);
   const session_id = useAAStore((store) => store.session_id);
   const selectedBanks = useAAStore((store) => store.selectedBanks);
@@ -42,20 +44,31 @@ export default function SelectBanksScreen() {
     useFetchFipList();
   const { getConsentDetails } = useGetConsentDetails();
   const { init, isLoading } = useInit();
+  const { logout } = useLogout();
 
   const banks = fips.filter((fip) => fip.asset_class_id === "BANK"); // Only need to show fips of banks
   const sections = getSections(banks, debouncedFilterText);
 
+  const goBackWithLogout = async () => {
+    await logout();
+    // resetFips();
+  };
+
   useEffect(() => {
     const onBackPress = () => {
       if (router.canGoBack()) {
-        resetFips();
         router.back(); // then go back
+        resetFips();
+      } else {
+        goBackWithLogout();
       }
       return true; // prevent default back
     };
 
-    const subscription = BackHandler.addEventListener("hardwareBackPress", onBackPress);
+    const subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      onBackPress
+    );
 
     return () => subscription.remove(); // cleanup on unmount
   }, []);
@@ -99,7 +112,7 @@ export default function SelectBanksScreen() {
           console.log("session_id status ->", sessionResponse.status);
 
           if (sessionResponse.status === "ok") {
-            router.replace("/(app)/account-aggregator/account-discovery");
+            router.navigate("/(app)/account-aggregator/account-discovery");
           }
         } catch (error) {
           presentBottomSheetModal();
@@ -134,7 +147,10 @@ export default function SelectBanksScreen() {
         {/* Search Input and Selected Banks View */}
 
         <View px="$5" py="$3">
-          <SearchBanksInput filterText={filterText} onChangeFilterText={setFilterText} />
+          <SearchBanksInput
+            filterText={filterText}
+            onChangeFilterText={setFilterText}
+          />
 
           <SelectedBanksPillsView selectedBanks={selectedBanks} />
         </View>
@@ -168,7 +184,9 @@ export default function SelectBanksScreen() {
               <BodyText ta="center" size="$small">
                 Couldn't find your bank?
                 <LabelText
-                  onPress={() => router.navigate("/(app)/account-aggregator/coming-soon")}
+                  onPress={() =>
+                    router.navigate("/(app)/account-aggregator/coming-soon")
+                  }
                   size="$large"
                   fow="$emphasized"
                   color="#001484"
@@ -197,8 +215,8 @@ export default function SelectBanksScreen() {
               onPress={handlePress}
               iconAfter={isLoading ? <ActivityIndicator /> : null}
               disabled={
-                selectedBanks.filter((bank) => bank.asset_class_id === "BANK").length ===
-                  0 || isLoading
+                selectedBanks.filter((bank) => bank.asset_class_id === "BANK")
+                  .length === 0 || isLoading
               }
             >
               Continue
@@ -216,7 +234,10 @@ const useAnimatedFooter = () => {
   const footerOffset = useSharedValue(0);
 
   const animateFooter = (toValue: number, delay: number) => {
-    footerOffset.value = withDelay(delay, withTiming(toValue, { duration: 200 }));
+    footerOffset.value = withDelay(
+      delay,
+      withTiming(toValue, { duration: 200 })
+    );
   };
 
   const onScrollBeginDrag = () => animateFooter(35, 100);

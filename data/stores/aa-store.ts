@@ -1,7 +1,7 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 // import { devtools } from '@csark0812/zustand-expo-devtools';
-import { immer } from 'zustand/middleware/immer';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { immer } from "zustand/middleware/immer";
+import { createJSONStorage, persist } from "zustand/middleware";
 import {
   AccountLinkRefs,
   FipDataType,
@@ -13,8 +13,8 @@ import {
   FipRefNumber,
   SelectedAccount,
   SessionIdType,
-} from '../models/account-aggregator';
-import { zustandStorage } from './helpers/storage';
+} from "../models/account-aggregator";
+import { zustandStorage } from "./helpers/storage";
 
 export type AccountAggregatorState = {
   fips: FipDataType[];
@@ -39,8 +39,12 @@ type AccountAggregatorActions = {
   setRefNumber: (fip_id: string, ref_number: string) => void;
   addAccountLinkRefs: (accountLinkRefs: AccountLinkRefs) => void;
   setConsentId: (consent_id: string) => void;
-  setDiscoveredAccounts: (updater: (prev: DiscoverAccountType) => DiscoverAccountType) => void;
-  selectAllAccounts: (updater: (prev: SelectedAccount[]) => SelectedAccount[]) => void;
+  setDiscoveredAccounts: (
+    updater: (prev: DiscoverAccountType) => DiscoverAccountType
+  ) => void;
+  selectAllAccounts: (
+    updater: (prev: SelectedAccount[]) => SelectedAccount[]
+  ) => void;
   setSelectedAccounts: (selectedAccount: SelectedAccount) => void;
   resetFips: () => void;
   resetDiscoveredAccounts: () => void;
@@ -48,7 +52,7 @@ type AccountAggregatorActions = {
 };
 
 const initialState: AccountAggregatorState = {
-  selectedEntities: ['BANK', 'EQUITIES', 'MF_ETF_OTHERS'],
+  selectedEntities: ["BANK", "EQUITIES", "MF_ETF_OTHERS"],
   fips: [],
   consent_handles: [],
   session_id: null,
@@ -60,7 +64,9 @@ const initialState: AccountAggregatorState = {
   consent_id: null,
 };
 
-export const useAAStore = create<AccountAggregatorState & AccountAggregatorActions>()(
+export const useAAStore = create<
+  AccountAggregatorState & AccountAggregatorActions
+>()(
   immer(
     persist(
       (set) => ({
@@ -77,7 +83,11 @@ export const useAAStore = create<AccountAggregatorState & AccountAggregatorActio
         },
         setSelectedBanks(selectedBank) {
           set((state) => {
-            if (!state.selectedBanks.some((bank) => bank.fip_id === selectedBank.fip_id)) {
+            if (
+              !state.selectedBanks.some(
+                (bank) => bank.fip_id === selectedBank.fip_id
+              )
+            ) {
               state.selectedBanks = [...state.selectedBanks, selectedBank];
             } else {
               state.selectedBanks = state.selectedBanks.filter(
@@ -103,7 +113,9 @@ export const useAAStore = create<AccountAggregatorState & AccountAggregatorActio
         },
         setRefNumber(fip_id, ref_number) {
           set((state) => {
-            state.fipRefNumbers = state.fipRefNumbers.some((item) => item.fip_id === fip_id)
+            state.fipRefNumbers = state.fipRefNumbers.some(
+              (item) => item.fip_id === fip_id
+            )
               ? state.fipRefNumbers.map((item) =>
                   item.fip_id === fip_id ? { ...item, ref_number } : item
                 )
@@ -112,7 +124,10 @@ export const useAAStore = create<AccountAggregatorState & AccountAggregatorActio
         },
         addAccountLinkRefs(accountLinkRefs) {
           set((state) => {
-            state.accountLinkRefs = [...state.accountLinkRefs, ...accountLinkRefs];
+            state.accountLinkRefs = [
+              ...state.accountLinkRefs,
+              ...accountLinkRefs,
+            ];
           });
         },
         setConsentId(consent_id) {
@@ -134,17 +149,21 @@ export const useAAStore = create<AccountAggregatorState & AccountAggregatorActio
           set((state) => {
             const { account_ref_number } = selectedAccount;
             const accounts = state.selectedAccounts;
-            const exists = accounts.some((a) => a.account_ref_number === account_ref_number);
+            const exists = accounts.some(
+              (a) => a.account_ref_number === account_ref_number
+            );
 
             state.selectedAccounts = exists
-              ? accounts.filter((a) => a.account_ref_number !== account_ref_number)
+              ? accounts.filter(
+                  (a) => a.account_ref_number !== account_ref_number
+                )
               : [...accounts, selectedAccount];
           });
         },
 
         resetFips() {
           set((state) => {
-            state.fips = [];
+            // state.fips = [];
             state.selectedBanks = [];
             state.fipRefNumbers = [];
           });
@@ -160,7 +179,7 @@ export const useAAStore = create<AccountAggregatorState & AccountAggregatorActio
         },
       }),
       {
-        name: 'aa-store',
+        name: "aa-store",
         partialize: (state) => ({
           session_id: state.session_id,
         }),

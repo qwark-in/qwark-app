@@ -48,7 +48,8 @@ const PersonalDetailsScreen = () => {
   const toast = useToastController();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const authData = useAuthStore((store) => store.authData)!;
-  const { bottomSheetModalRef, presentBottomSheetModal } = useCustomBottomSheetModal();
+  const { bottomSheetModalRef, presentBottomSheetModal } =
+    useCustomBottomSheetModal();
   const setIsOnboardingCompleted = useGlobalStore(
     (store) => store.setIsOnboardingCompleted
   );
@@ -106,7 +107,7 @@ const PersonalDetailsScreen = () => {
 
       setUser(response.data);
       setIsOnboardingCompleted(true);
-      router.replace("/account-aggregator/select-banks");
+      router.navigate("/account-aggregator/select-banks");
     } catch (error) {
       toast.show(error.message, {
         type: "error",
@@ -118,10 +119,13 @@ const PersonalDetailsScreen = () => {
   };
 
   useEffect(() => {
-    const subscription = BackHandler.addEventListener("hardwareBackPress", () => {
-      logout();
-      return true; // Prevent default behavior (exit app)
-    });
+    const subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        logout();
+        return true; // Prevent default behavior (exit app)
+      }
+    );
 
     return () => subscription.remove();
   }, []);
@@ -182,18 +186,24 @@ const PersonalDetailsScreen = () => {
         </View>
 
         <View p="$5" boxShadow="0 -2px 16px 0 rgba(22, 22, 22, 0.12)">
-          <XStack onPress={() => setChecked(!checked)} gap="$2_5" alignItems="center">
+          <XStack
+            onPress={() => setChecked(!checked)}
+            gap="$2_5"
+            alignItems="center"
+          >
             <Checkbox checked={checked} />
             <BodyText size="$small" color="$text/secondary" fs={1}>
-              I authorize Qwark to fetch my financial data from RBI regulated Account
-              Aggregator ecosystem and manage my KYC details.
+              I authorize Qwark to fetch my financial data from RBI regulated
+              Account Aggregator ecosystem and manage my KYC details.
             </BodyText>
           </XStack>
           <FilledButton
             mt="$5"
             disabled={!isDirty || !checked || isSubmitting}
             onPress={handleSubmit(handleConfirm)}
-            iconAfter={isSubmitting ? <ActivityIndicator color="#6F6F6F" /> : null}
+            iconAfter={
+              isSubmitting ? <ActivityIndicator color="#6F6F6F" /> : null
+            }
           >
             Confirm
           </FilledButton>

@@ -52,15 +52,19 @@ export default function ProfileCheck() {
       setIsAccountAggregatorCompleted(hasAccounts);
 
       // 4. No accounts → go to select banks flow
-      if (!hasAccounts) {
+      if (hasAccounts) {
         router.replace("/(app)/account-aggregator/select-banks");
         return;
       }
+
+      //TODO: Only for dev. Remove in prev and prod
+      // throw new Error("Financial profile does not exist");
 
       // 5. All good → dashboard
       router.replace("/dashboard-tab");
     } catch (err) {
       // User does not exist → onboarding
+      console.log(err.message);
       router.replace("/personal-details");
     }
   };
