@@ -4,6 +4,7 @@ import axios from "axios";
 import { FetchFipListResponse } from "./types";
 import { mockFipListFetcher } from "./mockFetchers";
 import { useAAStore } from "data/stores/aa-store";
+import { FEATURE_MOCK_API } from "settings";
 
 const fetcher = async (url: string) => {
   const response = await axios.get(url);
@@ -15,14 +16,9 @@ export const useFetchFipList = () => {
   const selectMultipleFips = useAAStore((store) => store.selectMultipleFips);
   const selectedEntities = useAAStore((store) => store.selectedEntities);
   const FIP_LIST_KEY = `${BASE_URL}/v1/fips`;
-  const { data, error, isLoading, isValidating } = useSWR<
-    FetchFipListResponse,
-    Error
-  >(
+  const { data, error, isLoading, isValidating } = useSWR<FetchFipListResponse, Error>(
     FIP_LIST_KEY,
-    process.env.EXPO_PUBLIC_FEATURE_MOCK_API === "true"
-      ? mockFipListFetcher
-      : fetcher,
+    FEATURE_MOCK_API ? mockFipListFetcher : fetcher,
     {
       onSuccess: ({ data }) => {
         setFips(

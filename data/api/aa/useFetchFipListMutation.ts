@@ -4,6 +4,7 @@ import useSWRMutation from "swr/mutation";
 import { FetchFipListResponse } from "./types";
 import { mockFipListFetcher } from "./mockFetchers";
 import { useAAStore } from "data/stores/aa-store";
+import { FEATURE_MOCK_API } from "settings";
 
 const fetcher = async (url: string) => {
   const response = await axios.get(url);
@@ -18,36 +19,30 @@ export const useFetchFipListMutation = () => {
   const { trigger, isMutating, data, error } = useSWRMutation<
     FetchFipListResponse,
     Error
-  >(
-    FIP_LIST_KEY,
-    process.env.EXPO_PUBLIC_FEATURE_MOCK_API === "true"
-      ? mockFipListFetcher
-      : fetcher,
-    {
-      onSuccess: ({ data }) => {
-        setFips(
-          data.fips
-            .slice()
-            .sort((a, b) =>
-              a.fip_name.toLowerCase().localeCompare(b.fip_name.toLowerCase())
-            )
-        );
-        selectMultipleFips(
-          data.fips
-            .filter(
-              (fip) =>
-                fip.asset_class_id !== "BANK" &&
-                selectedEntities.includes(fip.asset_class_id)
-            )
-            .map((fip) => ({
-              fip_id: fip.fip_id,
-              fip_name: fip.fip_name,
-              asset_class_id: fip.asset_class_id,
-            }))
-        );
-      },
-    }
-  );
+  >(FIP_LIST_KEY, FEATURE_MOCK_API ? mockFipListFetcher : fetcher, {
+    onSuccess: ({ data }) => {
+      setFips(
+        data.fips
+          .slice()
+          .sort((a, b) =>
+            a.fip_name.toLowerCase().localeCompare(b.fip_name.toLowerCase())
+          )
+      );
+      selectMultipleFips(
+        data.fips
+          .filter(
+            (fip) =>
+              fip.asset_class_id !== "BANK" &&
+              selectedEntities.includes(fip.asset_class_id)
+          )
+          .map((fip) => ({
+            fip_id: fip.fip_id,
+            fip_name: fip.fip_name,
+            asset_class_id: fip.asset_class_id,
+          }))
+      );
+    },
+  });
 
   return {
     fetchFipListTigger: trigger,

@@ -10,6 +10,7 @@ import { getAnalytics } from "@react-native-firebase/analytics";
 import { useGetMarketData } from "data/api";
 import { View } from "tamagui";
 import { ActivityIndicator } from "react-native";
+import { FEATURE_GOOGLE_ANALYTICS } from "settings";
 
 const { Navigator } = createMaterialTopTabNavigator();
 
@@ -71,7 +72,7 @@ export default function TabLayout() {
       }}
       screenListeners={{
         state: (e) => {
-          if (process.env.EXPO_PUBLIC_FEATURE_GOOGLE_ANALYTICS === "true") {
+          if (FEATURE_GOOGLE_ANALYTICS) {
             const fbAnalytics = getAnalytics();
             console.debug(
               "[Firebase Analytics] Top Nav tab:",

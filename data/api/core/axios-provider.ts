@@ -5,13 +5,15 @@
  * Axios global config to be used throughout the app
  */
 
+import { DEV_API_BASE_URL } from "settings";
+
 /**
  * Imports
  */
 // React and RN
 
 // Libraries
-const axios = require('axios').default;
+const axios = require("axios").default;
 
 // Local (e.g. this and other workspaces)
 
@@ -22,7 +24,6 @@ const axios = require('axios').default;
 /**
  * Helpers
  */
-export const BASE_URL = process.env.EXPO_PUBLIC_DEV_API_BASE_URL;
 
 /**
  * Global config for axios library
@@ -37,7 +38,7 @@ const axiosGlobalConfig = {
   // `baseURL` will be prepended to `url` unless `url` is absolute.
   // It can be convenient to set `baseURL` for an instance of axios to pass relative URLs
   // to methods of that instance.
-  baseURL: BASE_URL,
+  baseURL: DEV_API_BASE_URL,
 
   // `transformRequest` allows changes to the request data before it is sent to the server
   // This is only applicable for request methods 'PUT', 'POST', 'PATCH' and 'DELETE'
@@ -120,17 +121,17 @@ const axiosGlobalConfig = {
   // `responseType` indicates the type of data that the server will respond with
   // options are: 'arraybuffer', 'document', 'json', 'text', 'stream'
   //   browser only: 'blob'
-  responseType: 'json', // default
+  responseType: "json", // default
 
   // `responseEncoding` indicates encoding to use for decoding responses (Node.js only)
   // Note: Ignored for `responseType` of 'stream' or client-side requests
-  responseEncoding: 'utf8', // default
+  responseEncoding: "utf8", // default
 
   // `xsrfCookieName` is the name of the cookie to use as a value for xsrf token
-  xsrfCookieName: 'XSRF-TOKEN', // default
+  xsrfCookieName: "XSRF-TOKEN", // default
 
   // `xsrfHeaderName` is the name of the http header that carries the xsrf token value
-  xsrfHeaderName: 'X-XSRF-TOKEN', // default
+  xsrfHeaderName: "X-XSRF-TOKEN", // default
 
   // `onUploadProgress` allows handling of progress events for uploads
   // browser only

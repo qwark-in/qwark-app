@@ -1,8 +1,9 @@
-import axios from './axios';
-import useSWRMutation from 'swr/mutation';
-import { BASE_URL } from './constants';
-import { DiscoverAccountsQueryBody, DiscoverAccountsResponse } from './types';
-import { mockDiscoverAccountsFetcher } from './mockFetchers';
+import axios from "axios";
+import useSWRMutation from "swr/mutation";
+import { BASE_URL } from "./constants";
+import { DiscoverAccountsQueryBody, DiscoverAccountsResponse } from "./types";
+import { mockDiscoverAccountsFetcher } from "./mockFetchers";
+import { FEATURE_MOCK_API } from "settings";
 
 const discoverAccountsFetcher = async (
   url: string,
@@ -15,9 +16,7 @@ const discoverAccountsFetcher = async (
 export const useDiscoverAccounts = () => {
   const { trigger, isMutating, data, error } = useSWRMutation(
     `${BASE_URL}/v1/fip/discover`,
-    process.env.EXPO_PUBLIC_FEATURE_MOCK_API === 'true'
-      ? mockDiscoverAccountsFetcher
-      : discoverAccountsFetcher,
+    FEATURE_MOCK_API ? mockDiscoverAccountsFetcher : discoverAccountsFetcher,
     {
       populateCache: false, // No caching required for this
     }

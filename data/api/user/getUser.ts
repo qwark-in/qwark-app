@@ -2,9 +2,10 @@ import axios, { AxiosError } from "axios";
 import { BASE_URL } from "./constants";
 import { GetUserResponse } from "./types";
 import { AuthDataType } from "data/models/auth";
+import { FEATURE_MOCK_USER_API } from "settings";
 
 export const getUser = async (authData: AuthDataType) => {
-  if (process.env.EXPO_PUBLIC_FEATURE_MOCK_USER_API === "true") {
+  if (FEATURE_MOCK_USER_API) {
     const { getUserMock } = await import("./userMockApis");
     return getUserMock(authData);
   }
@@ -29,9 +30,7 @@ export const getUser = async (authData: AuthDataType) => {
 
       throw new Error(
         `Get user failed: ${
-          error.response?.data?.message ||
-          error.response?.statusText ||
-          error.message
+          error.response?.data?.message || error.response?.statusText || error.message
         }`
       );
     } else {

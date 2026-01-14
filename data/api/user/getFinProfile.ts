@@ -3,9 +3,7 @@ import { FIN_PROFILE_BASE_URL } from "./constants";
 import { GetFinProfileResponse } from "./types";
 import { AuthDataType } from "data/models/auth";
 import { mockFinProfileData } from "./mockData";
-
-const IS_MOCK_FIN_PROFILE_API =
-  process.env.EXPO_PUBLIC_FEATURE_MOCK_FIN_PROFILE_API === "true";
+import { FEATURE_MOCK_FIN_PROFILE_API } from "settings";
 
 export const getFinProfileMock = (): Promise<GetFinProfileResponse> => {
   return new Promise((resolve) => {
@@ -19,8 +17,8 @@ export const getFinProfile = async (
   authData: AuthDataType
 ): Promise<AxiosResponse<GetFinProfileResponse>> => {
   try {
-    if (IS_MOCK_FIN_PROFILE_API) {
-      console.log("🧪 Mock Get Fin Profile API");
+    if (FEATURE_MOCK_FIN_PROFILE_API) {
+      console.log("Mock Get Fin Profile API");
 
       const mockData = await getFinProfileMock();
 

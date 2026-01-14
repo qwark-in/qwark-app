@@ -4,6 +4,7 @@ import { CustomBottomTabs } from "navigation/CustomBottomTabs";
 import { HideAmountButton } from "features/dashboard/components/HideAmountButton";
 import { Icon } from "ui/assets/icons/adaptive";
 import { RawColor } from "ui/assets/icons/adaptive/types";
+import { FEATURE_GOOGLE_ANALYTICS } from "settings";
 
 export const BottomTabScreensFbAnalyticsIds = [
   "dashboard-screen",
@@ -24,7 +25,7 @@ export default function TabLayout() {
       }}
       screenListeners={{
         state: (e) => {
-          if (process.env.EXPO_PUBLIC_FEATURE_GOOGLE_ANALYTICS === "true") {
+          if (FEATURE_GOOGLE_ANALYTICS) {
             const fbAnalytics = getAnalytics();
             console.debug(
               "[Firebase Analytics] Bottom Nav tab:",

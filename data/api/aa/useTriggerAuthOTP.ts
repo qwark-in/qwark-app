@@ -1,8 +1,9 @@
-import axios from 'axios';
-import useSWRMutation from 'swr/mutation';
-import { BASE_URL } from './constants';
-import { TriggerAuthOTPQueryBody, TriggerAuthOTPResponse } from './types';
-import { mockTriggerAuthOTPFetcher } from './mockFetchers';
+import axios from "axios";
+import useSWRMutation from "swr/mutation";
+import { BASE_URL } from "./constants";
+import { TriggerAuthOTPQueryBody, TriggerAuthOTPResponse } from "./types";
+import { mockTriggerAuthOTPFetcher } from "./mockFetchers";
+import { FEATURE_MOCK_API } from "settings";
 
 const triggerAuthOTPFetcher = async (
   url: string,
@@ -15,9 +16,7 @@ const triggerAuthOTPFetcher = async (
 export const useTriggerAuthOTP = () => {
   const { trigger, isMutating, data, error } = useSWRMutation(
     `${BASE_URL}/v1/auth/create`,
-    process.env.EXPO_PUBLIC_FEATURE_MOCK_API === 'true'
-      ? mockTriggerAuthOTPFetcher
-      : triggerAuthOTPFetcher
+    FEATURE_MOCK_API ? mockTriggerAuthOTPFetcher : triggerAuthOTPFetcher
   );
 
   return {

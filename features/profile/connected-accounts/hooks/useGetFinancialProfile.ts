@@ -5,9 +5,7 @@ import { mockFinProfileData } from "data/api/user/mockData";
 import { FinancialProfileState } from "data/models/financial-profile";
 import { useFinancialProfileStore } from "data/stores/financial-profile-store";
 import { useToastController } from "@tamagui/toast";
-
-const IS_MOCK_FIN_PROFILE_API =
-  process.env.EXPO_PUBLIC_FEATURE_MOCK_FIN_PROFILE_API === "true";
+import { FEATURE_MOCK_FIN_PROFILE_API } from "settings";
 
 const getGetFinancialProfileDataFetcher = async (
   url: string
@@ -38,7 +36,7 @@ export const useGetFinancialProfileData = () => {
 
   const { data, error, isLoading, isValidating, mutate } = useSWR(
     `${FIN_PROFILE_BASE_URL}`,
-    IS_MOCK_FIN_PROFILE_API
+    FEATURE_MOCK_FIN_PROFILE_API
       ? getMockGetFinancialProfileDataFetcher
       : getGetFinancialProfileDataFetcher,
     {

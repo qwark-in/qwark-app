@@ -1,8 +1,9 @@
-import axios from 'axios';
-import useSWRMutation from 'swr/mutation';
-import { BASE_URL } from './constants';
-import { GetConsentDetailsQueryParams, GetConsentDetailsResponse } from './types';
-import { mockGetConsentDetailsFetcher } from './mockFetchers';
+import axios from "axios";
+import useSWRMutation from "swr/mutation";
+import { BASE_URL } from "./constants";
+import { GetConsentDetailsQueryParams, GetConsentDetailsResponse } from "./types";
+import { mockGetConsentDetailsFetcher } from "./mockFetchers";
+import { FEATURE_MOCK_API } from "settings";
 
 const getConsentDetailsFetcher = async (
   url: string,
@@ -15,9 +16,7 @@ const getConsentDetailsFetcher = async (
 export const useGetConsentDetails = () => {
   const { trigger, isMutating, data, error } = useSWRMutation(
     `${BASE_URL}/v1/consent`,
-    process.env.EXPO_PUBLIC_FEATURE_MOCK_API === 'true'
-      ? mockGetConsentDetailsFetcher
-      : getConsentDetailsFetcher
+    FEATURE_MOCK_API ? mockGetConsentDetailsFetcher : getConsentDetailsFetcher
   );
 
   return {

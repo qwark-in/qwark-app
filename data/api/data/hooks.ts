@@ -6,8 +6,7 @@ import { DashboardState } from "data/models/dashboard";
 import { MarketState } from "data/models/market";
 import { useMarketStore } from "data/stores/market-store";
 import { mockMarketData, mockDashboardData } from "./mockData";
-
-const IS_MOCK_DATA_API = process.env.EXPO_PUBLIC_FEATURE_MOCK_DATA_API === "true";
+import { FEATURE_MOCK_DATA_API } from "settings";
 
 const getDashboardDataFetcher = async (url: string): Promise<DashboardState> => {
   const response = await axios.get(url);
@@ -30,7 +29,7 @@ export const useGetDashboardData = () => {
   const setCashflow = useDashboardStore((state) => state.setCashflow);
   const { data, error, isLoading, isValidating, mutate } = useSWR(
     `${BASE_URL}/dashboard`,
-    IS_MOCK_DATA_API ? getMockDashboardDataFetcher : getDashboardDataFetcher,
+    FEATURE_MOCK_DATA_API ? getMockDashboardDataFetcher : getDashboardDataFetcher,
     {
       onSuccess: (data) => {
         if (data.cashflow) {
@@ -75,7 +74,7 @@ export const useGetMarketData = () => {
 
   const { data, error, isLoading, isValidating, mutate } = useSWR(
     `${BASE_URL}/market`,
-    IS_MOCK_DATA_API ? getMockMarketDataFetcher : getMarketDataFetcher,
+    FEATURE_MOCK_DATA_API ? getMockMarketDataFetcher : getMarketDataFetcher,
     {
       onSuccess: (data) => {
         if (data.eqHoldings) {

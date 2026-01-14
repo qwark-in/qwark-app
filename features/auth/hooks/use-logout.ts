@@ -3,8 +3,7 @@ import { useToastController } from "@tamagui/toast";
 import { logout as logoutService } from "data/api/auth";
 import { useAuthStore } from "data/stores/auth-store";
 import { useUserStore } from "data/stores/user-store";
-
-const IS_SSO_ENABLED = process.env.EXPO_PUBLIC_FEATURE_SSO_AUTH === "true";
+import { FEATURE_SSO_AUTH } from "settings";
 
 export const useLogout = () => {
   const authData = useAuthStore((s) => s.authData);
@@ -25,7 +24,7 @@ export const useLogout = () => {
     setIsLoggingOut(true);
 
     try {
-      if (!IS_SSO_ENABLED) {
+      if (!FEATURE_SSO_AUTH) {
         console.log("SSO disabled → mocking logout");
         clearSession();
         return;

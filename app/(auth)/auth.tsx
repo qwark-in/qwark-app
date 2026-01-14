@@ -7,8 +7,7 @@ import { AuthWelcomeCarousal } from "features/auth/components/AuthWelcomeCarousa
 import { useAuthURL } from "features/auth/hooks/use-auth-url";
 import { AuthType } from "features/auth/types";
 import { Platform } from "react-native";
-
-const IS_SSO_AUTH = process.env.EXPO_PUBLIC_FEATURE_SSO_AUTH === "true";
+import { FEATURE_SSO_AUTH } from "settings";
 
 export default function AuthScreen() {
   const router = useRouter();
@@ -16,7 +15,7 @@ export default function AuthScreen() {
   const { getAuthURL } = useAuthURL();
 
   const handlePress = async (type: AuthType) => {
-    if (!IS_SSO_AUTH) {
+    if (!FEATURE_SSO_AUTH) {
       router.navigate("/login");
       return;
     }

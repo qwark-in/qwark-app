@@ -1,8 +1,9 @@
-import axios from './axios';
-import useSWRMutation from 'swr/mutation';
-import { BASE_URL } from './constants';
-import { LinkAccountsQueryBody, LinkAccountsResponse } from './types';
-import { mockLinkAccountsFetcher } from './mockFetchers';
+import axios from "axios";
+import useSWRMutation from "swr/mutation";
+import { BASE_URL } from "./constants";
+import { LinkAccountsQueryBody, LinkAccountsResponse } from "./types";
+import { mockLinkAccountsFetcher } from "./mockFetchers";
+import { FEATURE_MOCK_API } from "settings";
 
 const linkAccountsFetcher = async (
   url: string,
@@ -15,9 +16,7 @@ const linkAccountsFetcher = async (
 export const useLinkAccounts = () => {
   const { trigger, isMutating, data, error } = useSWRMutation(
     `${BASE_URL}/v1/fip/link`,
-    process.env.EXPO_PUBLIC_FEATURE_MOCK_API === 'true'
-      ? mockLinkAccountsFetcher
-      : linkAccountsFetcher
+    FEATURE_MOCK_API ? mockLinkAccountsFetcher : linkAccountsFetcher
   );
 
   return {

@@ -7,8 +7,7 @@ import { exchangeToken } from "data/api/auth/token";
 import { registerDevice } from "data/api/auth/device";
 import { getFcmToken } from "features/auth/helpers/getFcmToken";
 import { Platform } from "react-native";
-
-const IS_SSO_ENABLED = process.env.EXPO_PUBLIC_FEATURE_SSO_AUTH === "true";
+import { FEATURE_SSO_AUTH } from "settings";
 
 const getErrorMessage = (err: unknown) => {
   if (err instanceof Error) return err.message;
@@ -27,7 +26,7 @@ export const useLogin = () => {
 
   const login = useCallback(async () => {
     if (isLoading) return;
-    if (!codeVerifier && IS_SSO_ENABLED) {
+    if (!codeVerifier && FEATURE_SSO_AUTH) {
       console.warn("Missing codeVerifier during login");
       return;
     }
@@ -35,7 +34,7 @@ export const useLogin = () => {
     setIsLoading(true);
 
     try {
-      if (!IS_SSO_ENABLED) {
+      if (!FEATURE_SSO_AUTH) {
         // Mock login (dev / preview)
         setToken({
           token: "mock-token-123456",

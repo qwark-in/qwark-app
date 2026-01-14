@@ -3,6 +3,7 @@ import { getAnalytics } from "@react-native-firebase/analytics";
 import { useCashflowScreenStore } from "../store/cashflow-screen-store";
 import { Category } from "../types";
 import { AnimatedTabType, AnimatedTopTabs } from "ui/layout/AnimatedTopTabs";
+import { FEATURE_GOOGLE_ANALYTICS } from "settings";
 
 type CashflowTopTabsProps = {};
 
@@ -24,7 +25,7 @@ export const CashflowTopTabs: React.FC<CashflowTopTabsProps> = ({}) => {
   const activeTab = useCashflowScreenStore((store) => store.activeTab);
 
   const handleSelectTab = (index: number) => {
-    if (process.env.EXPO_PUBLIC_FEATURE_GOOGLE_ANALYTICS === "true") {
+    if (FEATURE_GOOGLE_ANALYTICS) {
       const fbAnalytics = getAnalytics();
       console.debug(
         "[Firebase Analytics] Cashflow Tab:",

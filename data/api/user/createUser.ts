@@ -3,13 +3,12 @@ import { BASE_URL } from "./constants";
 import { CreateUserQueryBody, CreateUserResponse } from "./types";
 import { AuthDataType } from "data/models/auth";
 import { createUserMock } from "./userMockApis";
-
-const IS_MOCK_USER_API = process.env.EXPO_PUBLIC_FEATURE_MOCK_USER_API === "true";
+import { FEATURE_MOCK_USER_API } from "settings";
 
 export const createUser = async (data: CreateUserQueryBody, authData: AuthDataType) => {
   try {
-    if (IS_MOCK_USER_API) {
-      console.log("🧪 Mock Create User API");
+    if (FEATURE_MOCK_USER_API) {
+      console.log("Mock Create User API");
 
       const { data: mockData } = await createUserMock(data, authData);
 

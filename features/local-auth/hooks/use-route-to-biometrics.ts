@@ -25,8 +25,7 @@ export const useRouteToBiometrics = () => {
         const elapsedTime = (Date.now() - lastBackgroundTime.current) / 1000; // Convert to seconds
         lastBackgroundTime.current = null;
 
-        const shouldRouteToAuth =
-          elapsedTime > Number(process.env.EXPO_PUBLIC_BIOMETRIC_TIMEOUT || 60);
+        const shouldRouteToAuth = elapsedTime > 60;
 
         if (isBiometricsEnabled && shouldRouteToAuth) {
           router.replace("/");

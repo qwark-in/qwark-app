@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useToastController } from "@tamagui/toast";
 import { useAuthStore } from "data/stores/auth-store";
 import { checkSession } from "data/api/auth";
+import { FEATURE_SSO_AUTH } from "settings";
 
 export const useCheckAuthSession = () => {
   const authData = useAuthStore((store) => store.authData);
@@ -11,8 +12,8 @@ export const useCheckAuthSession = () => {
 
   useEffect(() => {
     if (!authData) return;
-    if (process.env.EXPO_PUBLIC_FEATURE_SSO_AUTH === "false") {
-      console.log("EXPO_PUBLIC_FEATURE_SSO_AUTH=false. Mocking check session...");
+    if (!FEATURE_SSO_AUTH) {
+      console.log("FEATURE_SSO_AUTH=false. Mocking check session...");
       return;
     }
     (async function () {

@@ -1,11 +1,10 @@
 import axios, { AxiosError } from "axios";
 import { BASE_URL } from "./constants";
+import { FEATURE_MOCK_KYC_API } from "settings";
 
 export type GetKYCStatusResponse = {
   verified: boolean;
 };
-
-const IS_KYC_MOCK = process.env.EXPO_PUBLIC_FEATURE_MOCK_KYC_API === "true";
 
 const getKYCStatusMock = async (pan: string): Promise<GetKYCStatusResponse> => {
   const response = {
@@ -22,7 +21,7 @@ const getKYCStatusMock = async (pan: string): Promise<GetKYCStatusResponse> => {
 };
 
 export const getKYCStatus = async (pan: string) => {
-  if (IS_KYC_MOCK) {
+  if (FEATURE_MOCK_KYC_API) {
     const response = await getKYCStatusMock("ABCDE1234F");
     return response;
   }
