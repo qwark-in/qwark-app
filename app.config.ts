@@ -83,7 +83,6 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
         foregroundImage: adaptiveIcon,
       },
       googleServicesFile: "./google-services.json",
-      newArchEnabled: true,
     },
     plugins: [
       "expo-router",
@@ -127,6 +126,9 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
         projectId: EAS_PROJECT_ID,
       },
       appVariant: process.env.APP_VARIANT,
+    },
+    updates: {
+      url: "https://u.expo.dev/0d2a808f-3eeb-4136-91f9-3068122c0829",
     },
   };
 };

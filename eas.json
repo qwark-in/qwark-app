@@ -34,6 +34,7 @@
     "preview": {
       "extends": "base",
       "withoutCredentials": true,
+      "developmentClient": true,
       "distribution": "internal",
       "environment": "preview",
       "android": {
