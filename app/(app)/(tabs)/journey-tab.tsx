@@ -1,6 +1,5 @@
 import { MiniChart } from "features/dashboard/components/MiniChart";
-import { newJourneyList } from "features/journey/constants";
-import { useRef, useState } from "react";
+import { chartData, milestones, newJourneyList } from "features/journey/constants";
 import { LayoutChangeEvent, Pressable, useWindowDimensions } from "react-native";
 import Animated, {
   useAnimatedStyle,
@@ -9,35 +8,16 @@ import Animated, {
   withSpring,
   withTiming,
 } from "react-native-reanimated";
-import { ScrollView, Separator, TamaguiElement, View, XStack, YStack } from "tamagui";
+import { ScrollView, Separator, View, XStack, YStack } from "tamagui";
 import { Icon } from "ui/assets/icons/adaptive";
 import { JourneyHouse } from "ui/assets/illustrations";
 import { OutlineButton } from "ui/controls/buttons";
 import { BodyText, HeadlineText, LabelText, TitleText } from "ui/display/typography";
+import { VerticalStatusProgress } from "react-native-vertical-status-progress";
 
 const COLUMN_GAP = 16;
 const PADDING_HORIZONTAL = 20;
 const IMAGE_HEIGHT = 100;
-
-const chartData: {
-  value: number;
-  date: string;
-}[] = [
-  { date: "2025-01-01", value: 120 },
-  { date: "2025-01-02", value: 122 },
-  { date: "2025-01-03", value: 121 },
-  { date: "2025-01-04", value: 124 },
-  { date: "2025-01-05", value: 126 },
-  { date: "2025-01-06", value: 125 },
-  { date: "2025-01-07", value: 128 },
-  { date: "2025-01-08", value: 130 },
-  { date: "2025-01-09", value: 129 },
-  { date: "2025-01-10", value: 133 },
-  { date: "2025-01-11", value: 135 },
-  { date: "2025-01-12", value: 138 },
-  { date: "2025-01-13", value: 140 },
-  { date: "2025-01-14", value: 142 },
-];
 
 export default function JourneyTabScreen() {
   const { width } = useWindowDimensions();
@@ -171,9 +151,9 @@ const JourneyCard = () => {
       </XStack>
 
       <Animated.View style={[animatedHeightStyle, { overflow: "hidden" }]}>
-        <View w="100%" py="$7" pos="absolute" gap="$5" onLayout={onLayout}>
+        <View w="100%" pt="$7" pb="$2" pos="absolute" gap="$5" onLayout={onLayout}>
           <BodyText fow="$emphasized">Portfolio Performance</BodyText>
-          <XStack jc="space-between">
+          <XStack jc="space-between" gap="$3">
             <YStack fg={1}>
               <TitleText fontVariant={["lining-nums"]}>₹9.71L</TitleText>
               <BodyText size="$small" color="$text/secondary">
@@ -193,8 +173,55 @@ const JourneyCard = () => {
               </BodyText>
             </YStack>
           </XStack>
+
+          <View p="$3" br="$3" bw={1} boc="$stroke/disabled" gap="$3">
+            <BodyText fow="$emphasized">Milestones</BodyText>
+            <VerticalStatusProgress
+              accordion={false}
+              statuses={milestones}
+              currentStatus="second"
+              showOrder
+              statusColors={{
+                prevBallColor: "#24A148",
+                currentBallColor: "#C6C6C6",
+                futureBallColor: "#C6C6C6",
+                prevStickColor: "#24A148",
+                currentStickColor: "#c6c6c6",
+                futureStickColor: "#C6C6C6",
+                prevTitleColor: "#262626",
+                currentTitleColor: "#262626",
+                futureTitleColor: "#262626",
+                prevSubtitleColor: "#6F6F6F",
+                currentSubtitleColor: "#6F6F6F",
+                futureSubtitleColor: "#6F6F6F",
+              }}
+              titleStyle={{
+                fontSize: 12,
+                fontWeight: "500",
+                fontFamily: "RobotoSerifMedium",
+                fontVariant: ["lining-nums"],
+                letterSpacing: 0.5,
+                lineHeight: 16,
+              }}
+              subTitleStyle={{
+                fontSize: 12,
+                fontWeight: "400",
+                fontFamily: "BarlowRegular",
+                letterSpacing: 0.4,
+                lineHeight: 16,
+              }}
+              contentWrapperStyle={{ paddingLeft: 8, paddingBottom: 12 }}
+            />
+          </View>
         </View>
       </Animated.View>
+
+      <XStack ai="center" mt="$5" gap="$1_5">
+        <BodyText mb="$_5" size="$xsmall" fow="$emphasized">
+          View Details
+        </BodyText>
+        <Icon name="chevron-right" size="sm" color="$icon/secondary" />
+      </XStack>
     </View>
   );
 };
