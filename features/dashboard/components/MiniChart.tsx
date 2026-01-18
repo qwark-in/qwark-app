@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { View } from "tamagui";
 import { LayoutChangeEvent } from "react-native";
 import { Area, CartesianChart, Line } from "victory-native";
@@ -7,8 +7,10 @@ const CHART_HEIGHT = 32;
 
 export const MiniChart = ({
   chartData,
+  chartHeight,
 }: {
   chartData: { value: number; date: string }[];
+  chartHeight?: number;
 }) => {
   const [parentWidth, setParentwidth] = useState<number>(0);
 
@@ -18,7 +20,7 @@ export const MiniChart = ({
 
   return (
     <View f={0.8} onLayout={onLayout}>
-      <View height={CHART_HEIGHT} width={parentWidth}>
+      <View height={chartHeight || CHART_HEIGHT} width={parentWidth}>
         <CartesianChart
           data={chartData}
           xKey="date"

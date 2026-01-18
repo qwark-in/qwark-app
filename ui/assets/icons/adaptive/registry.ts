@@ -1,3 +1,4 @@
+import { ref } from "node:process";
 import * as icons from "./glyphs";
 
 export const iconRegistry = {
@@ -10,6 +11,7 @@ export const iconRegistry = {
   check: icons.Check,
   "chevron-left": icons.ChevronLeft,
   "chevron-right": icons.ChevronRight,
+  "chevron-down": icons.ChevronDown,
   "connected-accounts": icons.ConnectedAccounts,
   cross: icons.Cross,
   close: icons.Close,
@@ -23,6 +25,7 @@ export const iconRegistry = {
   plus: icons.Plus,
   profile: icons.ProfileIcon,
   "profile-tab": icons.ProfileTab,
+  refresh: icons.Refresh,
   settings: icons.Settings,
   shield: icons.Shield,
   search: icons.Search,

@@ -1,4 +1,3 @@
-import React from "react";
 import { Stack } from "expo-router";
 import { screenOptions } from "navigation/screenOptions";
 import { CustomHeader } from "navigation/CustomHeader";

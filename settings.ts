@@ -1,4 +1,4 @@
-export const DEV_API_BASE_URL = "http://4.187.235.22:443";
+export const DEV_API_BASE_URL = "http://4.187.178.219:443";
 export const DEV_API_FIN_PROFILE_BASE_URL = "http://4.224.157.113";
 export const DEV_API_PROFILE_BASE_URL = "http://4.187.228.127";
 export const DEV_API_DATA_BASE_URL = "http://135.235.249.63";
