@@ -12,9 +12,9 @@ import {
 const mockUser: GetUserResponse = {
   user_id: "cbb25c27-b0dc-49c7-bbeb-54f741975a44",
   name: {
-    first: "",
+    first: "Harsh",
     middle: "",
-    last: "",
+    last: "Mohite",
   },
   joining_time: new Date().toISOString(),
   dob: "1997-06-15T00:00:00.000Z",

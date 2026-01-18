@@ -1,4 +1,4 @@
-import { ScrollView, View, YStack } from "tamagui";
+import { ScrollView, Separator, View, YStack } from "tamagui";
 import { ActivityIndicator } from "react-native";
 import { useGetDashboardData, useGetMarketData } from "data/api";
 import { useExitAppOnBackPress } from "hooks/use-exit-app-on-back-press";
@@ -23,22 +23,25 @@ export default function DashboardScreen() {
   }
 
   return (
-    <ScrollView
-      f={1}
-      contentContainerStyle={{
-        bg: "#FAFAFC",
-        px: "$5",
-        pt: "$7",
-        pb: "$5",
-      }}
-      showsVerticalScrollIndicator={false}
-    >
-      <YStack gap="$8">
-        <Networth />
-        <Investments />
-        <Cashflow />
-        <BankAccounts />
-      </YStack>
-    </ScrollView>
+    <View f={1}>
+      <Separator bw={1} boc="$stroke/disabled" />
+      <ScrollView
+        f={1}
+        bg="#FAFAFC"
+        contentContainerStyle={{
+          px: "$5",
+          pt: "$7",
+          pb: "$5",
+        }}
+        showsVerticalScrollIndicator={false}
+      >
+        <YStack gap="$8">
+          <Networth />
+          <Investments />
+          <Cashflow />
+          <BankAccounts />
+        </YStack>
+      </ScrollView>
+    </View>
   );
 }

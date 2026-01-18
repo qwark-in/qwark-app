@@ -63,7 +63,17 @@ export default function TabLayout() {
       <Tabs.Screen
         name="journey-tab"
         options={{
-          title: "Journey Screen",
+          title: "Journey",
+          headerShown: true,
+          headerRightContainerStyle: {
+            paddingRight: 16,
+          },
+          headerShadowVisible: false,
+          headerTitleStyle: {
+            fontFamily: "RobotoSerifSemibold",
+            fontSize: 22,
+            fontWeight: 500,
+          },
           tabBarIcon: ({ color }) => (
             <Icon size="lg" name="journey" color={color as RawColor} />
           ),
