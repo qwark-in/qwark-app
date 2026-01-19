@@ -11,6 +11,7 @@ import {
   Line,
 } from "@shopify/react-native-skia";
 import { useDerivedValue, useSharedValue } from "react-native-reanimated";
+import { scheduleOnRN } from "react-native-worklets";
 
 const CHART_HEIGHT = 180;
 const TOOLTIP_PADDING_X = 10;
@@ -43,6 +44,11 @@ export const Chart = ({
   const chartLeft = useSharedValue(0);
   const chartRight = useSharedValue(0);
 
+  const handleChartBounds = (bounds: { left: number; right: number }) => {
+    chartLeft.value = bounds.left;
+    chartRight.value = bounds.right;
+  };
+
   /**
    * Tooltip text
    */
@@ -73,7 +79,8 @@ export const Chart = ({
     if (!font) return 0;
 
     const textWidth =
-      font.measureText(xValue.value).width + font.measureText(yValue.value).width;
+      font.measureText(xValue.value).width +
+      font.measureText(yValue.value).width;
     const width = textWidth + TOOLTIP_PADDING_X * 2;
 
     const idealX = state.x.position.value - textWidth / 2 - TOOLTIP_PADDING_X;
@@ -102,15 +109,15 @@ export const Chart = ({
   const lineP1 = useDerivedValue(() =>
     vec(
       state.x.position.value,
-      state.y.value.position.value // bar top
-    )
+      state.y.value.position.value, // bar top
+    ),
   );
 
   const lineP2 = useDerivedValue(() => {
     if (!font) return vec();
     return vec(
       state.x.position.value, // stays true to data
-      TOOLTIP_Y + font.getSize() + TOOLTIP_PADDING_Y * 2
+      TOOLTIP_Y + font.getSize() + TOOLTIP_PADDING_Y * 2,
     );
   });
 
@@ -127,8 +134,7 @@ export const Chart = ({
         chartPressState={state}
       >
         {({ points, chartBounds }) => {
-          chartLeft.value = chartBounds.left;
-          chartRight.value = chartBounds.right;
+          scheduleOnRN(() => handleChartBounds(chartBounds));
 
           return (
             <>

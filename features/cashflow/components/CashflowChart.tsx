@@ -20,7 +20,9 @@ type CashflowChartProps = {
 };
 
 export const CashflowChart: React.FC<CashflowChartProps> = ({ cashflow }) => {
-  const appliedFilters = useCashflowScreenStore((store) => store.appliedFilters);
+  const appliedFilters = useCashflowScreenStore(
+    (store) => store.appliedFilters,
+  );
   const setDuration = useCashflowScreenStore((store) => store.setDuration);
 
   const data = cashflow.flatMap((item) =>
@@ -29,15 +31,19 @@ export const CashflowChart: React.FC<CashflowChartProps> = ({ cashflow }) => {
         isWithinInterval(item.date, {
           start: new Date(appliedFilters.dates.fromDate),
           end: new Date(appliedFilters.dates.toDate),
-        })
+        }),
       )
-      .map((a) => ({ value: a.amount, date: a.date }))
+      .map((a) => ({ value: a.amount, date: a.date })),
   );
 
-  const dataTotalByDate = getDataTotalByDuration(data, appliedFilters.duration, {
-    startDate: appliedFilters.dates.fromDate.toISOString(),
-    endDate: appliedFilters.dates.toDate.toISOString(),
-  });
+  const dataTotalByDate = getDataTotalByDuration(
+    data,
+    appliedFilters.duration,
+    {
+      startDate: appliedFilters.dates.fromDate.toISOString(),
+      endDate: appliedFilters.dates.toDate.toISOString(),
+    },
+  );
   const dataSorted = sortChartData(dataTotalByDate);
   const chartData = getChartData(dataSorted);
 
@@ -55,7 +61,8 @@ export const CashflowChart: React.FC<CashflowChartProps> = ({ cashflow }) => {
 
   return (
     <View mb="$3">
-      {dataSorted.length !== 0 ? (
+      {dataSorted.length !== 0 &&
+      dataSorted.some((item) => item.value !== 0) ? (
         <Chart chartData={chartData} />
       ) : (
         <View h={CHART_HEIGHT + YAXIS_EXTRA_HEIGHT + 5} ai="center" jc="center">
