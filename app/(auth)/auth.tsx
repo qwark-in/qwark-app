@@ -43,7 +43,7 @@ export default function AuthScreen() {
           onPress={() => handlePress("SIGNUP")}
           testID="welcome-continue-button"
         >
-          Signup to Qwark
+          Signup
         </FilledButton>
         <BodyText mt="$3" size="$xsmall" fow="$emphasized" ta="center">
           If you already have already registered,{" "}
