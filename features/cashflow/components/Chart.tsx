@@ -11,15 +11,16 @@ import {
   Line,
 } from "@shopify/react-native-skia";
 import { useDerivedValue, useSharedValue } from "react-native-reanimated";
-import { scheduleOnRN } from "react-native-worklets";
+import { formatAmount } from "helpers/format-amount";
 
-const CHART_HEIGHT = 180;
+const CHART_HEIGHT = 250;
 const TOOLTIP_PADDING_X = 10;
 const TOOLTIP_PADDING_Y = 6;
 const TOOLTIP_RADIUS = 8;
 const TOOLTIP_Y = 5;
 const EDGE_PADDING = 4;
 
+const roboto = require("../../../assets/fonts/roboto-serif/RobotoSerif-Medium.ttf");
 const barlow = require("../../../assets/fonts/barlow/Barlow-Medium.ttf");
 
 export const Chart = ({
@@ -31,7 +32,8 @@ export const Chart = ({
   }[];
 }) => {
   const activeTab = useCashflowScreenStore((store) => store.activeTab);
-  const font = useFont(barlow, 14);
+  const robotoFont = useFont(roboto, 12);
+  const barlowFont = useFont(barlow, 12);
 
   const { state, isActive } = useChartPressState({
     x: "",
@@ -57,17 +59,17 @@ export const Chart = ({
   });
 
   const yValue = useDerivedValue(() => {
-    return ` ${state.y.value.value.value}`;
+    return ` ${formatAmount(state.y.value.value.value)}`;
   });
 
   /**
    * Tooltip width
    */
   const tooltipWidth = useDerivedValue(() => {
-    if (!font) return 0;
+    if (!barlowFont || !robotoFont) return 0;
     return (
-      font.measureText(xValue.value).width +
-      font.measureText(yValue.value).width +
+      barlowFont.measureText(xValue.value).width +
+      robotoFont.measureText(yValue.value).width +
       TOOLTIP_PADDING_X * 2
     );
   });
@@ -76,11 +78,11 @@ export const Chart = ({
    * Clamp ONLY the tooltip rect
    */
   const tooltipRectX = useDerivedValue(() => {
-    if (!font) return 0;
+    if (!barlowFont || !robotoFont) return 0;
 
     const textWidth =
-      font.measureText(xValue.value).width +
-      font.measureText(yValue.value).width;
+      barlowFont.measureText(xValue.value).width +
+      robotoFont.measureText(yValue.value).width;
     const width = textWidth + TOOLTIP_PADDING_X * 2;
 
     const idealX = state.x.position.value - textWidth / 2 - TOOLTIP_PADDING_X;
@@ -99,8 +101,8 @@ export const Chart = ({
   });
 
   const tooltipTextY = useDerivedValue(() => {
-    if (!font) return 0;
-    return tooltipTextX.value + font.measureText(xValue.value).width;
+    if (!barlowFont) return 0;
+    return tooltipTextX.value + barlowFont.measureText(xValue.value).width;
   });
 
   /**
@@ -114,12 +116,16 @@ export const Chart = ({
   );
 
   const lineP2 = useDerivedValue(() => {
-    if (!font) return vec();
+    if (!barlowFont) return vec();
     return vec(
       state.x.position.value, // stays true to data
-      TOOLTIP_Y + font.getSize() + TOOLTIP_PADDING_Y * 2,
+      TOOLTIP_Y + barlowFont.getSize() + TOOLTIP_PADDING_Y * 2,
     );
   });
+
+  const maxValue = Math.max(...chartData.map((item) => item.value));
+
+  const upperBoundMaxValue = (maxValue * 5.5) / 5;
 
   return (
     <View height={CHART_HEIGHT}>
@@ -127,22 +133,52 @@ export const Chart = ({
         data={chartData}
         xKey="date"
         yKeys={["value"]}
-        padding={{ left: -5, right: -2 }}
-        domainPadding={{ left: 20, right: 20, top: 40 }}
-        axisOptions={{ lineWidth: 0 }}
-        frame={{ lineWidth: 0 }}
+        padding={{ left: 20, top: 4, bottom: 4 }}
+        domainPadding={{ left: 20, right: 20, top: 0 }}
         chartPressState={state}
+        onChartBoundsChange={handleChartBounds}
+        frame={{ lineWidth: { top: 0, left: 0 } }}
+        xAxis={{
+          font: barlowFont,
+          labelColor: "#6F6F6F",
+          lineWidth: 0,
+          labelOffset: 10,
+          tickCount: 3,
+        }}
+        yAxis={[
+          {
+            font: robotoFont,
+            labelColor: "#6F6F6F",
+            axisSide: "right",
+            lineWidth: 0,
+
+            tickValues: [
+              0,
+              upperBoundMaxValue / 5,
+              (upperBoundMaxValue / 5) * 2,
+              (upperBoundMaxValue / 5) * 3,
+              (upperBoundMaxValue / 5) * 4,
+              upperBoundMaxValue,
+            ],
+            formatYLabel(label) {
+              return `${formatAmount(label, 1)}`;
+            },
+          },
+        ]}
       >
         {({ points, chartBounds }) => {
-          scheduleOnRN(() => handleChartBounds(chartBounds));
-
           return (
             <>
               <Bar
                 points={points.value}
                 chartBounds={chartBounds}
                 innerPadding={0.45}
-                // roundedCorners={{ topLeft: 5, topRight: 5 }}
+                roundedCorners={{
+                  topLeft: 9999,
+                  topRight: 9999,
+                  bottomLeft: 9999,
+                  bottomRight: 9999,
+                }}
                 animate={{ type: "timing", duration: 500 }}
               >
                 <LinearGradient
@@ -155,7 +191,7 @@ export const Chart = ({
                 />
               </Bar>
 
-              {isActive && font ? (
+              {isActive && barlowFont ? (
                 <>
                   {/* Thin connector line (always straight) */}
                   <Line
@@ -170,7 +206,7 @@ export const Chart = ({
                     x={tooltipRectX}
                     y={TOOLTIP_Y}
                     width={tooltipWidth}
-                    height={font.getSize() + TOOLTIP_PADDING_Y * 2}
+                    height={barlowFont.getSize() + TOOLTIP_PADDING_Y * 2}
                     r={TOOLTIP_RADIUS}
                     color="white"
                   >
@@ -189,15 +225,15 @@ export const Chart = ({
                   {/* Tooltip text */}
                   <Text
                     x={tooltipTextX}
-                    y={TOOLTIP_Y + font.getSize() + TOOLTIP_PADDING_Y - 1}
-                    font={font}
+                    y={TOOLTIP_Y + barlowFont.getSize() + TOOLTIP_PADDING_Y - 1}
+                    font={barlowFont}
                     color="#6F6F6F"
                     text={xValue}
                   />
                   <Text
                     x={tooltipTextY}
-                    y={TOOLTIP_Y + font.getSize() + TOOLTIP_PADDING_Y - 1}
-                    font={font}
+                    y={TOOLTIP_Y + barlowFont.getSize() + TOOLTIP_PADDING_Y - 1}
+                    font={robotoFont}
                     text={yValue}
                     color={activeTab === "EXPENSES" ? "#DA1E28" : "#24A148"}
                   />

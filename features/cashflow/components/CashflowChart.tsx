@@ -20,9 +20,7 @@ type CashflowChartProps = {
 };
 
 export const CashflowChart: React.FC<CashflowChartProps> = ({ cashflow }) => {
-  const appliedFilters = useCashflowScreenStore(
-    (store) => store.appliedFilters,
-  );
+  const appliedFilters = useCashflowScreenStore((store) => store.appliedFilters);
   const setDuration = useCashflowScreenStore((store) => store.setDuration);
 
   const data = cashflow.flatMap((item) =>
@@ -36,20 +34,12 @@ export const CashflowChart: React.FC<CashflowChartProps> = ({ cashflow }) => {
       .map((a) => ({ value: a.amount, date: a.date })),
   );
 
-  const dataTotalByDate = getDataTotalByDuration(
-    data,
-    appliedFilters.duration,
-    {
-      startDate: appliedFilters.dates.fromDate.toISOString(),
-      endDate: appliedFilters.dates.toDate.toISOString(),
-    },
-  );
+  const dataTotalByDate = getDataTotalByDuration(data, appliedFilters.duration, {
+    startDate: appliedFilters.dates.fromDate.toISOString(),
+    endDate: appliedFilters.dates.toDate.toISOString(),
+  });
   const dataSorted = sortChartData(dataTotalByDate);
   const chartData = getChartData(dataSorted);
-
-  // Chart X-axis labels
-  const startLabel = format(appliedFilters.dates.fromDate, "dd MMM yy");
-  const endLabel = format(appliedFilters.dates.toDate, "dd MMM yy");
 
   useEffect(() => {
     const lastTransactionDate = cashflow
@@ -61,19 +51,13 @@ export const CashflowChart: React.FC<CashflowChartProps> = ({ cashflow }) => {
 
   return (
     <View mb="$3">
-      {dataSorted.length !== 0 &&
-      dataSorted.some((item) => item.value !== 0) ? (
+      {dataSorted.length !== 0 && dataSorted.some((item) => item.value !== 0) ? (
         <Chart chartData={chartData} />
       ) : (
         <View h={CHART_HEIGHT + YAXIS_EXTRA_HEIGHT + 5} ai="center" jc="center">
           <TitleText>No Data Found</TitleText>
         </View>
       )}
-
-      <XStack jc="space-between">
-        <BodyText>{startLabel}</BodyText>
-        <BodyText>{endLabel}</BodyText>
-      </XStack>
 
       <View py="$2" mt="$3">
         <TimeframeSelector

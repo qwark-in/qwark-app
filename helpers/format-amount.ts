@@ -1,4 +1,4 @@
-type FormatAmountFunction = (netWorth: number) => string;
+type FormatAmountFunction = (amount: number, toFixed?: number) => string;
 
 /**
  * Converts a number to a formatted string that uses Indian norms
@@ -6,10 +6,11 @@ type FormatAmountFunction = (netWorth: number) => string;
  * @param {number} amount Number to be converted into a formatted string
  * @returns {string} Formatted string
  */
-export const formatAmount: FormatAmountFunction = (amount: number): string => {
-  if (amount < 0 || isNaN(amount)) return 'Invalid Networth';
+export const formatAmount: FormatAmountFunction = (amount, toFixed): string => {
+  "worklet";
+  if (amount < 0 || isNaN(amount)) return "Invalid Networth";
 
-  const suffixes = ['', 'K', 'L', 'Cr'];
+  const suffixes = ["", "K", "L", "Cr"];
   let index = 1;
   let initialDivisor = 1000; // For the first division
 
@@ -19,5 +20,5 @@ export const formatAmount: FormatAmountFunction = (amount: number): string => {
     initialDivisor = 100; // Set 100 for subsequent divisions
   }
 
-  return '₹' + amount.toFixed(2) + suffixes[index - 1];
+  return "₹" + amount.toFixed(toFixed || 2) + suffixes[index - 1];
 };

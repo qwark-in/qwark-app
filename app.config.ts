@@ -33,7 +33,7 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
 
   const { name, androidPackageName, icon, adaptiveIcon, scheme } = getDynamicAppConfig(
     (process.env.APP_VARIANT as "development" | "preview" | "production" | "storybook") ||
-      "development"
+      "development",
   );
 
   return {
@@ -46,7 +46,6 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
     android: {
       ...config.android,
       permissions: [
-        ...(config.android?.permissions ?? []),
         "READ_SMS",
         "RECEIVE_SMS",
         "android.permission.RECORD_AUDIO",
@@ -93,13 +92,24 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
       "@react-native-firebase/app",
       [
         "@react-native-community/datetimepicker", // Line - 56,137 Refer -> https://github.com/react-native-datetimepicker/datetimepicker/issues/975
+        {
+          android: {
+            datePicker: {
+              colorAccent: {
+                light: "#001484",
+              },
+              textColorPrimary: {
+                light: "#001484",
+              },
+            },
+          },
+        },
       ],
       [
         "expo-splash-screen",
         {
           backgroundColor: "#ffffff",
           image: icon,
-          // resizeMode: 'contain',
           dark: {
             image: icon,
             backgroundColor: "#000000",
@@ -112,10 +122,6 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
         {
           android: {
             usesCleartextTraffic: process.env.APP_VARIANT === "preview",
-            newArchEnabled: true,
-          },
-          ios: {
-            newArchEnabled: true,
           },
         },
       ],
@@ -134,7 +140,7 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
 };
 
 const getDynamicAppConfig = (
-  environment: "development" | "preview" | "production" | "storybook"
+  environment: "development" | "preview" | "production" | "storybook",
 ): DynamicConfig => {
   if (environment === "production") {
     return {
