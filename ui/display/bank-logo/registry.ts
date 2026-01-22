@@ -13,7 +13,7 @@ export const BANK_LOGO_MAP: Partial<Record<FipId, ComponentType<LogoProps>>> = {
   "UCOB-FIP": BankIcons.UcoBankLogo,
   CUBFIP: BankIcons.CityUnionBankLogo,
   "KBL-FIP": BankIcons.KarnatakaBankLogo,
-  "IOB-FIP": BankIcons.IndianBankLogo,
+  "IOB-FIP": BankIcons.IndianOverseasBankLogo,
   "fiplive@canarabank": BankIcons.CanaraBankLogo,
   IBFIP: BankIcons.IndianBankLogo,
   BARBFIP: BankIcons.BobBankLogo,
@@ -29,4 +29,5 @@ export const BANK_LOGO_MAP: Partial<Record<FipId, ComponentType<LogoProps>>> = {
   "KarurVysyaBank-FIP": BankIcons.KarurVysyaBankLogo,
   "BOI-FIP": BankIcons.BankOfIndiaLogo,
   "fiplive@indusind": BankIcons.IndusIndBankLogo,
+  "UBI-FIP": BankIcons.UnionBankLogo,
 };

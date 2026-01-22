@@ -1,8 +1,8 @@
-export const DEV_API_BASE_URL = "http://4.187.252.67:443";
+export const DEV_API_BASE_URL = "https://api.qwark.in/auth";
 export const DEV_API_FIN_PROFILE_BASE_URL = "http://4.224.157.113";
-export const DEV_API_PROFILE_BASE_URL = "http://4.187.228.127";
-export const DEV_API_DATA_BASE_URL = "http://4.224.130.45/";
-export const DEV_API_KYC_BASE_URL = "http://98.70.230.140";
+export const DEV_API_PROFILE_BASE_URL = "https://api.qwark.in/profile";
+export const DEV_API_DATA_BASE_URL = "https://api.qwark.in/accounting";
+export const DEV_API_KYC_BASE_URL = "https://api.qwark.in/kyc";
 export const DEV_AA_API_BASE_URL = "https://previewqwark.camsfinserv.com";
 export const DEV_API_WEB_BASE_URL = "http://localhost:3001/web-gateway";
 export const DEV_API_WEB_FIN_PROFILE_BASE_URL = "http://localhost:3001/web-fin-profile";

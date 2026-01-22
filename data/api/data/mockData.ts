@@ -269,7 +269,7 @@ export const mockDashboardData: DashboardState = {
       accountDetails: {
         accountNumber: "XXXX1234",
         accountRefNumber: "HDFC-XXXX1234",
-        fipId: "HDFC-BANK",
+        fipId: "HDFC-FIP",
         fipName: "HDFC Bank",
       },
       currentBalance: 25432.1,
@@ -540,7 +540,7 @@ export const mockDashboardData: DashboardState = {
       accountDetails: {
         accountNumber: "XXXX9876",
         accountRefNumber: "ICICI-XXXX9876",
-        fipId: "ICICI-BANK",
+        fipId: "ICICI-FIP",
         fipName: "ICICI Bank",
       },
       currentBalance: 987654.32,

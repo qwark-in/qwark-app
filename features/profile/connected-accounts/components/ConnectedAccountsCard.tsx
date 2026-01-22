@@ -6,6 +6,7 @@ import { Icon } from "ui/assets/icons/adaptive";
 import { BodyText, TitleText } from "ui/display/typography";
 import { Entity } from "data/models/financial-profile";
 import { useRouter } from "expo-router";
+import { BankLogo } from "ui/display/bank-logo/BankLogo";
 
 // -------------------------
 // Types
@@ -13,6 +14,7 @@ import { useRouter } from "expo-router";
 
 type ConnectedAccountsCardProps = {
   fip_name: string;
+  fip_id: string;
   asset_class_id: Entity;
   accounts: {
     account_number: string;
@@ -26,6 +28,7 @@ type ConnectedAccountsCardProps = {
 export const ConnectedAccountsCard: React.FC<ConnectedAccountsCardProps> = ({
   accounts,
   fip_name,
+  fip_id,
   asset_class_id,
 }) => {
   const router = useRouter();
@@ -45,7 +48,7 @@ export const ConnectedAccountsCard: React.FC<ConnectedAccountsCardProps> = ({
     <View mb="$6">
       <View bw={1} br="$4" boc="$stroke/disabled">
         <XStack p="$4" gap="$3" ai="center">
-          <Icon name="bank-logo-placeholder" />
+          <BankLogo fipId={fip_id} />
           <YStack>
             <TitleText>{fip_name}</TitleText>
 

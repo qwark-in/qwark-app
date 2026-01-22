@@ -8,9 +8,7 @@ import { Link, useRouter } from "expo-router";
 import { useAAStore } from "data/stores/aa-store";
 
 export default function LinkedBanksScreen() {
-  const connectedAccounts = useFinancialProfileStore(
-    (store) => store.connectedAccounts
-  );
+  const connectedAccounts = useFinancialProfileStore((store) => store.connectedAccounts);
   const setSelectedEntities = useAAStore((store) => store.setSelectedEntities);
   const router = useRouter();
 
@@ -19,9 +17,7 @@ export default function LinkedBanksScreen() {
     router.navigate("/account-aggregator/select-banks");
   };
 
-  const banks = connectedAccounts.filter(
-    (account) => account.asset_class_id === "BANK"
-  );
+  const banks = connectedAccounts.filter((account) => account.asset_class_id === "BANK");
 
   if (banks.length === 0) {
     return (
@@ -37,6 +33,7 @@ export default function LinkedBanksScreen() {
         {banks.map((item) => (
           <ConnectedAccountsCard
             key={item.fip_id}
+            fip_id={item.fip_id}
             fip_name={item.fip_name}
             asset_class_id={item.asset_class_id}
             accounts={item.accounts.map((acc) => ({

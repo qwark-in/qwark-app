@@ -32,7 +32,7 @@ const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 // Get User
 export const getUserMock = async (
-  authData: AuthDataType
+  authData: AuthDataType,
 ): Promise<{ data: GetUserResponse }> => {
   await delay(300);
   console.log("✅ [MOCK] Get User called");
@@ -42,7 +42,7 @@ export const getUserMock = async (
 // Create User
 export const createUserMock = async (
   data: CreateUserQueryBody,
-  authData: AuthDataType
+  authData: AuthDataType,
 ): Promise<{ data: CreateUserResponse }> => {
   await delay(300);
   console.log("✅ [MOCK] Create User called with:", data);
@@ -61,7 +61,7 @@ export const createUserMock = async (
 // Update User
 export const updateUserMock = async (
   data: UpdateUserQueryBody,
-  authData: AuthDataType
+  authData: AuthDataType,
 ): Promise<{ data: UpdateUserResponse }> => {
   await delay(300);
   console.log("✅ [MOCK] Update User called with:", data);
