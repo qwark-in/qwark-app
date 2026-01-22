@@ -98,9 +98,6 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
               colorAccent: {
                 light: "#001484",
               },
-              textColorPrimary: {
-                light: "#001484",
-              },
             },
           },
         },

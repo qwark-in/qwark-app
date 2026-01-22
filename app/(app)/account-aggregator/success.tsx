@@ -1,5 +1,7 @@
 import { useGlobalStore } from "data/stores/global-store";
 import { useRouter } from "expo-router";
+import { useEffect } from "react";
+import { BackHandler } from "react-native";
 import { View, YStack } from "tamagui";
 import { CheckGreen } from "ui/assets/icons/fixed-color";
 import { FilledButton } from "ui/controls/buttons";
@@ -8,10 +10,10 @@ import { BodyText, HeadlineText } from "ui/display/typography";
 export default function SuccessScreen() {
   const router = useRouter();
   const isAccountAggregatorCompleted = useGlobalStore(
-    (store) => store.isAccountAggregatorCompleted
+    (store) => store.isAccountAggregatorCompleted,
   );
   const setIsAccountAggregatorCompleted = useGlobalStore(
-    (store) => store.setIsAccountAggregatorCompleted
+    (store) => store.setIsAccountAggregatorCompleted,
   );
 
   const handlePress = () => {
@@ -25,6 +27,16 @@ export default function SuccessScreen() {
       setIsAccountAggregatorCompleted(true);
     }
   };
+
+  useEffect(() => {
+    const onBackPress = () => {
+      return true; // prevent default back
+    };
+
+    const subscription = BackHandler.addEventListener("hardwareBackPress", onBackPress);
+
+    return () => subscription.remove(); // cleanup on unmount
+  }, []);
 
   return (
     <View f={1} bg="#FFF" jc="space-between">

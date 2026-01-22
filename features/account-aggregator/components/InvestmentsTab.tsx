@@ -12,12 +12,12 @@ export const InvestmentsTab: React.FC<InvestmentsTabProps> = () => {
   const discoveredAccounts = useAAStore((store) => store.discoveredAccounts);
 
   const investments = discoveredAccounts.filter(
-    (account) => account.asset_class_id !== "BANK"
+    (account) => account.asset_class_id !== "BANK" && account.accounts.length > 0,
   );
 
   const totalInvestmentAccounts = investments.reduce(
     (acc, curr) => acc + curr.accounts.length,
-    0
+    0,
   );
 
   return (

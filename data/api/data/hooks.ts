@@ -20,7 +20,7 @@ const getMockDashboardDataFetcher = async (_url: string): Promise<DashboardState
   };
 
   return new Promise((resolve) => {
-    setTimeout(() => resolve(response.data), 500);
+    setTimeout(() => resolve(response.data), 200);
   });
 };
 
@@ -39,7 +39,7 @@ export const useGetDashboardData = () => {
           setNetworth(data.networth);
         }
       },
-    }
+    },
   );
 
   return {
@@ -64,7 +64,7 @@ const getMockMarketDataFetcher = async (_url: string): Promise<MarketState> => {
   };
 
   return new Promise((resolve) => {
-    setTimeout(() => resolve(response.data), 500);
+    setTimeout(() => resolve(response.data), 200);
   });
 };
 
@@ -84,7 +84,7 @@ export const useGetMarketData = () => {
           setMfHoldings(data.mfHoldings);
         }
       },
-    }
+    },
   );
   return {
     data,

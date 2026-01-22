@@ -47,7 +47,7 @@ export const AuthoriseBanksSliderItem: React.FC<AuthoriseBanksSliderItemProps> =
 
   const consentHandle = consentHandles.find(
     (handle) =>
-      handle.asset_class_id === fips.find((fip) => fip.fip_id === fip_id)?.asset_class_id
+      handle.asset_class_id === fips.find((fip) => fip.fip_id === fip_id)?.asset_class_id,
   )?.consent_handle!;
 
   const onSuccess = () => handleAuthorise(fip_id);
@@ -139,10 +139,8 @@ export const AuthoriseBanksSliderItem: React.FC<AuthoriseBanksSliderItemProps> =
   return (
     <View width={width - 20 * 2}>
       <View mt="$6">
-        <XStack gap="$2">
-          <FontAwesome name="bank" size={16} color="black" />
-          <TitleText fow="$emphasized">{fip_name}</TitleText>
-        </XStack>
+        <TitleText fow="$emphasized">{fip_name}</TitleText>
+
         <BodyText mt="$2" color="#6F6F6F">
           The OTP will be sent to{" "}
           <BodyText fow="$emphasized" color="#262626">
