@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, BackHandler } from "react-native";
 import { Separator, View, XStack, YStack } from "tamagui";
 import { useForm } from "react-hook-form";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSafeAreaPadding } from "hooks/use-safearea-padding";
@@ -48,10 +48,9 @@ const PersonalDetailsScreen = () => {
   const toast = useToastController();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const authData = useAuthStore((store) => store.authData)!;
-  const { bottomSheetModalRef, presentBottomSheetModal } =
-    useCustomBottomSheetModal();
+  const { bottomSheetModalRef, presentBottomSheetModal } = useCustomBottomSheetModal();
   const setIsOnboardingCompleted = useGlobalStore(
-    (store) => store.setIsOnboardingCompleted
+    (store) => store.setIsOnboardingCompleted,
   );
   const { logout } = useLogout();
   const setUser = useUserStore((store) => store.setState);
@@ -102,7 +101,7 @@ const PersonalDetailsScreen = () => {
           },
           phone: data.mobileNumber,
         },
-        authData
+        authData,
       );
 
       setUser(response.data);
@@ -118,17 +117,17 @@ const PersonalDetailsScreen = () => {
     }
   };
 
-  useEffect(() => {
-    const subscription = BackHandler.addEventListener(
-      "hardwareBackPress",
-      () => {
+  useFocusEffect(
+    useCallback(() => {
+      const subscription = BackHandler.addEventListener("hardwareBackPress", () => {
+        console.log("logging out from personal details screen");
         logout();
         return true; // Prevent default behavior (exit app)
-      }
-    );
+      });
 
-    return () => subscription.remove();
-  }, []);
+      return () => subscription.remove();
+    }, []),
+  );
 
   return (
     <View f={1} {...safeAreaPadding}>
@@ -186,24 +185,18 @@ const PersonalDetailsScreen = () => {
         </View>
 
         <View p="$5" boxShadow="0 -2px 16px 0 rgba(22, 22, 22, 0.12)">
-          <XStack
-            onPress={() => setChecked(!checked)}
-            gap="$2_5"
-            alignItems="center"
-          >
+          <XStack onPress={() => setChecked(!checked)} gap="$2_5" alignItems="center">
             <Checkbox checked={checked} />
             <BodyText size="$small" color="$text/secondary" fs={1}>
-              I authorize Qwark to fetch my financial data from RBI regulated
-              Account Aggregator ecosystem and manage my KYC details.
+              I authorize Qwark to fetch my financial data from RBI regulated Account
+              Aggregator ecosystem and manage my KYC details.
             </BodyText>
           </XStack>
           <FilledButton
             mt="$5"
             disabled={!isDirty || !checked || isSubmitting}
             onPress={handleSubmit(handleConfirm)}
-            iconAfter={
-              isSubmitting ? <ActivityIndicator color="#6F6F6F" /> : null
-            }
+            iconAfter={isSubmitting ? <ActivityIndicator color="#6F6F6F" /> : null}
           >
             Confirm
           </FilledButton>

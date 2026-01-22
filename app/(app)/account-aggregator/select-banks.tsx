@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, BackHandler, SectionList } from "react-native";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { View, YStack } from "tamagui";
 import Animated, {
   useSharedValue,
@@ -29,8 +29,7 @@ import { useLogout } from "features/auth/hooks";
 export default function SelectBanksScreen() {
   const [filterText, setFilterText] = useState<string>("");
   const debouncedFilterText = useDebounce(filterText, 150);
-  const { bottomSheetModalRef, presentBottomSheetModal } =
-    useCustomBottomSheetModal();
+  const { bottomSheetModalRef, presentBottomSheetModal } = useCustomBottomSheetModal();
   const fips = useAAStore((store) => store.fips);
   const session_id = useAAStore((store) => store.session_id);
   const selectedBanks = useAAStore((store) => store.selectedBanks);
@@ -54,24 +53,24 @@ export default function SelectBanksScreen() {
     // resetFips();
   };
 
-  useEffect(() => {
-    const onBackPress = () => {
-      if (router.canGoBack()) {
-        router.back(); // then go back
-        resetFips();
-      } else {
-        goBackWithLogout();
-      }
-      return true; // prevent default back
-    };
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        if (router.canGoBack()) {
+          router.back(); // then go back
+          resetFips();
+        } else {
+          console.log("Logging out from select banks screen");
+          goBackWithLogout();
+        }
+        return true; // prevent default back
+      };
 
-    const subscription = BackHandler.addEventListener(
-      "hardwareBackPress",
-      onBackPress
-    );
+      const subscription = BackHandler.addEventListener("hardwareBackPress", onBackPress);
 
-    return () => subscription.remove(); // cleanup on unmount
-  }, []);
+      return () => subscription.remove(); // cleanup on unmount
+    }, []),
+  );
 
   const renderItem = useCallback(
     ({ item }: { item: FipDataType }) => (
@@ -83,7 +82,7 @@ export default function SelectBanksScreen() {
         />
       </View>
     ),
-    [selectedBanks, setSelectedBanks]
+    [selectedBanks, setSelectedBanks],
   );
 
   const renderSectionHeader = useCallback(
@@ -94,7 +93,7 @@ export default function SelectBanksScreen() {
         </LabelText>
       </View>
     ),
-    []
+    [],
   );
 
   const handlePress = async () => {
@@ -147,10 +146,7 @@ export default function SelectBanksScreen() {
         {/* Search Input and Selected Banks View */}
 
         <View px="$5" py="$3">
-          <SearchBanksInput
-            filterText={filterText}
-            onChangeFilterText={setFilterText}
-          />
+          <SearchBanksInput filterText={filterText} onChangeFilterText={setFilterText} />
 
           <SelectedBanksPillsView selectedBanks={selectedBanks} />
         </View>
@@ -184,9 +180,7 @@ export default function SelectBanksScreen() {
               <BodyText ta="center" size="$small">
                 Couldn't find your bank?
                 <LabelText
-                  onPress={() =>
-                    router.navigate("/(app)/account-aggregator/coming-soon")
-                  }
+                  onPress={() => router.navigate("/(app)/account-aggregator/coming-soon")}
                   size="$large"
                   fow="$emphasized"
                   color="#001484"
@@ -215,8 +209,8 @@ export default function SelectBanksScreen() {
               onPress={handlePress}
               iconAfter={isLoading ? <ActivityIndicator /> : null}
               disabled={
-                selectedBanks.filter((bank) => bank.asset_class_id === "BANK")
-                  .length === 0 || isLoading
+                selectedBanks.filter((bank) => bank.asset_class_id === "BANK").length ===
+                  0 || isLoading
               }
             >
               Continue
@@ -234,10 +228,7 @@ const useAnimatedFooter = () => {
   const footerOffset = useSharedValue(0);
 
   const animateFooter = (toValue: number, delay: number) => {
-    footerOffset.value = withDelay(
-      delay,
-      withTiming(toValue, { duration: 200 })
-    );
+    footerOffset.value = withDelay(delay, withTiming(toValue, { duration: 200 }));
   };
 
   const onScrollBeginDrag = () => animateFooter(35, 100);

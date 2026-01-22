@@ -6,7 +6,6 @@ import { Networth } from "features/dashboard/components/Networth";
 import { Investments } from "features/dashboard/components/Investments";
 import { Cashflow } from "features/dashboard/components/Cashflow";
 import { BankAccounts } from "features/dashboard/components/BankAccounts";
-import { useMarketStore } from "data/stores/market-store";
 
 export default function DashboardScreen() {
   const { isLoading: isLoadingDashboard } = useGetDashboardData();
