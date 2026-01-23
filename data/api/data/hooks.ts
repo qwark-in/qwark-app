@@ -71,6 +71,7 @@ const getMockMarketDataFetcher = async (_url: string): Promise<MarketState> => {
 export const useGetMarketData = () => {
   const setEqHoldings = useMarketStore((store) => store.setEqHoldings);
   const setMfHoldings = useMarketStore((store) => store.setMfHoldings);
+  const setFdHoldings = useMarketStore((store) => store.setFdHoldings);
 
   const { data, error, isLoading, isValidating, mutate } = useSWR(
     `${BASE_URL}/market`,
@@ -82,6 +83,9 @@ export const useGetMarketData = () => {
         }
         if (data.mfHoldings) {
           setMfHoldings(data.mfHoldings);
+        }
+        if (data.fdHoldings) {
+          setFdHoldings(data.fdHoldings);
         }
       },
     },

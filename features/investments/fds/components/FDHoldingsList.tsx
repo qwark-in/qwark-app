@@ -25,7 +25,7 @@ export const FDHoldingsList: React.FC<FDHoldingsListProps> = ({}) => {
 
   const sortedHoldingsData = useMemo(
     () => sortFdTransactions(holdingsData, value),
-    [value]
+    [value],
   );
 
   return (
@@ -44,7 +44,7 @@ export const FDHoldingsList: React.FC<FDHoldingsListProps> = ({}) => {
               <BodyText size="$small" fow="$emphasized">
                 Sort
               </BodyText>
-              <IconButton name="check" onPress={presentBottomSheetModal} />
+              <IconButton name="filter" onPress={presentBottomSheetModal} />
             </XStack>
           </View>
         )}
