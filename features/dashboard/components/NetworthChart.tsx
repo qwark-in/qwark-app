@@ -11,6 +11,10 @@ export const NetworthChart = () => {
   const { chartData } = useDashboardStore((store) => store.networth)!;
   const { width: screenWidth } = useWindowDimensions();
 
+  if (chartData.length === 0) {
+    return null;
+  }
+
   const startLabel = format(chartData[0].date, "MMM dd");
   const endLabel = format(chartData[chartData.length - 1].date, "MMM dd");
 

@@ -46,7 +46,9 @@ export const AuthoriseBanksSuccess: React.FC<AuthoriseBanksSuccessProps> = ({
    */
   const acceptAllConsents = async (): Promise<string[]> => {
     const relevantHandles = consent_handles.filter((handle) =>
-      selectedAccounts.some((acc) => acc.asset_class_id === handle.asset_class_id),
+      selectedAccounts.some(
+        (acc) => acc.asset_class_id === handle.asset_class_id,
+      ),
     );
 
     const responses = await Promise.all(
@@ -67,7 +69,8 @@ export const AuthoriseBanksSuccess: React.FC<AuthoriseBanksSuccessProps> = ({
             const linkRef =
               fipAccount?.account_link_ref ??
               accountLinkRefs.find(
-                (acc) => acc.fip_account_ref_number === account.account_ref_number,
+                (acc) =>
+                  acc.fip_account_ref_number === account.account_ref_number,
               )?.fip_account_link_ref!;
 
             return {
@@ -103,10 +106,14 @@ export const AuthoriseBanksSuccess: React.FC<AuthoriseBanksSuccessProps> = ({
    */
   const updateFinancialProfile = async (consents: string[]) => {
     const updateFinProfileResponse = await updateFinProfile(
-      { consents: consents.map((consent) => ({ consent_id: consent })) },
+      { consents },
       authData,
     );
-    console.log("✅ Financial Profile updated:", updateFinProfileResponse.data);
+    console.log(
+      "✅ Financial Profile updated:",
+      updateFinProfileResponse.data,
+      updateFinProfileResponse.status,
+    );
   };
 
   /**
@@ -123,7 +130,6 @@ export const AuthoriseBanksSuccess: React.FC<AuthoriseBanksSuccessProps> = ({
       resetStore();
       router.replace("/(app)/account-aggregator/success");
     } catch (error) {
-      console.error(error);
       toast.show("Something went wrong", {
         message: "Please try again later",
         duration: 4000,
@@ -140,7 +146,13 @@ export const AuthoriseBanksSuccess: React.FC<AuthoriseBanksSuccessProps> = ({
         <TitleText size="$large" fow="$emphasized" mt="$8">
           Congratulations!
         </TitleText>
-        <BodyText mt="$3" ta="center" size="$large" fow="$emphasized" color="#525252">
+        <BodyText
+          mt="$3"
+          ta="center"
+          size="$large"
+          fow="$emphasized"
+          color="#525252"
+        >
           You have successfully authorized {selectedAccounts.length}{" "}
           {`account${numberOfAccounts > 1 ? "s" : ""}`}
         </BodyText>

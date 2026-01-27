@@ -12,5 +12,5 @@ export type CreateUserResponse = UserState;
 // Update User
 export type UpdateUserQueryBody = Partial<UserState>;
 export type UpdateUserResponse = UserState;
-export type UpdateFinProfileQueryBody = Pick<FinancialProfileState, "consents">;
+export type UpdateFinProfileQueryBody = { consents: string[] };
 export type UpdateFinProfileResponse = any;

@@ -5,25 +5,17 @@ import { DashboardActions, DashboardState } from "data/models/dashboard";
 import { zustandStorage } from "./helpers/storage";
 
 export const useDashboardStore = create<DashboardState & DashboardActions>()(
-  immer(
-    persist(
-      (set) => ({
-        networth: null,
-        cashflow: null,
-        setCashflow: (data) =>
-          set((state) => {
-            state.cashflow = data;
-          }),
-
-        setNetworth: (data) =>
-          set((state) => {
-            state.networth = data;
-          }),
+  immer((set) => ({
+    networth: null,
+    cashflow: null,
+    setCashflow: (data) =>
+      set((state) => {
+        state.cashflow = data;
       }),
-      {
-        name: "dashboard-storage",
-        storage: createJSONStorage(() => zustandStorage),
-      }
-    )
-  )
+
+    setNetworth: (data) =>
+      set((state) => {
+        state.networth = data;
+      }),
+  })),
 );
