@@ -11,10 +11,20 @@ import { useGetMarketData } from "data/api";
 import { View } from "tamagui";
 import { ActivityIndicator } from "react-native";
 import { FEATURE_GOOGLE_ANALYTICS } from "settings";
+import { getMarketData } from "data/api/data/data-services";
+import { useEffect, useState } from "react";
+import { useMarketStore } from "data/stores/market-store";
+import { useToastController } from "@tamagui/toast";
+import { useAuthStore } from "data/stores/auth-store";
+import { TitleText } from "ui/display/typography";
+import { FilledButton } from "ui/controls/buttons";
 
 const { Navigator } = createMaterialTopTabNavigator();
 
-const TopTabScreensFbAnalyticsIds = ["stocks-etf-screen", "mutual-funds-screen"];
+const TopTabScreensFbAnalyticsIds = [
+  "stocks-etf-screen",
+  "mutual-funds-screen",
+];
 
 export const MaterialTopTabs = withLayoutContext<
   MaterialTopTabNavigationOptions,
@@ -24,12 +34,70 @@ export const MaterialTopTabs = withLayoutContext<
 >(Navigator);
 
 export default function TabLayout() {
-  const { error, isLoading, isValidating, mutate } = useGetMarketData();
+  const authData = useAuthStore((store) => store.authData)!;
+  const toast = useToastController();
+  const setEqHoldings = useMarketStore((store) => store.setEqHoldings);
+  const setMfHoldings = useMarketStore((store) => store.setMfHoldings);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [error, setError] = useState(false);
+
+  const getMarket = async () => {
+    setError(false);
+    setIsLoading(true);
+    try {
+      const res = await getMarketData(authData);
+
+      console.log("Market response status", res.status);
+
+      if (res.status === 204) {
+        // Data not ready
+        setIsEmpty(true);
+        return;
+      }
+
+      if (res.data.eqHoldings) {
+        setEqHoldings(res.data.eqHoldings);
+      }
+      if (res.data.mfHoldings) {
+        setMfHoldings(res.data.mfHoldings);
+      }
+    } catch (error) {
+      console.log(error);
+      setError(true);
+      toast.show("Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getMarket();
+  }, []);
 
   if (isLoading) {
     return (
       <View f={1} bg="#FAFAFC" jc="center" ai="center">
         <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View f={1} bg="#FAFAFC" jc="center" ai="center" p="$5" gap="$5">
+        <TitleText size="$large">Error!</TitleText>
+        <FilledButton onPress={getMarket}>Try again!</FilledButton>
+      </View>
+    );
+  }
+
+  if (isEmpty) {
+    return (
+      <View f={1} bg="#FAFAFC" jc="center" ai="center" p="$5" gap="$5">
+        <TitleText size="$large">Data not ready!</TitleText>
+        <FilledButton onPress={getMarket}>Try again!</FilledButton>
       </View>
     );
   }
@@ -76,7 +144,7 @@ export default function TabLayout() {
             const fbAnalytics = getAnalytics();
             console.debug(
               "[Firebase Analytics] Top Nav tab:",
-              TopTabScreensFbAnalyticsIds[e.data.state.index]
+              TopTabScreensFbAnalyticsIds[e.data.state.index],
             );
             fbAnalytics.logScreenView({
               screen_class: "topnav-tab",
@@ -86,8 +154,14 @@ export default function TabLayout() {
         },
       }}
     >
-      <MaterialTopTabs.Screen name="stocks" options={{ title: "Stocks & ETFs" }} />
-      <MaterialTopTabs.Screen name="mutual-funds" options={{ title: "Mutual Funds" }} />
+      <MaterialTopTabs.Screen
+        name="stocks"
+        options={{ title: "Stocks & ETFs" }}
+      />
+      <MaterialTopTabs.Screen
+        name="mutual-funds"
+        options={{ title: "Mutual Funds" }}
+      />
       <MaterialTopTabs.Screen name="fds-rds" options={{ title: "FDs & RDs" }} />
     </MaterialTopTabs>
   );

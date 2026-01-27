@@ -13,7 +13,7 @@ export const getDashboardData = async (authData: AuthDataType) => {
         headers: {
           Token: JSON.stringify(authData),
         },
-      }
+      },
     );
 
     console.log("✅ Get Dashboard Response status:", response.status);
@@ -32,18 +32,21 @@ export const getDashboardData = async (authData: AuthDataType) => {
           error.response?.data?.message ||
           error.response?.statusText ||
           error.message
-        }`
+        }`,
       );
     } else {
       console.error("❌ Unexpected Error:", err);
       throw new Error(
-        "An unexpected error occurred while fetching the dashboard data."
+        "An unexpected error occurred while fetching the dashboard data.",
       );
     }
   }
 };
 
-type GetMarketResponse = {};
+type GetMarketResponse = {
+  eqHoldings: any;
+  mfHoldings: any;
+};
 
 export const getMarketData = async (authData: AuthDataType) => {
   try {
@@ -69,12 +72,12 @@ export const getMarketData = async (authData: AuthDataType) => {
           error.response?.data?.message ||
           error.response?.statusText ||
           error.message
-        }`
+        }`,
       );
     } else {
       console.error("❌ Unexpected Error:", err);
       throw new Error(
-        "An unexpected error occurred while fetching the Market data."
+        "An unexpected error occurred while fetching the Market data.",
       );
     }
   }
