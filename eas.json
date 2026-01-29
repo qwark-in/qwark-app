@@ -44,6 +44,7 @@
     "production": {
       "extends": "base",
       "autoIncrement": true,
+
       "android": {
         "buildType": "app-bundle",
         "applicationArchivePath": "android/app/build/outputs/**/*.aab"

@@ -31,10 +31,14 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
   console.log("⦿ Building app for environment: ", process.env.APP_VARIANT);
   // console.debug('config =', config);
 
-  const { name, androidPackageName, icon, adaptiveIcon, scheme } = getDynamicAppConfig(
-    (process.env.APP_VARIANT as "development" | "preview" | "production" | "storybook") ||
-      "development",
-  );
+  const { name, androidPackageName, icon, adaptiveIcon, scheme } =
+    getDynamicAppConfig(
+      (process.env.APP_VARIANT as
+        | "development"
+        | "preview"
+        | "production"
+        | "storybook") || "development",
+    );
 
   return {
     ...config,
@@ -45,12 +49,8 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
     scheme: scheme,
     android: {
       ...config.android,
-      permissions: [
-        "READ_SMS",
-        "RECEIVE_SMS",
-        "android.permission.RECORD_AUDIO",
-        "android.permission.MODIFY_AUDIO_SETTINGS",
-      ],
+      permissions: ["READ_SMS", "RECEIVE_SMS"],
+      versionCode: 5,
       package: androidPackageName,
       intentFilters: [
         {
@@ -88,7 +88,6 @@ module.exports = ({ config }: ConfigContext): ExpoConfig => {
       "expo-font", // Asked by expo install while updated to SDK 53
       "expo-secure-store", // Asked by expo install while updated to SDK 53
       "expo-web-browser", // Asked by expo install while updated to SDK 53
-      "expo-audio",
       "@react-native-firebase/app",
       [
         "@react-native-community/datetimepicker", // Line - 56,137 Refer -> https://github.com/react-native-datetimepicker/datetimepicker/issues/975
